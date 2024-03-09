@@ -1,1 +1,4 @@
 # server
+Parte de ProductManager creada por Emilio Servetti, aqui como solicita el trabajo hice una clase ProductManager que gestiona productos, cree un array que contiene a todos los productos y un metodo para crear cada producto con unos datos necesarios y obligatorios y el id que se designa automaticamente a cada producto, tambien hice un read para leer todos los productos y le agregue un readOne que retorna un producto especifico segun el id que se ingrese como prop, ademas hice que si el id que se agrega no es valida o existente, retorne un mensaje "Id de producto no existente".
+
+La parte de usuario fue creada por mi compañero Ignacio Vitello.
