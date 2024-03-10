@@ -47,7 +47,7 @@ producto.create({
   price : 250,
   stock : 25
 });
-//Al faltarle una propiedad (title) no creara este product y devolvera un log 'No se ha ingresado una propiedad'
+//Al faltarle una propiedad (title) no creara este product y devolvera un log 
 producto.create({
   //title : 'Paquete de harina',
   photo : 'harina.jpg',

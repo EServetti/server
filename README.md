@@ -26,3 +26,5 @@ console.log(producto.read());: aqui hice un log de todos los productos.
 console.log(producto.readOne(1)): aqui solo use el metodo readOne para hacer un log de un producto epecifico de id 1.
 
 console.log(producto.readOne(10)): aqui especifique un id np existente para probar la reaccion ante esto.
+
+La parte de users fue creada por mi compañero Ignacio Vitello.
