@@ -3,6 +3,11 @@ class ProductManager {
   static #products = [];
   //metodo para crear un nuevo producto
   create(data) {
+     // Verificar si no se ingreso alguna propiedad 
+     if (!data.title || !data.photo || !data.category || !data.price || !data.stock) {
+      console.log('No se ha ingresado una propiedad');
+      return; 
+    }
     const product = {
       id:
         ProductManager.#products.length === 0
@@ -13,7 +18,7 @@ class ProductManager {
       category: data.category,
       price: data.price,
       stock: data.stock,
-    };
+    } 
     ProductManager.#products.push(product);
     console.log("El producto se agrago correctamente");
   }
@@ -34,6 +39,7 @@ class ProductManager {
 //Creo una constante que invoca a la clase ProductManager
 const producto = new ProductManager;
 //Invoco al metodo create de la clase
+
 producto.create({
   title : 'Alfajor',
   photo : 'alfajor.jpg',
@@ -41,9 +47,9 @@ producto.create({
   price : 250,
   stock : 25
 });
-
+//Al faltarle una propiedad (title) no creara este product y devolvera un log 'No se ha ingresado una propiedad'
 producto.create({
-  title : 'Paquete de harina',
+  //title : 'Paquete de harina',
   photo : 'harina.jpg',
   category : 'comida',
   price : 500,
