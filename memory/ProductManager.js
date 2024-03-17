@@ -153,6 +153,6 @@ console.log(producto.read());
 //devuelve un producto especifico segun el id
 console.log(producto.readOne(1));
 //que pasa en el caso de que el producto solicitado tenda un id no existente
-console.log(producto.readOne(10));
+console.log(producto.readOne(11));
 //elimino el 5 producto
 producto.destroy(4);
