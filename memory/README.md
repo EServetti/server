@@ -17,6 +17,8 @@ read(): se crea un metodo para devolver los product guardados en products.
 
 readOne(): aqui agregue un metodo para devolver un product especifico segun su id, se usa un for of para revisar cada elemento del array products y si uno de estos coincide con el id ingresado en (data) lo devuelve, en el caso de que ninguno coincida devuelve un log de "Id de producto no existente".
 
+destroy(): aqui agregue un metodo para eliminar un producto usando un id, cree una constante llamada delOne en la que se guarda el objeto que contnga el id que atrape el filtro, luego hace un log de un mensaje "Se elimino el producto (id del producto eliminado)".
+
 const producto = new ProductManager;: Aqui ya fuera de la clase cree una constante llamada producto que invoca a la clase ProductManager.
 
 Luego cree 5 productos, uno de ellos con el title comentado para probar la reaccion cuando un producto no tiene todas sus propiedades.
