@@ -147,6 +147,94 @@ producto.create({
   price: 1000,
   stock: 20,
 });
+// Producto 11
+producto.create({
+  title: "Manta de Lana Tejida a Mano",
+  photo: "foto.png",
+  category: "hogar",
+  price: 1500,
+  stock: 15,
+});
+// Producto 12
+producto.create({
+  title: "Almohadas de Plumas",
+  photo: "foto.png",
+  category: "hogar",
+  price: 500,
+  stock: 15,
+});
+
+// Producto 13
+producto.create({
+  title: "Set de Ollas de Acero Inoxidable",
+  photo: "foto.png",
+  category: "cocina",
+  price: 2000,
+  stock: 10,
+});
+
+// Producto 14
+producto.create({
+  title: "Lámpara de Escritorio LED",
+  photo: "foto.png",
+  category: "hogar",
+  price: 800,
+  stock: 25,
+});
+
+// Producto 15
+producto.create({
+  title: "Set de Toallas de Baño",
+  photo: "foto.png",
+  category: "hogar",
+  price: 1200,
+  stock: 18,
+});
+
+// Producto 16
+producto.create({
+  title: "Silla Ergonómica de Oficina",
+  photo: "foto.png",
+  category: "hogar",
+  price: 1500,
+  stock: 12,
+});
+
+// Producto 17
+producto.create({
+  title: "Juego de Tazas de Porcelana",
+  photo: "foto.png",
+  category: "cocina",
+  price: 600,
+  stock: 30,
+});
+
+// Producto 18
+producto.create({
+  title: "Cortinas Opacas para Ventanas",
+  photo: "foto.png",
+  category: "hogar",
+  price: 1800,
+  stock: 8,
+});
+
+// Producto 19
+producto.create({
+  title: "Espejo de Cuerpo Entero",
+  photo: "foto.png",
+  category: "hogar",
+  price: 1600,
+  stock: 10,
+});
+
+// Producto 20
+producto.create({
+  title: "Set de Cubiertos de Acero Inoxidable",
+  photo: "foto.png",
+  category: "cocina",
+  price: 1000,
+  stock: 20,
+});
 
 //devuelve todos los productos
 console.log(producto.read());
