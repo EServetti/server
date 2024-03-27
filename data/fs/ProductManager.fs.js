@@ -7,7 +7,7 @@ const { parse } = require("path");
 const { stringify } = require("querystring");
 class ProductManager {
   constructor() {
-    this.path = "../files/products.json";
+    this.path = "../fs/files/products.json";
     this.init();
   }
   init() {
@@ -196,9 +196,9 @@ await productos.create({
 
 await productos.read();
 //devuelve el producto 4
-await productos.readOne('aa6595742cb32e408b64e9fa');
+await productos.readOne('b5b939f6321fcd6ba5c18786');
 //elimina el producto 10
-await productos.destroy('6a5afeb55876fd4c9509c764');
+//await productos.destroy('6a5afeb55876fd4c9509c764');
 }
 
 test();
