@@ -3,13 +3,24 @@ import fs from "fs";
 import  json  from "stream/consumers";
 import crypto from"crypto";
 import  log  from"console";
-import  parse  from"path";
+import  parse  from "path";
 import  stringify  from"querystring";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 
 class ProductManager {
   constructor() {
-    this.path = "/Users/Usuario/Desktop/Tareas Emilio/Curso Coderhouse/Proyects/server/data/fs/files/products.json";
+    this.path = this.constructPath();
     this.init();
+  }
+  //constructor de path global
+  constructPath() {
+const __filename = fileURLToPath(import.meta.url);
+const directorioBase = path.dirname(__filename);
+const rutaFiles = path.join(directorioBase, '..', 'fs', 'files');
+const rutaArchivoJSON = path.join(rutaFiles, 'products.json');
+return rutaArchivoJSON;
   }
   init() {
     try {
