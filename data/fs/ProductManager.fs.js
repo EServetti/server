@@ -1,14 +1,27 @@
-const { isUtf8 } = require("buffer");
-const fs = require("fs");
-const { json } = require("stream/consumers");
-const crypto = require("crypto");
-const { log } = require("console");
-const { parse } = require("path");
-const { stringify } = require("querystring");
+
+import  isUtf8  from "buffer";
+import fs from "fs";
+import  json  from "stream/consumers";
+import crypto from"crypto";
+import  log  from"console";
+import  parse  from "path";
+import  stringify  from"querystring";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+
 class ProductManager {
   constructor() {
-    this.path = "../fs/files/products.json";
+    this.path = this.constructPath();
     this.init();
+  }
+  //constructor de path global
+  constructPath() {
+const __filename = fileURLToPath(import.meta.url);
+const directorioBase = path.dirname(__filename);
+const rutaFiles = path.join(directorioBase, '..', 'fs', 'files');
+const rutaArchivoJSON = path.join(rutaFiles, 'products.json');
+return rutaArchivoJSON;
   }
   init() {
     try {
@@ -64,10 +77,15 @@ class ProductManager {
     }
   }
   //metodo read
-  async read() {
+  async read(cat) {
     try {
-      const contant = await fs.promises.readFile(this.path, "utf-8");
+      let contant = await fs.promises.readFile(this.path, "utf-8");
+      contant = JSON.parse(contant);
       console.log(contant);
+      if (cat) {
+        contant = contant.filter(each => each.category === cat);
+      }
+      return contant
     } catch (error) {
       console.log(error);
     }
@@ -83,6 +101,7 @@ class ProductManager {
       } else {
         console.log('Product found');
         console.log(theProduct);
+        return theProduct;
       }
     } catch (error) {
       console.log(error);
@@ -193,6 +212,95 @@ await productos.create({
   price: 1000,
   stock: 20,
 });
+// Producto 11
+await productos.create({
+  title: "Manta de Lana Tejida a Mano",
+  photo: "foto.png",
+  category: "hogar",
+  price: 1500,
+  stock: 15,
+});
+// Producto 12
+await productos.create({
+  title: "Almohadas de Plumas",
+  photo: "foto.png",
+  category: "hogar",
+  price: 500,
+  stock: 15,
+});
+
+// Producto 13
+await productos.create({
+  title: "Set de Ollas de Acero Inoxidable",
+  photo: "foto.png",
+  category: "cocina",
+  price: 2000,
+  stock: 10,
+});
+
+// Producto 14
+await productos.create({
+  title: "Lámpara de Escritorio LED",
+  photo: "foto.png",
+  category: "hogar",
+  price: 800,
+  stock: 25,
+});
+
+// Producto 15
+await productos.create({
+  title: "Set de Toallas de Baño",
+  photo: "foto.png",
+  category: "hogar",
+  price: 1200,
+  stock: 18,
+});
+
+// Producto 16
+await productos.create({
+  title: "Silla Ergonómica de Oficina",
+  photo: "foto.png",
+  category: "hogar",
+  price: 1500,
+  stock: 12,
+});
+
+// Producto 17
+await productos.create({
+  title: "Juego de Tazas de Porcelana",
+  photo: "foto.png",
+  category: "cocina",
+  price: 600,
+  stock: 30,
+});
+
+// Producto 18
+await productos.create({
+  title: "Cortinas Opacas para Ventanas",
+  photo: "foto.png",
+  category: "hogar",
+  price: 1800,
+  stock: 8,
+});
+
+// Producto 19
+await productos.create({
+  title: "Espejo de Cuerpo Entero",
+  photo: "foto.png",
+  category: "hogar",
+  price: 1600,
+  stock: 10,
+});
+
+// Producto 20
+await productos.create({
+  title: "Set de Cubiertos de Acero Inoxidable",
+  photo: "foto.png",
+  category: "cocina",
+  price: 1000,
+  stock: 20,
+});
+
 
 await productos.read();
 //devuelve el producto 4
@@ -203,3 +311,6 @@ await productos.readOne('b5b939f6321fcd6ba5c18786');
 
 test();
 
+
+const productos = new ProductManager();
+export default productos;
