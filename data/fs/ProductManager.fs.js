@@ -1,3 +1,4 @@
+
 import  isUtf8  from "buffer";
 import fs from "fs";
 import  json  from "stream/consumers";
@@ -309,6 +310,7 @@ await productos.readOne('b5b939f6321fcd6ba5c18786');
 }
 
 test();
+
 
 const productos = new ProductManager();
 export default productos;

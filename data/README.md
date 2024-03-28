@@ -71,3 +71,4 @@ http/localhost:8080/api/products?query=(category)
 Si lo que queremos es pedir un producto especifico podemos hacerlo de esta manera:
 
 http/localhost:8080/api/products/:(id del producto)
+

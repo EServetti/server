@@ -235,7 +235,6 @@ producto.create({
   price: 1000,
   stock: 20,
 });
-
 //devuelve todos los productos
 console.log(producto.read());
 //devuelve un producto especifico segun el id
