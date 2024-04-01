@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Creado por Emilio Servetti, UserManager por Ignacio Vitello.\r ## Función\r Programa para el manejo de productos que cuentan con varias caracteristicas especificadas mas abajo, capaz de crear, leer uno o todos los productos y eliminaro.\r Los datos son guardados en la memoria o en un archivo json segun el archivo que se ejecute.\r ## Como usarlo\r ### ProductManager.js (guardado en memoria)\r ```\r //invocar la clase\r const producto = new ProductManager();",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon ./server.js",
+    "start": "node ./server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

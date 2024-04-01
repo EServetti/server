@@ -1,0 +1,322 @@
+[
+  {
+    "id": "17d85087bede336a9debb34f",
+    "title": "Vestido de Noche",
+    "photo": "https://thumbs.dreamstime.com/b/vestido-de-noche-en-un-maniqu%C3%AD-18692928.jpg",
+    "category": "moda",
+    "price": 1800,
+    "stock": 10
+  },
+  {
+    "id": "78252872edcddd18d721c97b",
+    "title": "Set de Pinceles de Maquillaje",
+    "photo": "https://tienda.artepierrot.cl/wp-content/uploads/2020/10/Pinceles-Social-AP2-600x600.png",
+    "category": "belleza",
+    "price": 500,
+    "stock": 30
+  },
+  {
+    "id": "176e36ff4c19217812cb0dad",
+    "title": "Balón de Fútbol",
+    "photo": "https://img.planetafobal.com/2021/07/uefa-champions-league-pelota-oficial-2021-2022-pyrostorm-yu.jpg",
+    "category": "deportes",
+    "price": 800,
+    "stock": 25
+  },
+  {
+    "id": "13b2eea943424b0bcd6a98c1",
+    "title": "Mochila Escolar",
+    "photo": "https://static.netshoes.com.br/produtos/mochila-convoy-cool-casual-escolar-universitaria-poliester/06/FLJ-0011-006/FLJ-0011-006_zoom2.jpg?ts=1565110007&ims=1088x",
+    "category": "accesorios",
+    "price": 600,
+    "stock": 18
+  },
+  {
+    "id": "88e607e6e364898ff625f0ed",
+    "title": "Juego de Mesa de Estrategia",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.rvtOjGzBffRXMx1Pyb-PegHaE9&pid=Api&P=0&h=180",
+    "category": "entretenimiento",
+    "price": 900,
+    "stock": 12
+  },
+  {
+    "id": "968079a2dd4ff1927d67769d",
+    "title": "Botines de Fútbol",
+    "photo": "https://www.deportesapalategui.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/a/o/ao3258-400-phcfh001-1000.jpeg",
+    "category": "deportes",
+    "price": 1500,
+    "stock": 8
+  },
+  {
+    "id": "1848005e031005e2b52263d0",
+    "title": "Juego de Sábanas de Algodón",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.ZdaYwifhD9W2xNU9xAa9MQHaHa&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": 1000,
+    "stock": 20
+  },
+  {
+    "id": "d6eb99057223bf83724c8331",
+    "title": "Manta de Lana Tejida a Mano",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.KGYLOTSbjADGZwsE4QiEEgHaE2&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": 1500,
+    "stock": 15
+  },
+  {
+    "id": "b3566c8fc47cd337f02e2b8e",
+    "title": "Almohadas de Plumas",
+    "photo": "https://tse4.explicit.bing.net/th?id=OIP.8LQDG3g4jA7pLbtVLrTQ8AHaGe&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": 500,
+    "stock": 15
+  },
+  {
+    "id": "7c9d096a26ddf9914f4a88fb",
+    "title": "Set de Ollas de Acero Inoxidable",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.q2rPt1RQHK-Y2wgWH9F74wHaFF&pid=Api&P=0&h=180",
+    "category": "cocina",
+    "price": 2000,
+    "stock": 10
+  },
+  {
+    "id": "a4168d204defa32df200d05f",
+    "title": "Lámpara de Escritorio LED",
+    "photo": "https://tse1.mm.bing.net/th?id=OIP.2gpAkv7T-h7sXlQcwBJElwHaHa&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": 800,
+    "stock": 25
+  },
+  {
+    "id": "5d604c56a3963967f3777e5f",
+    "title": "Set de Toallas de Baño",
+    "photo": "https://http2.mlstatic.com/D_NQ_NP_2X_840945-MLM44471891616_012021-F.jpg",
+    "category": "hogar",
+    "price": 1200,
+    "stock": 18
+  },
+  {
+    "id": "5b147098aa814228ef3c4a55",
+    "title": "Silla Ergonómica de Oficina",
+    "photo": "https://http2.mlstatic.com/silla-oficina-ergonomica-de-cuero-con-respaldo-alto-brazos-D_NQ_NP_855874-MLM28199817916_092018-F.jpg",
+    "category": "hogar",
+    "price": 1500,
+    "stock": 12
+  },
+  {
+    "id": "e8da7b499d64be5158a49148",
+    "title": "Juego de Tazas de Porcelana",
+    "photo": "https://resources.sears.com.mx/medios-plazavip/fotos/productos_sears1/original/3040364.jpg",
+    "category": "cocina",
+    "price": 600,
+    "stock": 30
+  },
+  {
+    "id": "b65f0ec7585569316eebf83e",
+    "title": "Cortinas Opacas para Ventanas",
+    "photo": "https://m.media-amazon.com/images/I/813Y57fOYAL.__AC_SY300_SX300_QL70_ML2_.jpg",
+    "category": "hogar",
+    "price": 1800,
+    "stock": 8
+  },
+  {
+    "id": "0dd0cfa34bff362b371b33f1",
+    "title": "Espejo de Cuerpo Entero",
+    "photo": "https://images-na.ssl-images-amazon.com/images/I/714Brt-Ie-L._SL1000_.jpg",
+    "category": "hogar",
+    "price": 1600,
+    "stock": 10
+  },
+  {
+    "id": "2d5098d13bab4c619aafea1d",
+    "title": "Set de Cubiertos de Acero Inoxidable",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.sAtZ5Xdn8g79t8ZQeuGQQQHaHa&pid=Api&P=0&h=180",
+    "category": "cocina",
+    "price": 1000,
+    "stock": 20
+  },
+  {
+    "id": "0b54d21db5932c5beb0d0ce1",
+    "title": "Estantería de Madera de Roble",
+    "photo": "https://tse1.mm.bing.net/th?id=OIP.MPqkUWjzJVfqRhwphut5NQHaHa&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": 1800,
+    "stock": 10
+  },
+  {
+    "id": "103a6285937d82a259176b2a",
+    "title": "Cortina de Ducha de Diseño",
+    "photo": "https://images-na.ssl-images-amazon.com/images/I/71tUPW4mOIL._AC_SL1500_.jpg",
+    "category": "hogar",
+    "price": 200,
+    "stock": 30
+  },
+  {
+    "id": "a6d4d73bd3a257e3671df43d",
+    "title": "Cafetera Express de Acero Inoxidable",
+    "photo": "https://tse1.mm.bing.net/th?id=OIP.-bNcGr2ZQjUZD1Q6DAxTWwHaHa&pid=Api&P=0&h=180",
+    "category": "cocina",
+    "price": 2500,
+    "stock": 8
+  },
+  {
+    "id": "a6d4d73bd3a257e3671df43d",
+    "title": "Cafetera Express de Acero Inoxidable",
+    "photo": "https://example.com/cafetera.png",
+    "category": "cocina",
+    "price": 2500,
+    "stock": 8
+  },
+  {
+    "id": "2335d230c4b2652b8985b5d4",
+    "title": "Sillón Reclinable de Cuero",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.5Gl7XIXL7uMXXhaeqjm1TgHaHa&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": 3000,
+    "stock": 5
+  },
+  {
+    "id": "200087fbf8a777bc25f7bc98",
+    "title": "Set de Platos de Porcelana",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.Gmoq8zOh4sbRuRzffe1IrwHaHa&pid=Api&P=0&h=180",
+    "category": "cocina",
+    "price": 1000,
+    "stock": 25
+  },
+  {
+    "id": "ef5f105daaaab4306609344e",
+    "title": "Mesa de Centro de Cristal Templado",
+    "photo": "https://www.mueblesdiaz.com/wp-content/uploads/2020/05/3776-1536x1290.jpg",
+    "category": "hogar",
+    "price": 1200,
+    "stock": 15
+  },
+  {
+    "id": "f35818d56c47f35952a5ec90",
+    "title": "Cubertería de Plata de Ley",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.qAsniw13-TKnuD8fp-gwfQHaFl&pid=Api&P=0&h=180",
+    "category": "cocina",
+    "price": 3500,
+    "stock": 10
+  },
+  {
+    "id": "bbbd595917528e0292b5a4e2",
+    "title": "Cuadro Decorativo de Paisaje",
+    "photo": "https://1.bp.blogspot.com/-ApM1khV8RMY/U39azdmsclI/AAAAAAABwC0/zzuIVDrLjRw/s1600/cuadros-de-paisajes-de-monta%C3%B1as-pinturas.jpg",
+    "category": "hogar",
+    "price": 500,
+    "stock": 20
+  },
+  {
+    "id": "9fd7a485f552387047cc4843",
+    "title": "Juego de Té de Porcelana",
+    "photo": "http://4.bp.blogspot.com/-fzjEfx5iQF4/TtgEz9Oic9I/AAAAAAAAB3U/J_az0fhoUmY/s1600/Juego+de+te+japones+ratan+1.jpg",
+    "category": "cocina",
+    "price": 1500,
+    "stock": 18
+  },
+  {
+    "id": "50cc54353c671a62dcd16750",
+    "title": "Sofá Modular de Tela",
+    "photo": "https://tse2.mm.bing.net/th?id=OIP.hNj4vL392naFiV8rPj30HQHaE5&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": 2000,
+    "stock": 10
+  },
+  {
+    "id": "8df7650e082faadf0fae06f5",
+    "title": "Set de Utensilios de Cocina de Silicona",
+    "photo": "https://tse1.mm.bing.net/th?id=OIP._zRKBwJBxPX660635l2eCgHaHa&pid=Api&P=0&h=180",
+    "category": "cocina",
+    "price": 800,
+    "stock": 30
+  },
+  {
+    "id": "c56b73d5796579ea7be2f7c6",
+    "title": "Reloj de Pared de Estilo Vintage",
+    "photo": "https://tse3.mm.bing.net/th?id=OIP.oO1z6WYzoA9OIOjvpP0DHwHaHO&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": 700,
+    "stock": 20
+  },
+  {
+    "id": "02cdb6b1f3aafa81fda1886c",
+    "title": "Escritorio de Oficina Moderno",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.WaeLR2ad1ZD7lHF_AOIBzwHaHa&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": 1800,
+    "stock": 12
+  },
+  {
+    "id": "25dbf71aafc3ca01e0ded391",
+    "title": "Exprimidor de Cítricos Eléctrico",
+    "photo": "https://tse2.mm.bing.net/th?id=OIP.wGbn-fIZw0A2FyrULIe6ugHaIS&pid=Api&P=0&h=180",
+    "category": "cocina",
+    "price": 600,
+    "stock": 25
+  },
+  {
+    "id": "a82317beecbfaba6e454f958",
+    "title": "Set de Fundas de Almohada",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.vMZsSJXz4R0NYgH_98MkbAHaHf&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": 300,
+    "stock": 30
+  },
+  {
+    "id": "b0044f44ff9964330628ceea",
+    "title": "Taburetes de Bar Ajustables",
+    "photo": "https://falabella.scene7.com/is/image/Falabella/15226390_1?wid=800&hei=800&qlt=70",
+    "category": "hogar",
+    "price": 1000,
+    "stock": 15
+  },
+  {
+    "id": "84811a05473fee8770f5374c",
+    "title": "Hervidor Eléctrico de Agua",
+    "photo": "https://tse2.mm.bing.net/th?id=OIP.JY75OXNaencMgq4BAaR2LAHaHa&pid=Api&P=0&h=180",
+    "category": "cocina",
+    "price": 400,
+    "stock": 20
+  },
+  {
+    "id": "e390abeef94ee4a9101520e9",
+    "title": "Lámpara de Pie de Estilo Industrial",
+    "photo": "https://tse2.mm.bing.net/th?id=OIP.bHB5W-d3u9WZiF0XQPD8DgHaJn&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": 1200,
+    "stock": 8
+  },
+  {
+    "id": "bdbb85c66d3ec7e1d3fd6aba",
+    "title": "Set de Cucharas de Café de Acero Inoxidable",
+    "photo": "https://tse2.mm.bing.net/th?id=OIP.Tipl-9nC2oXMwwr82rD2yAHaIU&pid=Api&P=0&h=180",
+    "category": "cocina",
+    "price": 500,
+    "stock": 25
+  },
+  {
+    "id": "222b1d489f58a14b0f79bb95",
+    "title": "Tatin",
+    "photo": "https://masonlineprod.vtexassets.com/arquivos/ids/246188/Alfajor-Simple-Tatin-Negro-33g-1-32815.jpg?v=637883553702800000",
+    "category": "comida",
+    "price": 250,
+    "stock": 25
+  },
+  {
+    "id": "02107f6b7cc42160c8d692e8",
+    "title": "Tarta de Frutas",
+    "photo": "https://placeralplato.com/files/2015/05/Receta-de-tarta-de-frutas-640x480.jpg?width=1200&enable=upscale",
+    "category": "repostería",
+    "price": 350,
+    "stock": 20
+  },
+  {
+    "id": "4db039175e92fd546231e9b6",
+    "title": "Auriculares Inalámbricos",
+    "photo": "https://images-na.ssl-images-amazon.com/images/I/71IvLIxaLCL._AC_SL1500_.jpg",
+    "category": "tecnología",
+    "price": 1200,
+    "stock": 15
+  }
+]
