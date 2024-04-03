@@ -1,29 +1,5 @@
 [
   {
-    "id": "17d85087bede336a9debb34f",
-    "title": "Vestido de Noche",
-    "photo": "https://thumbs.dreamstime.com/b/vestido-de-noche-en-un-maniqu%C3%AD-18692928.jpg",
-    "category": "moda",
-    "price": 1800,
-    "stock": 10
-  },
-  {
-    "id": "78252872edcddd18d721c97b",
-    "title": "Set de Pinceles de Maquillaje",
-    "photo": "https://tienda.artepierrot.cl/wp-content/uploads/2020/10/Pinceles-Social-AP2-600x600.png",
-    "category": "belleza",
-    "price": 500,
-    "stock": 30
-  },
-  {
-    "id": "176e36ff4c19217812cb0dad",
-    "title": "Balón de Fútbol",
-    "photo": "https://img.planetafobal.com/2021/07/uefa-champions-league-pelota-oficial-2021-2022-pyrostorm-yu.jpg",
-    "category": "deportes",
-    "price": 800,
-    "stock": 25
-  },
-  {
     "id": "13b2eea943424b0bcd6a98c1",
     "title": "Mochila Escolar",
     "photo": "https://static.netshoes.com.br/produtos/mochila-convoy-cool-casual-escolar-universitaria-poliester/06/FLJ-0011-006/FLJ-0011-006_zoom2.jpg?ts=1565110007&ims=1088x",
@@ -316,7 +292,15 @@
     "title": "Auriculares Inalámbricos",
     "photo": "https://images-na.ssl-images-amazon.com/images/I/71IvLIxaLCL._AC_SL1500_.jpg",
     "category": "tecnología",
-    "price": 1200,
-    "stock": 15
+    "price": 1500,
+    "stock": 10
+  },
+  {
+    "id": "9bfe0fc3f3c0a05cdb81f344",
+    "title": "Tablet",
+    "photo": "https://example.com/cortina.png",
+    "category": "tecnología",
+    "price": 3000,
+    "stock": 10
   }
 ]
