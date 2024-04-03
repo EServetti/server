@@ -1,26 +1,10 @@
 [
   {
-    "id": "13b2eea943424b0bcd6a98c1",
-    "title": "Mochila Escolar",
-    "photo": "https://static.netshoes.com.br/produtos/mochila-convoy-cool-casual-escolar-universitaria-poliester/06/FLJ-0011-006/FLJ-0011-006_zoom2.jpg?ts=1565110007&ims=1088x",
-    "category": "accesorios",
-    "price": 600,
-    "stock": 18
-  },
-  {
-    "id": "88e607e6e364898ff625f0ed",
-    "title": "Juego de Mesa de Estrategia",
-    "photo": "https://tse4.mm.bing.net/th?id=OIP.rvtOjGzBffRXMx1Pyb-PegHaE9&pid=Api&P=0&h=180",
-    "category": "entretenimiento",
-    "price": 900,
-    "stock": 12
-  },
-  {
     "id": "968079a2dd4ff1927d67769d",
-    "title": "Botines de Fútbol",
-    "photo": "https://www.deportesapalategui.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/a/o/ao3258-400-phcfh001-1000.jpeg",
-    "category": "deportes",
-    "price": 1500,
+    "title": "Horno de Convección Digital",
+    "photo": "https://http2.mlstatic.com/D_NQ_NP_842109-MLM45554296567_042021-F.jpg",
+    "category": "electrodomésticos",
+    "price": 2500,
     "stock": 8
   },
   {
@@ -273,34 +257,66 @@
   },
   {
     "id": "222b1d489f58a14b0f79bb95",
-    "title": "Tatin",
-    "photo": "https://masonlineprod.vtexassets.com/arquivos/ids/246188/Alfajor-Simple-Tatin-Negro-33g-1-32815.jpg?v=637883553702800000",
-    "category": "comida",
-    "price": 250,
-    "stock": 25
+    "title": "Batidora de Pie Multifunción",
+    "photo": "https://falabella.scene7.com/is/image/Falabella/15162877_1?wid=800&hei=800&qlt=70",
+    "category": "electrodomésticos",
+    "price": 1500,
+    "stock": 12
   },
   {
     "id": "02107f6b7cc42160c8d692e8",
-    "title": "Tarta de Frutas",
-    "photo": "https://placeralplato.com/files/2015/05/Receta-de-tarta-de-frutas-640x480.jpg?width=1200&enable=upscale",
-    "category": "repostería",
-    "price": 350,
+    "title": "Cafetera de Goteo Programable",
+    "photo": "https://tse2.mm.bing.net/th?id=OIP.P7zHeT7LqoJlo9ZfFWPfHgHaHa&pid=Api&P=0&h=180",
+    "category": "electrodomésticos",
+    "price": 800,
     "stock": 20
   },
   {
-    "id": "4db039175e92fd546231e9b6",
-    "title": "Auriculares Inalámbricos",
-    "photo": "https://images-na.ssl-images-amazon.com/images/I/71IvLIxaLCL._AC_SL1500_.jpg",
-    "category": "tecnología",
-    "price": 1500,
+    "id": "eb434e085d3689cd19971bfb",
+    "title": "Sofá reclinable",
+    "photo": "https://mintl.rencdn.com/product/ashley/images/39905-88-ANGLE-SW-P1-KO.jpg",
+    "category": "hogar",
+    "price": 5500,
+    "stock": 5
+  },
+  {
+    "id": "537ab1782f0882b95c912f4b",
+    "title": "Freidora de Aire Digital",
+    "photo": "https://electroomega.com.do/wp-content/uploads/2021/02/Freidora-de-Aire-Digital-Oster-CKSTAF-40D.jpg",
+    "category": "electrodomésticos",
+    "price": 1800,
     "stock": 10
   },
   {
-    "id": "9bfe0fc3f3c0a05cdb81f344",
-    "title": "Tablet",
-    "photo": "https://example.com/cortina.png",
-    "category": "tecnología",
+    "id": "efa14a273a3be7f1608b4767",
+    "title": "Robot de Cocina Multifunción",
+    "photo": "https://tse3.mm.bing.net/th?id=OIP.GozMykSCEMJBkD0wB1vRiAHaHa&pid=Api&P=0&h=180",
+    "category": "electrodomésticos",
     "price": 3000,
+    "stock": 15
+  },
+  {
+    "id": "642be492b36d8f988c5e2db9",
+    "title": "Tostadora de Pan de Acero Inoxidable",
+    "photo": "https://osterla.vteximg.com.br/arquivos/ids/157879-1000-1000/TSSTTR500-1.jpg?v=637449519713770000",
+    "category": "electrodomésticos",
+    "price": 500,
+    "stock": 25
+  },
+  {
+    "id": "d5adcef7a4581fa7f191c023",
+    "title": "Licuadora de Mano Inalámbrica",
+    "photo": "https://tse2.mm.bing.net/th?id=OIP.W-NP4y7RK3txCaeJn5PhLAHaHa&pid=Api&P=0&h=180",
+    "category": "electrodomésticos",
+    "price": 1000,
+    "stock": 18
+  },
+  {
+    "id": "dc903c8e44c2b735dbd61576",
+    "title": "Máquina de Pan Automática",
+    "photo": "https://elektra.vtexassets.com/arquivos/ids/2226998/10004453-d2.jpg?v=637257739281970000",
+    "category": "electrodomésticos",
+    "price": 2200,
     "stock": 10
   }
 ]
