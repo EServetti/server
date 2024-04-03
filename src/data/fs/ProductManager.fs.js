@@ -60,14 +60,14 @@ class ProductManager {
         if (!contant.some((product) => product.title === data.title)) {
           contant.push(product);
           console.log("Product created");
+          contant = JSON.stringify(contant, null, 2);
+        await fs.promises.writeFile(this.path, contant);
+        return product;
         } else {
           const error = new Error('The product has already been created!');
           error.statusCode = 409;
           throw error;
         }
-        contant = JSON.stringify(contant, null, 2);
-        await fs.promises.writeFile(this.path, contant);
-        return product;
       }
     } catch (error) {
       throw error;
