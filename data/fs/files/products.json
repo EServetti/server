@@ -78,5 +78,85 @@
     "category": "hogar",
     "price": 1000,
     "stock": 20
+  },
+  {
+    "id": "a09fdd260d68f492944683d8",
+    "title": "Manta de Lana Tejida a Mano",
+    "photo": "foto.png",
+    "category": "hogar",
+    "price": 1500,
+    "stock": 15
+  },
+  {
+    "id": "55e3da1f2d9e7f561e7997ae",
+    "title": "Almohadas de Plumas",
+    "photo": "foto.png",
+    "category": "hogar",
+    "price": 500,
+    "stock": 15
+  },
+  {
+    "id": "5a8be66db3f9da8f403f876a",
+    "title": "Set de Ollas de Acero Inoxidable",
+    "photo": "foto.png",
+    "category": "cocina",
+    "price": 2000,
+    "stock": 10
+  },
+  {
+    "id": "6547e86f707aea4fce3e7fae",
+    "title": "Lámpara de Escritorio LED",
+    "photo": "foto.png",
+    "category": "hogar",
+    "price": 800,
+    "stock": 25
+  },
+  {
+    "id": "2cfbce7e1223eac02770f549",
+    "title": "Set de Toallas de Baño",
+    "photo": "foto.png",
+    "category": "hogar",
+    "price": 1200,
+    "stock": 18
+  },
+  {
+    "id": "e50590cf31662e2a230b60f5",
+    "title": "Silla Ergonómica de Oficina",
+    "photo": "foto.png",
+    "category": "hogar",
+    "price": 1500,
+    "stock": 12
+  },
+  {
+    "id": "4a14811b53d937f154efd0df",
+    "title": "Juego de Tazas de Porcelana",
+    "photo": "foto.png",
+    "category": "cocina",
+    "price": 600,
+    "stock": 30
+  },
+  {
+    "id": "3f162fbffd7dce9ae6622357",
+    "title": "Cortinas Opacas para Ventanas",
+    "photo": "foto.png",
+    "category": "hogar",
+    "price": 1800,
+    "stock": 8
+  },
+  {
+    "id": "9427f824a95d5489d0868965",
+    "title": "Espejo de Cuerpo Entero",
+    "photo": "foto.png",
+    "category": "hogar",
+    "price": 1600,
+    "stock": 10
+  },
+  {
+    "id": "27c3718b82606076d2d02bee",
+    "title": "Set de Cubiertos de Acero Inoxidable",
+    "photo": "foto.png",
+    "category": "cocina",
+    "price": 1000,
+    "stock": 20
   }
 ]
