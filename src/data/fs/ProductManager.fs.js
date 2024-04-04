@@ -144,7 +144,7 @@ class ProductManager {
     try {
       let contant = await fs.promises.readFile(this.path, "utf-8");
       contant = JSON.parse(contant);
-      const delProduct = contant.find((product) => (product.id = id));
+      const delProduct = contant.find((product) => (product.id === id));
       if (!delProduct) {
         const error = new Error("not found!");
         error.statusCode = 404;
