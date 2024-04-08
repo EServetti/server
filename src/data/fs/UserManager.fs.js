@@ -73,14 +73,11 @@ class UserManager {
     }
   }
   //metodo para leer todos los usuarios
-  async read(role) {
+  async read() {
     try {
       let contant = await fs.promises.readFile(this.path, "utf-8");
       contant = JSON.parse(contant);
       if (contant.length !== 0) {
-        if (role) {
-          contant = contant.filter((each) => each.role === role);
-        }
         return contant;
       } else {
         const error = new Error("Not found!");

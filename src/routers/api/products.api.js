@@ -13,11 +13,27 @@ productsRouter.delete("/:nid", destroy);
 async function read(req, res, next) {
   try {
     const { category } = req.query;
-    const all = await productManager.read(category);
-    return res.json({
-      statusCode: 200,
-      message: all,
-    });
+    const all = await productManager.read();
+    const allCat = all.filter((product) => product.category === category)
+    //si existen productos con la category ingresada los devuelve
+    if (allCat.length !== 0 ) {
+      return res.json({
+        statusCode: 200,
+        message: allCat,
+      })}
+    //sino se ingreso una query devuelve todos los productos
+    else if (!category){
+      return res.json({
+        statusCode: 200,
+        message: all,
+      });
+    } 
+    //si no existe la query ingresada devuelve un error
+    else {
+      const error = new Error('Not found!')
+      error.statusCode = 404;
+      throw error;
+    }
   } catch (error) {
     return next(error)
   }
