@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import errorHandler from '../middlewares/errorHandler.mid.js'
 import apiRouter from './api/index.api.js';
-import usersRouter from './api/users.api.js';
+import viewsRouter from './views/index.views.js';
 
 const indexRouter = Router();
 
 indexRouter.use('/api', apiRouter);
+indexRouter.use("/", viewsRouter);
 
 export default indexRouter;

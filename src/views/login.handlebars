@@ -1,0 +1,25 @@
+<div class="main" style="padding-bottom: 300px; display: flex; justify-content:center; ">
+  <div class="registerBox" style="background-color: white; width: 400px; margin-top:100px; border:1px solid black; border-radius: 25px; padding:20px;">
+    <span style="display: flex; justify-content:center"><h3>Welcome to our store</h3></span>
+    <input
+      id="uid"
+      class="form-control form-control-lg"
+      type="text"
+      placeholder="User ID"
+      aria-label=".form-control-lg example"
+    />
+    <span style="display: flex; justify-content:center; margin-top:10px">
+    <button onclick="redirect()" style="border:1px solid black; border-radius:10px">Enviar</button>
+    </span>
+</div>
+<script>
+    function redirect() {
+        try {
+        let uid = document.getElementById("uid").value;
+        console.log(uid)
+        window.location.href = "/users/" + uid
+        } catch(error){
+            return(error)
+        }
+    }
+</script>
