@@ -1,6 +1,7 @@
 ## ProductManager
 Creado por Emilio Servetti.
 ## Función
+
 Programa para el manejo de productos y usuarios que cuentan con varias caracteristicas especificadas mas abajo, capaz de crear, actualizar, eliminar o leer uno o todos los productos y usuarios.
 Los datos son guardados en la memoria o en un archivo json segun el archivo que se ejecute.
 ## Como usarlo
@@ -119,3 +120,5 @@ Esto nos llevara a una ventana con todos los productos ordenados desde el ultimo
 Al entrar a esta ventana nos aparecera un campo de texto en el que deveremos ingresar el id del user que queramos ver (lo podemos encontrar en HOME), esto nos redireccionara a una ventana con los datos del usuario.
 ## Register
 Aqui cree una maqueta de una pagina de registro guiandome de diferentes paginas vistas, en este aparecen las opciones de crear un usuario ingresando email, name y password, o ingresar con tu cuenta de Google o Apple.
+y en el cuadro vacio al lado de la key agregamos el id del producto que queremos eliminar, de esta forma se eliminara.
+
