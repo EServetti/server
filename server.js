@@ -7,6 +7,7 @@ import { engine } from "express-handlebars"
 import __dirname from "./utils.js"
 import { createServer } from "http"
 import { Server } from "socket.io"
+import socketCb from "./src/routers/index.socket.js"
 
 //http server
 const server = express();
@@ -19,6 +20,8 @@ nodeServer.listen(port, ready)
 
 //tcp server
 const socketServer = new Server(nodeServer)
+socketServer.on("connection", socketCb)
+export { socketServer }
 
 //template engine (handlebars)
 server.engine("handlebars",engine())

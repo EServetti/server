@@ -1,13 +1,16 @@
 import { Router } from "express";
 import ProductManager from "../../data/fs/ProductManager.fs.js"
-import register from "./register.view.js";
-import login from "./login.views.js"
-import userData from "./userData.views.js"
+import users from "./users.views.js";
+import products from "./products.view.js"
 
 const viewsRouter = Router();
-viewsRouter.use(register)
-viewsRouter.use(login)
-viewsRouter.use(userData)
+//vistas usuarios
+viewsRouter.use("/users", users)
+//vistas de productos
+viewsRouter.use("/products", products)
+
+
+
 
 viewsRouter.get("/", async (req, res, next) => {
   try {

@@ -318,5 +318,13 @@
     "category": "electrodomésticos",
     "price": 2500,
     "stock": 10
+  },
+  {
+    "id": "738bb1c78987639ea1f561c2",
+    "title": "Silla Gamer",
+    "photo": "https://static.nb.com.ar/img/9fe6fa8819e665c19d832f6fd8b3170d.jpeg",
+    "category": "hogar",
+    "price": "1700",
+    "stock": "15"
   }
 ]
