@@ -1,7 +1,7 @@
 ## ProductManager
 Creado por Emilio Servetti.
 ## Función
-Programa para el manejo de productos que cuentan con varias caracteristicas especificadas mas abajo, capaz de crear, leer uno o todos los productos y eliminaro.
+Programa para el manejo de productos que cuentan con varias caracteristicas especificadas mas abajo, capaz de crear, actualizar, leer uno o todos los productos y eliminaro.
 Los datos son guardados en la memoria o en un archivo json segun el archivo que se ejecute.
 ## Como usarlo
 ### ProductManager.js (guardado en memoria)
