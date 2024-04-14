@@ -1,0 +1,13 @@
+<h1 style="color:white; border-bottom: 1px solid white; padding-bottom:10px; display:flex; justify-content:center">Product list</h1>
+<div class="mainCont" style="margin: 30px 0 0 0; display: flex; flex-wrap: wrap;">
+{{#each content}}
+  <div class="productCont" style="background-color:white; width:350px; padding: 0 10px 0 10px; margin: 10px 30px 10px 30px; border: 1px solid black;">
+    <img src={{this.photo}} class="productImage" style="width: 300px; height: 300px;">
+    <div class="productInfo" style="display: flex; justify-content:center;  flex-direction:column; align-items: center;  ">
+      <h5 style="margin-right: 5px;">{{this.title}}</h5>
+      <h5>${{this.price}}</h5>
+      <h6>id:{{this.id}}</h6>
+    </div>
+  </div>
+{{/each}}
+</div>
