@@ -122,7 +122,7 @@
   {
     "id": "a6d4d73bd3a257e3671df43d",
     "title": "Cafetera Express de Acero Inoxidable",
-    "photo": "https://example.com/cafetera.png",
+    "photo": "https://fravega.vteximg.com.br/arquivos/ids/1766402-1300-1300/012598_2.jpg?v=636602622683200000",
     "category": "cocina",
     "price": 2500,
     "stock": 8
@@ -316,7 +316,31 @@
     "title": "Máquina de Pan Automática",
     "photo": "https://elektra.vtexassets.com/arquivos/ids/2226998/10004453-d2.jpg?v=637257739281970000",
     "category": "electrodomésticos",
-    "price": 2200,
+    "price": 2500,
     "stock": 10
+  },
+  {
+    "id": "738bb1c78987639ea1f561c2",
+    "title": "Silla Gamer",
+    "photo": "https://static.nb.com.ar/img/9fe6fa8819e665c19d832f6fd8b3170d.jpeg",
+    "category": "hogar",
+    "price": "1700",
+    "stock": "15"
+  },
+  {
+    "id": "4a07ec10020cd6d5b18802b8",
+    "title": "Mesa de luz moderna",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.TzVB0kPpYxCkfAncbjDD4QHaHa&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": "700",
+    "stock": "4"
+  },
+  {
+    "id": "6b97d112ef5c0459b92fa1d9",
+    "title": "Lampara colgante moderna",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.aockeyCGck5N8YR2iFquuAHaHa&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": "800",
+    "stock": "20"
   }
 ]

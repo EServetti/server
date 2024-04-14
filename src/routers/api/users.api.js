@@ -1,28 +1,28 @@
 import { Router } from "express";
-import productManager from "../../data/fs/ProductManager.fs.js";
+import UserManager from "../../data/fs/UserManager.fs.js";
 
-const productsRouter = Router();
+const usersRouter = Router();
 
-productsRouter.get("/", read);
-productsRouter.get("/:nid", readOne);
-productsRouter.post("/", create);
-productsRouter.put("/:nid", update);
-productsRouter.delete("/:nid", destroy);
+usersRouter.get("/", read);
+usersRouter.get("/:nid", readOne);
+usersRouter.post("/", create);
+usersRouter.put("/:nid", update);
+usersRouter.delete("/:nid", destroy);
 
 //metodo read
 async function read(req, res, next) {
   try {
-    const { category } = req.query;
-    const all = await productManager.read();
-    const allCat = all.filter((product) => product.category === category)
-    //si existen productos con la category ingresada los devuelve
-    if (allCat.length !== 0 ) {
+    const { role } = req.query;
+    const all = await UserManager.read();
+    const allRole = all.filter((user) => user.role === role)
+    //si existen usuarios con la category ingresada los devuelve
+    if (allRole.length !== 0 ) {
       return res.json({
         statusCode: 200,
-        message: allCat,
+        message: allRole,
       })}
-    //sino se ingreso una query devuelve todos los productos
-    else if (!category){
+    //sino se ingreso una query devuelve todos los usuarios
+    else if (!role){
       return res.json({
         statusCode: 200,
         message: all,
@@ -42,7 +42,7 @@ async function read(req, res, next) {
 async function readOne(req, res, next) {
   try {
     const { nid } = req.params;
-    const one = await productManager.readOne(nid);
+    const one = await UserManager.readOne(nid);
     return res.json({
       statusCode: 200,
       message: one,
@@ -55,10 +55,10 @@ async function readOne(req, res, next) {
 async function create(req, res, next) {
   try {
     const data = req.body;
-    const created = await productManager.create(data);
+    const created = await UserManager.create(data);
     return res.json({
       statusCode: 201,
-      message: `Created product id = ${created.id}`,
+      message: `Created user id = ${created.id}`,
     });
   } catch (error) {
     return next(error)
@@ -69,7 +69,7 @@ async function update(req, res, next) {
 try {
   const { nid } = req.params;
   const data = req.body;
-  const updated = await productManager.update(nid, data);
+  const updated = await UserManager.update(nid, data);
   return res.json({
     statusCode: 200,
     message: updated
@@ -82,13 +82,13 @@ try {
 async function destroy (req, res, next) {
   try {
     const { nid } = req.params;
-    const eliminated = await productManager.destroy(nid)
+    const eliminated = await UserManager.destroy(nid)
     return res.json({
       statusCode: 200,
-      message: `Eliminated product id: ${eliminated.id}`
+      message: `Eliminated user id: ${eliminated.id}`
     })
   } catch (error) {
     return next(error)
   }  
 }
-export default productsRouter;
+export default usersRouter;

@@ -1,0 +1,92 @@
+<div class="main">
+  <h1 style="color:white; border-bottom: 1px solid white; padding-bottom:10px; display:flex; justify-content:center">Our products</h1>
+  <div class="formCont">
+    <h3 style="color:white; display:flex; justify-content:center">Create a new
+      product</h3>
+    <form
+      class="form"
+      style="display: flex; justify-content:center; flex-direction: column; align-items:center "
+    >
+      <input
+        class="title"
+        type="text"
+        name="title"
+        id="title"
+        placeholder="Name of the product "
+        style="width: 300px;"
+      />
+      <input
+        class="photo"
+        type="text"
+        name="photo"
+        id="photo"
+        placeholder="Url of the photo (optional)"
+        style="width: 300px;"
+      />
+      <input
+        class="category"
+        type="text"
+        name="category"
+        id="category"
+        placeholder="Category of the product (optional)"
+        style="width: 300px;"
+      />
+      <input
+        class="price"
+        type="number"
+        name="price"
+        id="price"
+        placeholder="Price of the product (optional)"
+        style="width: 300px;"
+      />
+      <input
+        class="stock"
+        type="number"
+        name="stock"
+        id="stock"
+        placeholder="Stock of the product (optional)"
+        style="width: 300px;"
+      />
+      <input
+        class="create"
+        type="button"
+        name="create"
+        id="create"
+        value="Create"
+        style="align-self: center; margin-top:5px"
+      />
+    </form>
+  </div>
+  <div
+    class="mainCont"
+    id="product"
+    style="margin: 30px 0 0 0; display: flex; flex-wrap: wrap; "
+  >
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+const socket = io(); 
+  //recibe los products y los agrega al div con id: product, con un formato estilizado
+  socket.on("products", data => { const content =
+  data.map(each => ` <div class="productCont" style="background-color:white;
+  width:350px; padding: 0 10px 0 10px; margin: 10px 30px 10px 30px; border: 1px
+  solid black;"> <img src="${each.photo}" class="productImage" style="width:
+  300px; height: 300px;"> <div class="productInfo" style="display: flex;
+  justify-content:center; flex-direction:column; align-items: center;"> <h5 style="margin-right: 5px;">${each.title}</h5>
+  <h5>${each.price}</h5><h6>id:${each.id}</h6></div> </div>`).reverse().join("");
+  document.querySelector("#product").innerHTML = content; });
+//envia los datos del producto
+  document.querySelector("#create").addEventListener("click", (event) => {
+    const title = document.querySelector("#title").value
+    const photo = document.querySelector("#photo").value
+    const category = document.querySelector("#category").value
+    const price = document.querySelector("#price").value
+    const stock = document.querySelector("#stock").value
+    socket.emit("product", {title, photo, category, price, stock})
+  })
+</script>
+
+
+  

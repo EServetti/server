@@ -5,13 +5,7 @@ class ProductManager {
   create(data) {
     try {
       // Verificar si no se ingreso alguna propiedad
-      if (
-        !data.title ||
-        !data.photo ||
-        !data.category ||
-        !data.price ||
-        !data.stock
-      ) {
+      if (!data.title) {
         console.log("¡Missing data!");
         return;
       }
@@ -86,6 +80,10 @@ class ProductManager {
       const delOne = ProductManager.#products.filter(
         (product) => product.id === data
       );
+      const filtered = ProductManager.#products.filter(
+        (product) => product.id !== data
+      );
+      ProductManager.#products = filtered;
       console.log(`The product has been eliminated`);
     } catch (error) {
       console.log(error);

@@ -74,14 +74,11 @@ class ProductManager {
     }
   }
   //metodo para leer todos los productos
-  async read(cat) {
+  async read() {
     try {
       let contant = await fs.promises.readFile(this.path, "utf-8");
       contant = JSON.parse(contant);
       if (contant.length !== 0) {
-        if (cat) {
-          contant = contant.filter((each) => each.category === cat);
-        }
         return contant;
       } else {
         const error = new Error("Not found!");

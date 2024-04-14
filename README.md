@@ -1,7 +1,8 @@
 ## ProductManager
 Creado por Emilio Servetti.
 ## Función
-Programa para el manejo de productos que cuentan con varias caracteristicas especificadas mas abajo, capaz de crear, actualizar, leer uno o todos los productos y eliminaro.
+
+Programa para el manejo de productos y usuarios que cuentan con varias caracteristicas especificadas mas abajo, capaz de crear, actualizar, eliminar o leer uno o todos los productos y usuarios.
 Los datos son guardados en la memoria o en un archivo json segun el archivo que se ejecute.
 ## Como usarlo
 ### ProductManager.js (guardado en memoria)
@@ -107,3 +108,17 @@ Por ultimo arriba ponemos DELETE y como cuando leimos un producto:
 http/:localhost:8080/api/products/:nid
 ```
 y en el cuadro vacio al lado de la key agregamos el id del producto que queremos eliminar, de esta forma se eliminara.
+## Manejo de página con vistas
+Ahora el manejo sera de manera mas simple y visual desde una pagina, para visitarla igual que con las anteriores formas de manejo debemos iniciar el server con:
+```
+npm start
+```
+Una ves iniciado el servidor lo podemos visitar escribiendo localhost:8080 en nuestro buscador, esto nos llevara a la pagina proncial, arriba tendremos una barra de busqueda con las siguientes opciones: Home (donde estamos), Our Products, Log In y Register, aqui como usarlos:
+## Our Products
+Esto nos llevara a una ventana con todos los productos ordenados desde el ultimo en ser creado hasta el primero, arriba de ellos tendremos un formulario, si ingresamos los datos que nos pide (de los cuales solo el title es obligatorio) crearemos un nuevo product y este aparecera en tiempo real.
+## Log In 
+Al entrar a esta ventana nos aparecera un campo de texto en el que deveremos ingresar el id del user que queramos ver (lo podemos encontrar en HOME), esto nos redireccionara a una ventana con los datos del usuario.
+## Register
+Aqui cree una maqueta de una pagina de registro guiandome de diferentes paginas vistas, en este aparecen las opciones de crear un usuario ingresando email, name y password, o ingresar con tu cuenta de Google o Apple.
+y en el cuadro vacio al lado de la key agregamos el id del producto que queremos eliminar, de esta forma se eliminara.
+
