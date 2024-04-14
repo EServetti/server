@@ -334,5 +334,13 @@
     "category": "hogar",
     "price": "700",
     "stock": "4"
+  },
+  {
+    "id": "6b97d112ef5c0459b92fa1d9",
+    "title": "Lampara colgante moderna",
+    "photo": "https://tse4.mm.bing.net/th?id=OIP.aockeyCGck5N8YR2iFquuAHaHa&pid=Api&P=0&h=180",
+    "category": "hogar",
+    "price": "800",
+    "stock": "20"
   }
 ]
