@@ -31,6 +31,7 @@ server.set('views', __dirname + '/src/views')
 //middlewares
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }))
+server.use(express.static("public"))
 
 //endpoints
 server.use('/', indexRouter)

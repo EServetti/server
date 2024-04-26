@@ -1,11 +1,16 @@
 import { Router } from "express";
 import productManager from "../../data/fs/ProductManager.fs.js";
+import isPhoto from "../../middlewares/isPhoto.js"
+import uploader from "../../middlewares/multer.mid.js";
+import exist from "../../middlewares/productExist.js";
+
+
 
 const productsRouter = Router();
 
 productsRouter.get("/", read);
 productsRouter.get("/:nid", readOne);
-productsRouter.post("/", create);
+productsRouter.post("/",uploader.single("photo"),exist,isPhoto, create,);
 productsRouter.put("/:nid", update);
 productsRouter.delete("/:nid", destroy);
 

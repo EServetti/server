@@ -7,20 +7,20 @@
       class="form"
       style="display: flex; justify-content:center; flex-direction: column; align-items:center "
     >
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+      <div class="form-group">
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="photo" accept="image/*">
+        <label class="custom-file-label" for="photo"  style="width: 300px; margin-left: 20px;">Choose a photo</label>
+      </div>
+      </div>
       <input
         class="title"
         type="text"
         name="title"
         id="title"
         placeholder="Name of the product "
-        style="width: 300px;"
-      />
-      <input
-        class="photo"
-        type="text"
-        name="photo"
-        id="photo"
-        placeholder="Url of the photo (optional)"
         style="width: 300px;"
       />
       <input
@@ -64,7 +64,19 @@
   >
   </div>
 </div>
-
+<script>
+  //actualiza el input del archivo con el nombre del mismo
+  document.getElementById('photo').addEventListener('change', function (e) {
+        var fileName = e.target.files[0].name;
+        var nextSibling = e.target.nextElementSibling;
+        
+      //En el caso de que el nombre del archivo sea demasiado largo lo limita a 17 caracteres
+       if (fileName.length > 20) {
+            fileName = fileName.slice(0, 17) + '...'; 
+        }
+      nextSibling.innerText = fileName;
+   });
+</script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
 const socket = io(); 
