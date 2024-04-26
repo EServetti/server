@@ -12,7 +12,7 @@ viewsRouter.use("/products", products)
 
 
 
-viewsRouter.get("/", async (req, res, next) => {
+viewsRouter.get("/landingpage", async (req, res, next) => {
   try {
     const all = await ProductManager.read();
     return res.render("index", { title: "HOME", content: all  });

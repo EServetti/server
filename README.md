@@ -26,7 +26,7 @@ console.log(producto.readOne(1));
 //metodo para eliminar uno segun su id(en este caso 4)
 producto.destroy(4);
 ```
-### ProductManager.fs.gs (guardado en archivos)
+### ProductManager.fs.js (guardado en archivos)
 ```
 //usarlo dentro de una funcion asincronica para evitar problemas
 async function test() {
