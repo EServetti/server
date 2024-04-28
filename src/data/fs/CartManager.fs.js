@@ -144,7 +144,7 @@ class CartManager {
     return maxId + 1;
   }
 }
-
+/*
 async function test()  {
   const cart = new CartManager();
   //creo un carrito
@@ -161,6 +161,7 @@ async function test()  {
   //await cart.destroy(1);
 }
 test();
+*/
 
 const cartManager = new CartManager();
 export default cartManager;

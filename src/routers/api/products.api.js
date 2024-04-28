@@ -1,9 +1,9 @@
 import { Router } from "express";
-import productManager from "../../data/fs/ProductManager.fs.js";
+//import productManager from "../../data/fs/ProductManager.fs.js";
 import isPhoto from "../../middlewares/isPhoto.js"
 import uploader from "../../middlewares/multer.mid.js";
 import exist from "../../middlewares/productExist.js";
-
+import productManager from "../../data/mongo/managers/ProductManager.db.js";
 
 
 const productsRouter = Router();
