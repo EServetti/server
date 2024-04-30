@@ -1,5 +1,6 @@
 import { Router } from "express";
-import ProductManager from "../../data/fs/ProductManager.fs.js"
+//import ProductManager from "../../data/fs/ProductManager.fs.js"
+import productManager from "../../data/mongo/managers/ProductManager.db.js";
 import users from "./users.views.js";
 import products from "./products.view.js"
 
@@ -12,9 +13,10 @@ viewsRouter.use("/products", products)
 
 
 
-viewsRouter.get("/landingpage", async (req, res, next) => {
+viewsRouter.get("/", async (req, res, next) => {
   try {
-    const all = await ProductManager.read();
+    const all = await productManager.read();
+    //pasar a objetos plano para poder renderizar
     return res.render("index", { title: "HOME", content: all  });
   } catch (error) {
     return next(error);

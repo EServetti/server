@@ -7,7 +7,7 @@ const collection =  "products"
 
 const schema = new Schema ({
   title: {type: String, required: true, unique: true, index: true},
-  photo: {type: String, default: "../../../../public/img/defaultProduct.png"},
+  photo: {type: String, default: "/img/defaultProduct.png"},
   category: {type : String, default : "product", index: true},
   price: {type: Number, default: 1},
   stock: { type: Number, default: 1}

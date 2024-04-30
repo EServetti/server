@@ -1,12 +1,14 @@
 import { Router } from "express";
 //import userManager from "../../data/fs/UserManager.fs.js";
-import userManager from "../../data/mongo/managers/UserManager.db.js"
+import UserManager from "../../data/mongo/managers/UserManager.db.js"
+import exist from "../../middlewares/userExist.js";
 
 const usersRouter = Router();
 
+
 usersRouter.get("/", read);
 usersRouter.get("/:nid", readOne);
-usersRouter.post("/", create);
+usersRouter.post("/", exist, create);
 usersRouter.put("/:nid", update);
 usersRouter.delete("/:nid", destroy);
 
@@ -14,8 +16,9 @@ usersRouter.delete("/:nid", destroy);
 async function read(req, res, next) {
   try {
     const { role } = req.query;
+    console.log("the role is " +role);
     const all = await UserManager.read();
-    const allRole = all.filter((user) => user.role === role)
+    const allRole = all.filter((user) => user.role == role)
     //si existen usuarios con la category ingresada los devuelve
     if (allRole.length !== 0 ) {
       return res.json({

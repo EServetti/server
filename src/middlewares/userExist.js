@@ -1,9 +1,9 @@
-import productManager from "../data/mongo/managers/ProductManager.db.js";
+import userManager from "../data/mongo/managers/UserManager.db.js";
 async function exist (req, res, next) {
 try { 
-    const { title } = req.body;
-    const all = await productManager.read();
-    const exist = all.some((product) => product.title === title);
+    const { email } = req.body;
+    const all = await userManager.read();
+    const exist = all.some((user) => user.email === email);
     console.log(req.body);
     //console.log(all);
     /*all.some((product)=> {
@@ -15,7 +15,7 @@ try {
     if (exist) {
         res.status(400).json({
             statusCode: 400,
-            message: "The product has already been created",
+            message: "The user has already been created",
         })
     } else {
         next()

@@ -16,4 +16,5 @@ const schema = new Schema ({
 });
 
 const Cart = model(collection, schema);
+
 export default Cart;

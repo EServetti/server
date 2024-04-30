@@ -5,13 +5,14 @@ class Manager {
   async create(data) {
     try {
       const one = await this.Model.create(data);
+      return one
     } catch (error) {
       throw error;
     }
   }
   async read() {
     try {
-      const all = this.Model.find();
+      const all = await this.Model.find().lean();
       return all;
     } catch (error) {
       throw error;
@@ -19,7 +20,7 @@ class Manager {
   }
   async readOne(id) {
     try {
-      const one = await this.Model.findOne({ _id: id });
+      const one = await this.Model.findOne({ _id: id }).lean();
       return one;
     } catch (error) {
       throw error;
@@ -27,7 +28,7 @@ class Manager {
   }
   async update (id, data) {
     try {
-      const one = await this.Model.findByIdAndUpdate(id, data, {new:true});
+      const one = await this.Model.findByIdAndUpdate(id, data, {new:true}).lean();
       return one
     } catch (error) {
       throw error
@@ -35,7 +36,7 @@ class Manager {
   }
   async destroy(id) {
     try {
-      const one = this.Model.findByIdAndDelete(id);
+      const one = this.Model.findByIdAndDelete(id).lean();
       return one;
     } catch (error) {
       throw error;

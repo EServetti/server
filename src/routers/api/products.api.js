@@ -19,7 +19,7 @@ async function read(req, res, next) {
   try {
     const { category } = req.query;
     const all = await productManager.read();
-    const allCat = all.filter((product) => product.category === category)
+    const allCat = all.filter((product) => product.category == category)
     //si existen productos con la category ingresada los devuelve
     if (allCat.length !== 0 ) {
       return res.json({

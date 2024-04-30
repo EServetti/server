@@ -11,9 +11,10 @@ import { Server } from "socket.io"
 import socketCb from "./src/routers/index.socket.js"
 import dbConnect from './src/utils/DbConnection.js';
 
+
 //http server
 const server = express();
-const port = 8080;
+const port = process.env.PORT
 const ready = async () => {
     console.log(`Server listening on port ${port}`);
     await dbConnect();
@@ -38,6 +39,6 @@ server.use(express.static("public"))
 
 //endpoints
 server.use('/', indexRouter)
-server.use(morgan('combined'));
+server.use(morgan('dev'));
 server.use(errorHandler);
 server.use(pathHandler)
