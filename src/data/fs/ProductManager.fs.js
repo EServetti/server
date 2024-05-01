@@ -56,18 +56,11 @@ class ProductManager {
         };
         let contant = await fs.promises.readFile(this.path, "utf-8");
         contant = JSON.parse(contant);
-        //Reviso que el producto no este creado y lo pusheo a contant
-        if (!contant.some((product) => product.title === data.title)) {
-          contant.push(product);
-          console.log("Product created");
-          contant = JSON.stringify(contant, null, 2);
+        contant.push(product);
+        console.log("Product created");
+        contant = JSON.stringify(contant, null, 2);
         await fs.promises.writeFile(this.path, contant);
         return product;
-        } else {
-          const error = new Error('The product has already been created!');
-          error.statusCode = 409;
-          throw error;
-        }
       }
     } catch (error) {
       throw error;
@@ -141,7 +134,7 @@ class ProductManager {
     try {
       let contant = await fs.promises.readFile(this.path, "utf-8");
       contant = JSON.parse(contant);
-      const delProduct = contant.find((product) => (product.id === id));
+      const delProduct = contant.find((product) => product.id === id);
       if (!delProduct) {
         const error = new Error("not found!");
         error.statusCode = 404;

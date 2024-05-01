@@ -1,26 +1,29 @@
 <div class="main">
   <h1 style="color:white; border-bottom: 1px solid white; padding-bottom:10px; display:flex; justify-content:center">Our products</h1>
   <div class="formCont">
-    <h3 style="color:white; display:flex; justify-content:center">Create a new
-      product</h3>
+    <h3 style="color:white; display:flex; justify-content:center">Add a product</h3>
     <form
       class="form"
       style="display: flex; justify-content:center; flex-direction: column; align-items:center "
+      id="productForm"
     >
+      <input 
+      type="file" 
+      class="text" 
+      id="photo" 
+      style="width: 300px; display:none" >
+      <label for="photo" style="width:300px;
+      background-color:white;
+      display:flex;justify-content:center;
+      margin: 0 0 5px 0;
+      cursor:pointer;"
+      >Insert immage of the product</label>
       <input
         class="title"
         type="text"
         name="title"
         id="title"
         placeholder="Name of the product "
-        style="width: 300px;"
-      />
-      <input
-        class="photo"
-        type="text"
-        name="photo"
-        id="photo"
-        placeholder="Url of the photo (optional)"
         style="width: 300px;"
       />
       <input
@@ -49,43 +52,133 @@
       />
       <input
         class="create"
-        type="button"
+        type="submit"
         name="create"
         id="create"
         value="Create"
-        style="align-self: center; margin-top:5px"
+        style="align-self: center; margin-top:5px; cursor:pointer;  padding: 10px 20px;  border-radius: 5px;  border: none; "
       />
     </form>
   </div>
   <div
     class="mainCont"
     id="product"
-    style="margin: 30px 0 0 0; display: flex; flex-wrap: wrap; "
+    style="margin: 30px 0 0 0; display: flex; flex-wrap: wrap; justify-content:center "
   >
   </div>
 </div>
-
+<script>
+  //actualiza el input del archivo con el nombre del mismo
+  document.getElementById('photo').addEventListener('change', function (e) {
+        let fileName = e.target.files[0].name;
+        let nextSibling = e.target.nextElementSibling;
+        
+      //En el caso de que el nombre del archivo sea demasiado largo lo limita a 17 caracteres
+       if (fileName.length > 20) {
+            fileName = fileName.slice(0, 17) + '...'; 
+        }
+      nextSibling.innerText = fileName;
+   });
+</script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
+ 
 const socket = io(); 
+
   //recibe los products y los agrega al div con id: product, con un formato estilizado
   socket.on("products", data => { const content =
-  data.map(each => ` <div class="productCont" style="background-color:white;
+  data.map(each => ` 
+  <div class="productCont" style="background-color:white;
   width:350px; padding: 0 10px 0 10px; margin: 10px 30px 10px 30px; border: 1px
-  solid black;"> <img src="${each.photo}" class="productImage" style="width:
-  300px; height: 300px;"> <div class="productInfo" style="display: flex;
-  justify-content:center; flex-direction:column; align-items: center;"> <h5 style="margin-right: 5px;">${each.title}</h5>
-  <h5>${each.price}</h5><h6>id:${each.id}</h6></div> </div>`).reverse().join("");
-  document.querySelector("#product").innerHTML = content; });
+  solid black;"> 
+  <img src="${each.photo}" class="productImage" style="width:
+  300px; height: 300px;"> 
+  <div class="productInfo" style="display: flex;
+  justify-content:center; flex-direction:column; align-items: center;"> 
+  <h5 style="margin-right: 5px;">${each.title}</h5>
+  <h5>$${each.price}</h5><h6>id:${each._id}</h6>
+  </div> 
+  </div>`).reverse().join("");
+  document.querySelector("#product").innerHTML = content; 
+  });
 //envia los datos del producto
-  document.querySelector("#create").addEventListener("click", (event) => {
-    const title = document.querySelector("#title").value
-    const photo = document.querySelector("#photo").value
-    const category = document.querySelector("#category").value
-    const price = document.querySelector("#price").value
-    const stock = document.querySelector("#stock").value
-    socket.emit("product", {title, photo, category, price, stock})
-  })
+
+document.querySelector("#productForm").addEventListener("submit", async (event) => {
+    event.preventDefault(); 
+    console.log("listen")
+
+    const title = document.querySelector("#title").value;
+    let photo = document.querySelector("#photo").value
+    //si no se ingreso el title no deja enviar el producto
+    if (!title.trim()) {
+        alert("Insert the title of the product")
+    }
+    //si no se ingreso la photo se maneja el socket por acá
+    else if(!photo.trim()) {
+      photo = "/img/defaultProduct.png";
+
+    let category = document.querySelector("#category").value;
+    let price = document.querySelector("#price").value;
+    let stock = document.querySelector("#stock").value;
+        // Manejo valores por defecto desde aquí porque si no se pasan como arrays vacíos
+        if (!category) {
+            category = "product";
+        }
+        if (!price) {
+            price = 1;
+        }
+        if (!stock) {
+            stock = 1
+        }
+      
+      socket.emit("product", {
+            title,
+            photo,
+            category,
+            price,
+            stock
+        });
+    } else {
+      
+    const photoInput = document.querySelector("#photo");
+    const photoFile = photoInput.files[0];
+    
+
+    //toma el file y lo pasa a traves de photo como dato de base64
+    const reader = new FileReader();
+    reader.readAsDataURL(photoFile);
+    reader.onloadend = function () {
+        const photoBase64 = reader.result;
+    
+    let category = document.querySelector("#category").value;
+    let price = document.querySelector("#price").value;
+    let stock = document.querySelector("#stock").value;
+        // Manejo valores por defecto desde aquí porque si no se pasan como arrays vacíos
+        if (!category) {
+            category = "product";
+        }
+        if (!price) {
+            price = 1;
+        }
+        if (!stock) {
+            stock = 1
+        }
+        socket.emit("product", {
+            title,
+            photo: photoBase64,
+            category,
+            price,
+            stock
+        });
+    }
+    }
+});
+  //alerta por si el producto ya esta creado
+  socket.on("alert", (message) => {
+  alert(message);
+});
+
+  
 </script>
 
 

@@ -26,7 +26,7 @@ console.log(producto.readOne(1));
 //metodo para eliminar uno segun su id(en este caso 4)
 producto.destroy(4);
 ```
-### ProductManager.fs.gs (guardado en archivos)
+### ProductManager.fs.js (guardado en archivos)
 ```
 //usarlo dentro de una funcion asincronica para evitar problemas
 async function test() {
@@ -113,7 +113,7 @@ Ahora el manejo sera de manera mas simple y visual desde una pagina, para visita
 ```
 npm start
 ```
-Una ves iniciado el servidor lo podemos visitar escribiendo localhost:8080 en nuestro buscador, esto nos llevara a la pagina proncial, arriba tendremos una barra de busqueda con las siguientes opciones: Home (donde estamos), Our Products, Log In y Register, aqui como usarlos:
+Una ves iniciado el servidor lo podemos visitar escribiendo localhost:8080 en nuestro buscador, esto nos llevara a la pagina proncial, aqui podremos ver todos los productos y en ellos tenemos un boton que nos lleva a  localhost:8080/products/:pid en donde podremos ver los datos del producto y tendremos el boton para agregar al carrito (actualmente sin uso), arriba tendremos una barra de busqueda con las siguientes opciones: Home (donde estamos), Our Products, Log In y Register, aqui como usarlos:
 ## Our Products
 Esto nos llevara a una ventana con todos los productos ordenados desde el ultimo en ser creado hasta el primero, arriba de ellos tendremos un formulario, si ingresamos los datos que nos pide (de los cuales solo el title es obligatorio) crearemos un nuevo product y este aparecera en tiempo real.
 ## Log In 

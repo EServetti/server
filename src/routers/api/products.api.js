@@ -1,11 +1,16 @@
 import { Router } from "express";
-import productManager from "../../data/fs/ProductManager.fs.js";
+//import productManager from "../../data/fs/ProductManager.fs.js";
+import isPhoto from "../../middlewares/isPhoto.js"
+import uploader from "../../middlewares/multer.mid.js";
+import exist from "../../middlewares/productExist.js";
+import productManager from "../../data/mongo/managers/ProductManager.db.js";
+
 
 const productsRouter = Router();
 
 productsRouter.get("/", read);
 productsRouter.get("/:nid", readOne);
-productsRouter.post("/", create);
+productsRouter.post("/",uploader.single("photo"),exist,isPhoto, create,);
 productsRouter.put("/:nid", update);
 productsRouter.delete("/:nid", destroy);
 
@@ -14,7 +19,7 @@ async function read(req, res, next) {
   try {
     const { category } = req.query;
     const all = await productManager.read();
-    const allCat = all.filter((product) => product.category === category)
+    const allCat = all.filter((product) => product.category == category)
     //si existen productos con la category ingresada los devuelve
     if (allCat.length !== 0 ) {
       return res.json({
