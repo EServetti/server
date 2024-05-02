@@ -23,8 +23,10 @@ users.get("/login", async (req, res, next) => {
 users.get("/:uid", async (req, res, next) => {
   try {
     const { uid } = req.params;
+    console.log("The uid is" + uid);
     const user = await userManager.readOne(uid);
     //pasar a un objeto plano para poder renderizar
+    console.log("The user is "+ user);
     res.render("userData", { title: "USER DATA", content: user });
   } catch (error) {
     return next(error);

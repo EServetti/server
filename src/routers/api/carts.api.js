@@ -16,11 +16,28 @@ cartsRouter.delete("/:nid", destroy);
 //metodo read
 async function read(req, res, next) {
   try {
+    const { user } = req.query
     const all = await CartManager.read();
-    return res.json({
+    const allUser = all.filter((cart) => cart.user_id == user)
+    //si existen productos con la category ingresada los devuelve
+    if (allUser.length !== 0 ) {
+      return res.json({
+        statusCode: 200,
+        message: allUser,
+      })}
+    //sino se ingreso una query devuelve todos los productos
+    else if (!user){
+      return res.json({
         statusCode: 200,
         message: all,
       });
+    } 
+    //si no existe la query ingresada devuelve un error
+    else {
+      const error = new Error('Not found!')
+      error.statusCode = 404;
+      throw error;
+    }
   } catch (error) {
     return next(error)
   }
