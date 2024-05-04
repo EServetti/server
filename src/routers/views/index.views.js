@@ -3,12 +3,15 @@ import { Router } from "express";
 import productManager from "../../data/mongo/managers/ProductManager.db.js";
 import users from "./users.views.js";
 import products from "./products.view.js"
+import carts from "./cart.view.js"
 
 const viewsRouter = Router();
 //vistas usuarios
 viewsRouter.use("/users", users)
 //vistas de productos
 viewsRouter.use("/products", products)
+//vista de carrito
+viewsRouter.use("/carts", carts)
 
 
 
