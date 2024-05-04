@@ -39,7 +39,7 @@ export default async (socket) => {
     }
   });
 
-  //socket para cart
+//socket para cart
   socket.emit("here", "connected")
   socket.on("uid", async (uid) => {
   
@@ -118,5 +118,19 @@ socket.on("cancel", async info => {
     socket.emit("cart", allCarts)
     socket.emit("completed")
   })
-  
+
+  //socket para agregar un producto al carrito
+  const message = "I'm here"
+  socket.emit("here", message)
+  socket.on("addProd", async info => {
+    const data = {
+      user_id: info.uid,
+      product_id: info.pid,
+      quantity: 1
+    }
+    await CartManager.create(data)
+    const alertMessage = "The product was added to your cart"
+    socket.emit("addAlert", alertMessage)
+  })
+ 
 };
