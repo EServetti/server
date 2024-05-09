@@ -1,13 +1,13 @@
 import { Router } from "express";
-//import userManager from "../../data/fs/UserManager.fs.js";
-import UserManager from "../../data/mongo/managers/CartManager.db.js"
 import exist from "../../middlewares/userExist.js";
 import CartManager from "../../data/mongo/managers/CartManager.db.js";
+
 
 const cartsRouter = Router();
 
 
 cartsRouter.get("/", read);
+cartsRouter.get("/paginate", paginate);
 cartsRouter.get("/:nid", readOne);
 cartsRouter.post("/", exist, create);
 cartsRouter.put("/:nid", update);
@@ -16,11 +16,53 @@ cartsRouter.delete("/:nid", destroy);
 //metodo read
 async function read(req, res, next) {
   try {
+    const { user } = req.query
     const all = await CartManager.read();
-    return res.json({
+    const allUser = all.filter((cart) => cart.user_id._id == user)
+    //si existen carritos con el user_id ingresado los devuelve
+    if (allUser.length !== 0 ) {
+      return res.json({
+        statusCode: 200,
+        message: allUser,
+      })}
+    //sino se ingreso una query devuelve todos los carritos
+    else if (!user){
+      return res.json({
         statusCode: 200,
         message: all,
       });
+    } 
+    //si no existe un carrito con ese user_id devuelve todos
+    else {
+      const error = new Error('Not found!')
+      error.statusCode = 404;
+      throw error;
+    }
+  } catch (error) {
+    return next(error)
+  }
+}
+//metodo paginate
+async function paginate (req, res, next) {
+  try {
+    const { user } = req.query;
+    const filter = {}
+    const opts = {}
+    if(user) {
+      filter.user_id= user
+    }
+    const all = await CartManager.paginate(filter, opts)
+    const info = {
+      page: all.page,
+      prevPage: all.prevPage,
+      nextPage: all.nextPage,
+      totalPages: all.totalPages
+    }
+    res.json({
+      statusCode: 200,
+      message: all.docs,
+      info: info
+    })
   } catch (error) {
     return next(error)
   }

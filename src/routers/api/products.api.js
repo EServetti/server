@@ -9,6 +9,7 @@ import productManager from "../../data/mongo/managers/ProductManager.db.js";
 const productsRouter = Router();
 
 productsRouter.get("/", read);
+productsRouter.get('/paginate', paginate)
 productsRouter.get("/:nid", readOne);
 productsRouter.post("/",uploader.single("photo"),exist,isPhoto, create,);
 productsRouter.put("/:nid", update);
@@ -39,6 +40,32 @@ async function read(req, res, next) {
       error.statusCode = 404;
       throw error;
     }
+  } catch (error) {
+    return next(error)
+  }
+}
+async function paginate(req, res, next) {
+  try {
+  const filter = {}
+  const opts = {}
+  if(req.query.limit) {
+      opts.limit = req.query.limit;
+  }
+  if(req.query.page) {
+    opts.page = req.query.page
+  }
+  const all = await productManager.paginate(filter, opts)
+  return res.json({
+    statusCode: 200,
+    message: all.docs,
+    info: {
+      page: all.page,
+      totalPages: all.totalPages,
+      prevPage: all.prevPage,
+      nextPage: all.nextPage,
+      maxPage: all.limit
+    }
+  })
   } catch (error) {
     return next(error)
   }

@@ -113,7 +113,7 @@ Ahora el manejo sera de manera mas simple y visual desde una pagina, para visita
 ```
 npm start
 ```
-Una ves iniciado el servidor lo podemos visitar escribiendo localhost:8080 en nuestro buscador, esto nos llevara a la pagina proncial, aqui podremos ver todos los productos y en ellos tenemos un boton que nos lleva a  localhost:8080/products/:pid en donde podremos ver los datos del producto y tendremos el boton para agregar al carrito (actualmente sin uso), arriba tendremos una barra de busqueda con las siguientes opciones: Home (donde estamos), Our Products, Log In y Register, aqui como usarlos:
+Una ves iniciado el servidor lo podemos visitar escribiendo localhost:8080 en nuestro buscador, esto nos llevara a la pagina proncial, aqui podremos ver todos los productos y en ellos tenemos un boton que nos lleva a  localhost:8080/products/:pid en donde podremos ver los datos del producto y tendremos el boton para agregar al carrito (actualmente nos pedira el id del user para agragarlo a su carrito), arriba tendremos una barra de busqueda con las siguientes opciones: Home (donde estamos), Our Products, Log In y Register, aqui como usarlos:
 ## Our Products
 Esto nos llevara a una ventana con todos los productos ordenados desde el ultimo en ser creado hasta el primero, arriba de ellos tendremos un formulario, si ingresamos los datos que nos pide (de los cuales solo el title es obligatorio) crearemos un nuevo product y este aparecera en tiempo real.
 ## Log In 
@@ -121,4 +121,8 @@ Al entrar a esta ventana nos aparecera un campo de texto en el que deveremos ing
 ## Register
 Aqui cree una maqueta de una pagina de registro guiandome de diferentes paginas vistas, en este aparecen las opciones de crear un usuario ingresando email, name y password, o ingresar con tu cuenta de Google o Apple.
 y en el cuadro vacio al lado de la key agregamos el id del producto que queremos eliminar, de esta forma se eliminara.
+## Cart
+Si presionamos el logo de un carrito de compras arriba a la derecha, nos saltara una alerta que nos pedira el id de un user para ver su carrito (obviamente esto sera momentaneo hasta que se implemente el login), en el carrito veremos los productos que posee un usuario en el caso que tenga products en el carrito, en ellos tendremos las opciones de cambiar la cantidad que queremos, de eliminar ese producto del carrito, ademas en la parte inferior tendremos la opcion de finalizar compra (actualmente hace la misma funcion que cancelarla) o de cancelarla. 
+En el caso de que el usuario no tenga un product en el cart se mostrara un cartel invitandolo a comprar.
+
 

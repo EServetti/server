@@ -18,6 +18,14 @@ class Manager {
       throw error;
     }
   }
+  async paginate(filter, opts) {
+    try {
+      const all = await this.Model.paginate(filter, opts);
+      return all;
+    } catch (error) {
+      throw error;
+    }
+  }
   async readOne(id) {
     try {
       const one = await this.Model.findOne({ _id: id }).lean();
