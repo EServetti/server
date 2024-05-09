@@ -1,22 +1,95 @@
-<h1 style="color:white; border-bottom: 1px solid white; padding-bottom:10px; display:flex; justify-content:center">Product list</h1>
+<dev style="color:white; border-bottom: 1px solid white; padding-bottom:10px; display:flex; align-items:center; justify-content:center">
+<dev style="flex: 1; margin-left:10px; border: 2px solid white; padding-left:5px"><h3>Page {{info.page}} of {{info.totalPages}}</h3></dev>
+<dev style="flex: 2; margin-left:25%">
+<h1 >Product list</h1>
+</dev>
+<dev style="flex 1; margin-right:20px">
+ <h3>Some category in especific? </h3>
+ <dev><button onclick="goHome()" style="color: white;border:none; background-color:#466365; border-bottom:1px solid white">HOUSE</button></dev>
+ <dev><button onclick="goKitchen()" style="color: white;border:none; background-color:#466365; border-bottom:1px solid white">KITCHEN</button></dev>
+ <dev><button onclick="goAppliances()" style="color: white;border:none; background-color:#466365; border-bottom:1px solid white">HOME APPLIANCES</button></dev>
+</dev>
+</dev>
 <div class="divMain" style="display: flex; justify-content:center">
-<div class="mainCont" style="margin: 30px 0 0 0; display: flex; flex-wrap: wrap; display: flex; justify-content:center ">
-{{#each content}}
-  <div class="productCont" style="background-color:white; width:350px; padding: 0 10px 0 10px; margin: 10px 30px 10px 30px; border: 1px solid black; border-radius:10px">
-    <img src={{this.photo}} class="productImage" style="width: 300px; height: 300px; margin: 10px 0 0 0">
-    <div class="productInfo" style="display: flex; justify-content:center;  flex-direction:column; align-items: center;  ">
-      <button onclick="redirect('{{this._id}}')" id="SeeProduct" style="width:100%;color: white;background-color:#6781B4;margin: 5px;border: 0; border-radius:5px;">See Product</button>
-    </div>
+  <div
+    class="mainCont"
+    style="margin: 30px 0 0 0; display: flex; flex-wrap: wrap; justify-content:center "
+  >
+    {{#each content}}
+      <div
+        class="productCont"
+        style="display:flex;justify-content:center;align-items:center;flex-direction:column;background-color:white; width:350px; padding: 0 10px 0 10px; margin: 10px 30px 10px 30px; border: 1px solid black; border-radius:10px"
+      >
+        <img
+          src={{this.photo}}
+          class="productImage"
+          style="width: 300px; height: 300px; margin: 10px 0 0 0;border: 1px solid #6781B4; border-radius:10px"
+        />
+        <div
+          class="productInfo"
+          style="display: flex; justify-content:center;  flex-direction:column; align-items: center;  "
+        >
+          <button
+            onclick="redirect('{{this._id}}')"
+            id="SeeProduct"
+            style="width:100%;color: white;background-color:#6781B4;margin: 5px;border: 0; border-radius:5px;"
+          >See Product</button>
+        </div>
+      </div>
+    {{/each}}
   </div>
-{{/each}}
 </div>
-</div>
+<div class="pageManager" style="display: flex;justify-content:center; align-items:center">
+      <button
+        onclick="prevPage('{{info.category}}', {{info.prevPage}})"
+        class="prev"
+        id="prev"
+        style="{{#if info.prevPage}} align-self: center; margin-top:5px;margin-right:10px; cursor:pointer;  padding: 10px 20px;  border-radius: 5px;  border: none; {{else}} display:none {{/if}}"
+      >Prev page</button>
+      <button
+    onclick="nextPage('{{info.category}}',{{info.nextPage}})"
+    class="next"
+    id="next"
+    style="{{#if info.nextPage}}align-self: center; margin-top:5px;margin-left:10px; cursor:pointer;  padding: 10px 20px;  border-radius: 5px; border: none;{{else}} display: none; {{/if}}"
+    >Next page</button>
 <script>
+  //redirecciona a pagina con datos del producto
   function redirect(id) {
-    try {
       window.location.href = "/products/" + id
-    }catch(error) {
-      return(error)
-    }
   }
+
+
+  //redirecciona a pagina anterior
+  function prevPage(category, prevPage)  {
+   if(!category){
+        window.location.href = "/?page="  + prevPage
+      }else {
+        window.location.href = "/?category=" +category+"&page="  + prevPage 
+      }
+  }
+
+  //redirecciona a pagina siguiente
+  function nextPage(category, nextPage) { 
+      if(!category){
+        window.location.href = "/?page="  + nextPage
+      }else {
+        window.location.href = "/?category=" +category+"&page="  + nextPage 
+      }
+  }
+  
+  // filtrar por category hogar
+  function goHome() {
+    window.location.href = "/?category=hogar" 
+  }
+
+  // filtrar por category cocina
+  function goKitchen() {
+    window.location.href = "/?category=cocina" 
+  }
+
+  // filtrar por category electrodomésticos
+  function goAppliances() {
+    window.location.href = "/?category=electrodomésticos" 
+  }
+
 </script>
