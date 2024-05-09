@@ -10,6 +10,7 @@ import { createServer } from "http"
 import { Server } from "socket.io"
 import socketCb from "./src/routers/index.socket.js"
 import dbConnect from './src/utils/DbConnection.js';
+import session from "express-session"
 
 
 //http server
@@ -36,6 +37,12 @@ server.set('views', __dirname + '/src/views')
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }))
 server.use(express.static("public"))
+server.use(session ({
+    secret: "process.env.SECRET_SESSION",
+    resave: true,
+    saveUninitialized: true,
+    cookie: {maxAge: 60000}
+}))
 
 //endpoints
 server.use('/', indexRouter)
