@@ -5,15 +5,34 @@ import userManager from "../../data/mongo/managers/UserManager.db.js";
 const carts = Router();
 
 
-carts.get("/:uid", async (req, res, next) => {
+carts.get("/", async (req, res, next) => {
   try {
-    const { uid } = req.params;
+    const { _id } = req.session;
     const info = {
-      uid: uid
+      uid: _id
     }
     res.render("cart",{title: "CART", info: info} )
   } catch (error) {
     return next(error);
   }
 });
+
+carts.post("/", async (req, res, next) => {
+  try {
+    const {_id} = req.session;
+    const { product_id }= req.body
+    const data = {
+      user_id: _id,
+      product_id: product_id,
+      quantity: 1
+    }
+    await cartManager.create(data)
+    return res.json({
+      statusCode: 201,
+      message: "The product has been added to cart"
+    })
+  } catch (error) {
+    return next(error)
+  }
+})
 export default carts;

@@ -27,9 +27,7 @@ sessionRouter.post("/login", isValidUser, isValidPass, async (req, res, next) =>
 //ruta que devuelve los datos del user
 sessionRouter.get("/", async (req, res, next) => {
     try {
-      console.log("The req.session is " +JSON.stringify(req.session));
       const { email, name, photo, role } = req.session;
-      console.log("The email is " + email);
       if(email) {
         return res.json({
           statusCode: 200,
@@ -51,5 +49,16 @@ sessionRouter.get("/", async (req, res, next) => {
       return next(error)
     }
   })
+
+  sessionRouter.get("/signout", async (req, res, next) => {
+    try {
+      req.session.destroy();
+          return res.json({ 
+            statusCode: 200,
+            message: "loged out!" });
+    }catch (error) {
+      console.log(error);
+    }
+   });
 
   export default sessionRouter

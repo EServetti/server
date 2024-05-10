@@ -20,6 +20,7 @@
     >
       <input
         type="file"
+        accept="image/*"
         class="text"
         id="photo"
         style="width: 300px; display:none"
@@ -86,8 +87,8 @@
   //actualiza el input del archivo con el nombre del mismo
   document.getElementById('photo').addEventListener('change', function (e) { let
   fileName = e.target.files[0].name; let nextSibling =
-  e.target.nextElementSibling; //En el caso de que el nombre del archivo sea
-  demasiado largo lo limita a 17 caracteres if (fileName.length > 20) { fileName
+  e.target.nextElementSibling; //En el caso de que el nombre del archivo sea demasiado largo lo limita a 17 caracteres 
+  if (fileName.length > 20) { fileName
   = fileName.slice(0, 17) + '...'; } nextSibling.innerText = fileName; });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -41,7 +41,8 @@ server.use(
       secret: process.env.SECRET_SESSION,
       resave: true,
       saveUninitialized: true,
-      cookie: { maxAge: 60 * 60 * 1000 },
+      cookie: { maxAge: 60 * 60 * 1000,
+         secure: false },
     })
   );
   server.use(cors({

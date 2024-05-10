@@ -32,6 +32,7 @@ sessionRouter.post("/login", isValidUser, isValidPass, async (req, res, next) =>
   req.session.role = one.role;
   req.session.photo = one.photo;
   req.session._id = one._id
+  console.log("You're welcome " +one.name);
   return res.json({
     statusCode: 200,
     message: "You're welcome " + one.name,

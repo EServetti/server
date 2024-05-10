@@ -20,51 +20,18 @@
     </p>
     <p
       id="pid"
-      style="display:flex;justify-content:center;width: 100%; border-bottom: 1px solid black;"
-    >Product Id: {{product._id}}</p>
+      style="display:flex;justify-content:center;width: 100%; border-bottom: 1px solid black; display:none"
+    >{{product._id}}</p>
     <button
       class="add2Cart"
       id="add2Cart"
-      onclick="addToCart()"
+      type="button"
       style="display:flex;align-items:center;width: 100%;color:white;background-color:#67B473; display:flex; justify-content:center;border:0; border-radius: 10px"
       >Do you like it? add to cart
     <img src="/img/carrito-de-compras.png" style="width: 15px; height:auto; margin: 0 0 0 10px"></button>
   </div>
 </div>
-<script src="/socket.io/socket.io.js"></script>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/script/add2Cart.js"></script>
 
-const socket = io();
 
-socket.on("here", message => {
-  console.log(message);
-}) 
-
-function addToCart() {
-    let uid = prompt("Please enter your user id here:");
-  // Revisar que tenga el formato de los _id de mongo
-  function esObjectIdValido(input) {
-    // Expresión regular para validar ObjectId
-    const objectIdRegex = /^[0-9a-fA-F]{24}$/;
-    return objectIdRegex.test(input);
-  }
-  const pidElement = document.querySelector("#pid");
-  const pid = pidElement ? pidElement.textContent.split(":")[1].trim() : null;
-  const info = {
-    uid: uid,
-    pid: pid
-  }
-  if (!uid) {
-    alert("Insert user id");
-  } else if (!esObjectIdValido(uid)) {
-    alert("The id has to be 24 hexadecimal characters");
-  }else {
-    socket.emit("addProd", info)
-  }
-  }
-
-  socket.on("addAlert", message => {
-      alert(message)
-    })
-
-</script>
