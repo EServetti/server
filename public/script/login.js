@@ -1,22 +1,28 @@
-
-    async function redirect() {
-        try {
-        let uid = document.getElementById("uid").value;
-        //revisar que tenga el formato de los _id de mongo
-        function esObjectIdValido(input) {
-            // Expresión regular para validar ObjectId
-            const objectIdRegex = /^[0-9a-fA-F]{24}$/;
-            return objectIdRegex.test(input);
-        }
-        if(!uid) {
-            alert("Insert user id")
-        }else if (!esObjectIdValido(uid)) {
-            alert("The id has to be 24 hexadecimal characters")
-        } else {
-            window.location.href = "/users/" + uid
-        }
-        
-        } catch(error){
-            return(error)
-        }
-    }
+document.querySelector("#LogIn").addEventListener("click", async () => {
+  const email = document.querySelector("#email").value;
+  const password = document.querySelector("#password").value;
+  const data = {
+    email: email,
+    password: password
+  }
+  const log = await fetch("/api/sessions/login", {
+    method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+  })
+  const response = await log.json()
+  if (response.statusCode === 200) {
+    location.replace("/")
+  } else {
+    Swal.fire({
+      title: response.message,
+      icon: "error",
+      confirmButtonText: "Accept",
+      timer: 5000,
+      timerProgressBar: true,
+      confirmButtonColor: "#466365",
+    });
+  }
+})

@@ -1,13 +1,11 @@
-
-
 async function navBar() {
   let online = await fetch("/session", {
-    credentials: "include"
+    method: "GET",
+    credentials: "include",
   });
   online = await online.json();
-  console.log("The user is " +JSON.stringify(online));
   if (online.statusCode === 200) {
-    `
+    const navBarContent = `
        <div class="container-fluid">
          <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px ">
            Everything for your home
@@ -40,17 +38,25 @@ async function navBar() {
              <a class="nav-link" href="/products/real" style="color: white">
                Create a product
              </a>
-             <span style="width: 600px;"></span>
-             <button class="nav-link" onclick="goCart()" style="color: white;">
-               <img
-                 src="/img/carrito-de-compras.png"
-                 style="width: 35px; height:auto;"
-               />
-             </button>
+             <span style="width: 800px;"></span>
+             <details style="display: flex; align-items: center;margin-right:10px">
+             <summary style="list-style: none; -webkit-details-marker: none;"><img src=${online.message.photo} style="height:50px;width:auto; border: 1px solid white; border-radius: 5px"/></summary>
+             <a class="nav-link" href="/users" style="color: white">
+             Details
+             </a>
+             <button type="button" id="closeSession" style="background-color: #b49a67; border: none"><img src="/img/logout.png" style="height:25px; width: auto;"/></button>
+             </details>
+             <a class="nav-link" href="/carts" style="color: white">
+              <img
+                src="/img/carrito-de-compras.png"
+                style="width: 45px; height:auto;"
+              />
+             </a>
            </div>
          </div>
        </div>
       `;
+    document.querySelector("#mainNavbar").innerHTML = navBarContent;
   } else {
     const navBarContent = `
        <div class="container-fluid">
@@ -95,5 +101,11 @@ async function navBar() {
       `;
     document.querySelector("#mainNavbar").innerHTML = navBarContent;
   }
+  document.querySelector("#closeSession").addEventListener("click", async () => {
+    await fetch("/session/signout")
+    return location.replace("/")
+  })
 }
- navBar()
+document.addEventListener("DOMContentLoaded", () => {
+  navBar(); 
+});

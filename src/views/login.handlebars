@@ -9,13 +9,7 @@
     <span style="display: flex; justify-content:center"><h3>Welcome to our store</h3></span>
       <form class="emailRegister" style="display: flex; justify-content:center; flex-direction:column; align-items:center">
     <input
-      id="uname"
-      class="form-control form-control-lg"
-      type="text"
-      placeholder="user name"
-    />
-    <input
-      id="userName"
+      id="email"
       class="form-control form-control-lg"
       type="text"
       placeholder="email"
@@ -29,9 +23,10 @@
     />
     <span style="display: flex; justify-content:center; margin-top:10px">
       <button
-        onclick="redirect()"
+        type="button"
+        id="LogIn"
         style="align-self: center; margin-top:5px;margin-right:10px; cursor:pointer;  padding: 10px 20px;  border-radius: 5px;"
-      >Sing in</button>
+      >Log in</button>
     </span>
       </form>
     <span style="display: flex; justify-content:center">or</span>
@@ -51,4 +46,5 @@
       /><p style="margin-top:10px;">Continue with Apple</p></button>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/script/login.js"></script>

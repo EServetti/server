@@ -1,12 +1,14 @@
-
-<div class="main" style=" height:100vh; display:flex; justify-content:center">
-  <div
-    class="userData"
-    style="background-color: white; width: 400px; height:600px; margin-top:100px; border:1px solid black; border-radius: 25px; padding:20px; display:flex; justify-content:center; flex-direction: column; align-items:center"
-  >
-    <span><h3> {{content.email}}</h3></span>
-    <img src={{content.photo}} style="width: 300px; height:auto; max-height:350px">
-    <p style="display:flex;justify-content:center;width: 300px;border-bottom: 1px solid black;">User ID: {{content._id}}</p>
-    <p style="display:flex;justify-content:center;width: 300px; border-bottom: 1px solid black;">User role: {{content.role}}</p>
+  <div class="Title" style="display: flex; justify-content:center; border-bottom: 2px solid white;">
+    <h1 style="color: white;">My Account</h1>
   </div>
-</div>
+  <div class="data" style="display: flex; justify-content:center; flex-wrap:wrap; color:black; margin-top:20px">
+    <span style="display: flex; justify-content:center;margin-bottom:5px; background-color: white; width:80%; padding: 10px 0"><h3>{{content.name}}</h3></span>
+    <span style="display: flex; justify-content:center;margin-bottom:5px; background-color: white; width:80%; padding: 10px 0">
+      <img src={{content.photo}} style="max-height:500px; max-width:300px;height:auto; width:auto" /></span>
+    <span style="display: flex; justify-content:center;margin-bottom:5px; background-color: white; width:80%; padding: 10px 0"><h3>{{content.email}}</h3></span>
+    <span style="display: flex; justify-content:center;margin-bottom:5px; background-color: white; width:80%; padding: 10px 0"><h3>My role: {{content.role}}</h3></span>
+    <span style="display: flex; justify-content:center;margin-bottom:5px; background-color: white; width:80%; padding: 10px 0">
+      <a href="/users/settings" style="background-color: gray; padding:5px; color: white; border: none; border-radius:5px"><strong >settings</strong><img src="/img/settings.png" style="width: 25px; height:auto; margin-left: 5px"/></a>
+    </span>
+  </div>
+
