@@ -11,7 +11,8 @@ import { Server } from "socket.io"
 import socketCb from "./src/routers/index.socket.js"
 import dbConnect from './src/utils/DbConnection.js';
 import session from "express-session"
-
+import cookieParser from "cookie-parser";
+import cors from "cors"
 
 //http server
 const server = express();
@@ -34,15 +35,23 @@ server.set('view engine', 'handlebars')
 server.set('views', __dirname + '/src/views')
 
 //middlewares
+server.use(cookieParser(process.env.SECRET_COOKIE))
+server.use(
+    session({
+      secret: process.env.SECRET_SESSION,
+      resave: true,
+      saveUninitialized: true,
+      cookie: { maxAge: 60 * 60 * 1000 },
+    })
+  );
+  server.use(cors({
+    origin: true, 
+    credentials: true 
+  }));
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }))
 server.use(express.static("public"))
-server.use(session ({
-    secret: "process.env.SECRET_SESSION",
-    resave: true,
-    saveUninitialized: true,
-    cookie: {maxAge: 60000}
-}))
+
 
 //endpoints
 server.use('/', indexRouter)
