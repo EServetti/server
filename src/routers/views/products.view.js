@@ -1,8 +1,10 @@
 import { Router } from "express";
 import productManager from "../../data/mongo/managers/ProductManager.db.js"
+import isOnline from "../../middlewares/isOnline.js"
+
 const products = Router();
 
-products.get("/real", async (req, res, next) => {
+products.get("/real", isOnline, async (req, res, next) => {
   try {
     res.render("products-real", {title: "PRODUCTS REAL"})
   } catch (error) {

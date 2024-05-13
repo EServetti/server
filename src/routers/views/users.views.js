@@ -3,6 +3,7 @@ import { Router } from "express";
 import userManager from "../../data/mongo/managers/UserManager.db.js";
 import uploader from "../../middlewares/multer.mid.js";
 import isPhoto from "../../middlewares/isPhoto.js";
+import isOnline from "../../middlewares/isOnline.js";
 
 const users = Router();
 
@@ -22,7 +23,7 @@ users.get("/login", async (req, res, next) => {
   }
 });
 
-users.get("/", async (req, res, next) => {
+users.get("/", isOnline, async (req, res, next) => {
   try {
     const { _id } = req.session;
     const user = await userManager.readOne(_id);
@@ -32,7 +33,7 @@ users.get("/", async (req, res, next) => {
   }
 });
 
-users.get("/settings", async (req, res, next) => {
+users.get("/settings", isOnline, async (req, res, next) => {
   try {
     const { _id } = req.session;
     const user = await userManager.readOne(_id);
@@ -42,14 +43,13 @@ users.get("/settings", async (req, res, next) => {
   }
 });
 
-users.put("/", uploader.single("photo"), isPhoto, async (req, res, next) => {
+users.put("/", isOnline, uploader.single("photo"), isPhoto, async (req, res, next) => {
   try {
     const { name, photo } = req.body;
     if(photo){
       req.session.photo = photo
     }
     const _id = req.session;
-    console.log(photo + _id);
     const data = {
       name: name,
       photo: photo,
