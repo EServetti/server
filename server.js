@@ -13,6 +13,7 @@ import dbConnect from './src/utils/DbConnection.js';
 import session from "express-session"
 import cookieParser from "cookie-parser";
 import cors from "cors"
+import MongoStore from "connect-mongo";
 
 //http server
 const server = express();
@@ -38,11 +39,13 @@ server.set('views', __dirname + '/src/views')
 server.use(cookieParser(process.env.SECRET_COOKIE))
 server.use(
     session({
+      store: new MongoStore({
+        mongoUrl: process.env.MONGO_URI,
+        ttl: 60 * 60
+      }),
       secret: process.env.SECRET_SESSION,
       resave: true,
-      saveUninitialized: true,
-      cookie: { maxAge: 60 * 60 * 1000,
-         secure: false },
+      saveUninitialized: true
     })
   );
   server.use(cors({

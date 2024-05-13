@@ -1,11 +1,12 @@
 import { Router } from "express";
 import cartManager from "../../data/mongo/managers/CartManager.db.js";
 import userManager from "../../data/mongo/managers/UserManager.db.js";
+import isOnline from "../../middlewares/isOnline.js";
 
 const carts = Router();
 
 
-carts.get("/", async (req, res, next) => {
+carts.get("/", isOnline, async (req, res, next) => {
   try {
     const { _id } = req.session;
     const info = {
@@ -17,7 +18,7 @@ carts.get("/", async (req, res, next) => {
   }
 });
 
-carts.post("/", async (req, res, next) => {
+carts.post("/", isOnline, async (req, res, next) => {
   try {
     const {_id} = req.session;
     const { product_id }= req.body
