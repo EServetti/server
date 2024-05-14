@@ -3,6 +3,7 @@ import isValidUser from "../../middlewares/isValidUser.mid.js";
 import isValidPass from "../../middlewares/isValidPass.mid.js";
 import userManager from "../../data/mongo/managers/UserManager.db.js";
 
+
 const sessionRouter = new Router()
 
 //ruta para iniciar sesión 
@@ -52,12 +53,20 @@ sessionRouter.get("/", async (req, res, next) => {
 
   sessionRouter.get("/signout", async (req, res, next) => {
     try {
-      req.session.destroy();
+      const online = req.session.email;
+      if(online) {
+        req.session.destroy();
           return res.json({ 
             statusCode: 200,
             message: "loged out!" });
+      }
+      else {
+        const error = new Error ("First log in!")
+        error.statusCode = 401;
+        throw error
+      }
     }catch (error) {
-      console.log(error);
+      return next(error)
     }
    });
 
