@@ -1,3 +1,5 @@
+
+//Middleware para redireccionar al inicio en el caso de que la sesison expire.
 async function isOnline (req, res, next) {
   try {
     const online = req.session.email;

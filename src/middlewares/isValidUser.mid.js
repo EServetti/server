@@ -9,14 +9,7 @@ async function isValidUser(req, res, next) {
       error.statusCode = 401;
       throw error
     }
-    else if(one) {
-      return next()
-    }
-    else{
-      const error = new Error("Bad auth!");
-      error.statusCode = 401;
-      throw error
-    }
+    return next()
   } catch (error) {
     return next(error)
   }
