@@ -1,26 +1,24 @@
 import { Router } from "express";
 import userManager from "../../data/mongo/managers/UserManager.db.js";
 import isValidUser from "../../middlewares/isValidUser.mid.js";
-import isValidPass from "../../middlewares/isValidPass.mid.js";
-import isValidEmail from "../../middlewares/isValidEmail.mid.js";
-import isvalidData from "../../middlewares/isValidData.mid.js";
+import passport from "../../middlewares/passport.mid.js";
+import isValidData from "../../middlewares/isValidData.js";
 
 const sessionRouter = Router();
 
 //ruta de register
 sessionRouter.post(
   "/register",
-  isvalidData,
-  isValidEmail,
+  isValidData,
+  passport.authenticate("register", { session: false }),
   async (req, res, next) => {
     try {
-      const data = req.body;
-      const one = await userManager.create(data);
       return res.json({
         statusCode: 201,
         message: "The acount has been created!",
       });
     } catch (error) {
+      console.log(error);
       return next(error);
     }
   }
@@ -30,20 +28,12 @@ sessionRouter.post(
 sessionRouter.post(
   "/login",
   isValidUser,
-  isValidPass,
+  passport.authenticate("login", { session: false }),
   async (req, res, next) => {
     try {
-      const { email } = req.body;
-      const one = await userManager.readByEmail(email);
-      req.session.email = email;
-      req.session.name = one.name;
-      req.session.role = one.role;
-      req.session.photo = one.photo;
-      req.session._id = one._id;
-      console.log("You're welcome " + one.name);
       return res.json({
         statusCode: 200,
-        message: "You're welcome " + one.name,
+        message: "You're welcome ",
       });
     } catch (error) {
       return next(error);
@@ -52,29 +42,21 @@ sessionRouter.post(
 );
 
 //ruta para ver datos del user online
-sessionRouter.post("/", async (req, res, next) => {
-  try {
-    const { email, name, photo, role } = req.session;
-    if (email) {
-      return res.json({
+sessionRouter.post(
+  "/",
+  passport.authenticate("data", { session: false }),
+  async (req, res, next) => {
+    try {
+      const one = req.body;
+      res.json({
         statusCode: 200,
-        message: {
-          email: email,
-          name: name,
-          photo: photo,
-          role: role,
-        },
+        message: one
       });
-    } else {
-      return res.json({
-        statusCode: 401,
-        message: "You must log in!",
-      });
+    } catch (error) {
+      return next(error);
     }
-  } catch (error) {
-    return next(error);
   }
-});
+);
 
 //ruta de log out
 sessionRouter.post("/signout", async (req, res, next) => {

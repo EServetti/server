@@ -1,24 +1,17 @@
 import { Router } from "express";
 import isValidUser from "../../middlewares/isValidUser.mid.js";
-import isValidPass from "../../middlewares/isValidPass.mid.js";
 import userManager from "../../data/mongo/managers/UserManager.db.js";
+import passport from "../../middlewares/passport.mid.js";
 
 
 const sessionRouter = new Router()
 
 //ruta para iniciar sesión 
-sessionRouter.post("/login", isValidUser, isValidPass, async (req, res, next) => {
+sessionRouter.post("/login", isValidUser, passport.authenticate("login", {session: false}), async (req, res, next) => {
     try {
-      const { email } = req.body;
-    const one = await userManager.readByEmail(email);
-    req.session.email = email;
-    req.session.name = one.name;
-    req.session.role = one.role;
-    req.session.photo = one.photo;
-    req.session._id = one._id
     return res.json({
       statusCode: 200,
-      message: "You're welcome " + one.name,
+      message: "You're welcome ",
     });
     } catch (error) {
       return next(error)
