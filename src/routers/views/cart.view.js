@@ -18,20 +18,28 @@ carts.get("/", isOnline, async (req, res, next) => {
   }
 });
 
-carts.post("/", isOnline, async (req, res, next) => {
+carts.post("/", async (req, res, next) => {
   try {
-    const {_id} = req.session;
-    const { product_id }= req.body
-    const data = {
-      user_id: _id,
-      product_id: product_id,
-      quantity: 1
+    if (req.session.email) {
+      const { _id } = req.session
+      const { product_id }= req.body
+      const data = {
+        user_id: _id,
+        product_id: product_id,
+        quantity: 1
+      }
+      await cartManager.create(data)
+      return res.json({
+        statusCode: 201,
+        message: "The product has been added to cart"
+      })
+    } else {
+      console.log("Must log in!");
+      return res.json({
+        statusCode: 401,
+        message: "You must login first!"
+      })
     }
-    await cartManager.create(data)
-    return res.json({
-      statusCode: 201,
-      message: "The product has been added to cart"
-    })
   } catch (error) {
     return next(error)
   }

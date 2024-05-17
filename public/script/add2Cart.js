@@ -19,5 +19,14 @@ document.querySelector("#add2Cart").addEventListener("click", async () => {
       timerProgressBar: true,
       confirmButtonColor: "#466365",
     });
+  } else{
+    Swal.fire({
+      title: response.message,
+      confirmButtonText: "Accept",
+      item: "error",
+      timer: 5000,
+      timerProgressBar: true,
+      confirmButtonColor: "#466365",
+    });
   }
 })
