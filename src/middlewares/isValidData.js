@@ -3,10 +3,9 @@ async function isValidData(req, res, next) {
     const email = req.body.email;
     const password = req.body.password;
     const name = req.body.name;
-    const age = req.body.age
-    if (!email || !password || !name || !age) {
+    if (!email || !password || !name ) {
       const error = new Error(
-        "You must enter at least email, password, date of birth, and name"
+        "You must enter at least email, password, and name"
       );
       error.statusCode = 400;
       throw error;

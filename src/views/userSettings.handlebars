@@ -14,7 +14,7 @@
   <span
     style="display: flex; justify-content:center;margin-bottom:5px; background-color: white; width:80%; padding: 10px 0"
   >
-  <input id="name" type="text" placeholder="New name"/>
+    <input id="name" type="text" placeholder="New name" />
     <button
       type="button"
       id="ChangeName"
@@ -25,7 +25,7 @@
   >
     <img
       src={{content.photo}}
-      style="max-height:500px; max-width:300px;height:auto; width:auto"
+      style="max-height:500px; max-width:300px;min-width: 250px;height:auto; width:auto"
     />
   </span>
   <span
@@ -54,13 +54,16 @@
   ><h3>{{content.email}}</h3></span>
   <span
     style="display: flex; justify-content:center;margin-bottom:5px; background-color: white; width:80%; padding: 10px 0"
-  ><h3>My role: {{content.role}}</h3></span>
+  ><h3>My role:{{#if (equal content.role 0)}} customer {{else}}
+        seller
+      {{/if}}</h3></span>
   <span
     style="display: flex; justify-content:center;margin-bottom:5px; background-color: white; width:80%; padding: 10px 0"
   >
-    <button
+    <a
+      href="/users/role"
       style="background-color: gray; padding:5px; color: white; border: none; border-radius:5px"
-    ><strong>Update your role</strong></button>
+    ><strong>Update your role</strong></a>
   </span>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

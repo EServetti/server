@@ -4,6 +4,7 @@ import userManager from "../../data/mongo/managers/UserManager.db.js";
 import uploader from "../../middlewares/multer.mid.js";
 import isPhoto from "../../middlewares/isPhoto.js";
 import isOnline from "../../middlewares/isOnline.js";
+import alreadyUpdated from "../../middlewares/alreadyUpdated.js";
 
 const users = Router();
 
@@ -43,16 +44,32 @@ users.get("/settings", isOnline, async (req, res, next) => {
   }
 });
 
-users.put("/", isOnline, uploader.single("photo"), isPhoto, async (req, res, next) => {
+users.get("/role",isOnline, async (req, res, next) => {
   try {
-    const { name, photo } = req.body;
+    res.render("update-profile", { title: "ROLE"});
+  } catch (error) {
+    return next(error)
+  }
+})
+
+users.put("/", isOnline, alreadyUpdated, uploader.single("photo"), isPhoto, async (req, res, next) => {
+  try {
+    const { name, photo, role, age } = req.body;
+
+    //actualizo el session para que se actualize la foto y el role de la navbar
     if(photo){
       req.session.photo = photo
     }
+    if(role){
+      req.session.role = role
+    }
     const _id = req.session;
+    
     const data = {
       name: name,
       photo: photo,
+      role: role,
+      age: age
     };
     await userManager.update(_id, data);
     return res.json({

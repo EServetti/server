@@ -117,13 +117,14 @@ passport.use(
         }
         await userManager.create(one)
       }
-      req.session.email = one.email
-      req.session.name = one.name
-      req.session.role = one.role
-      req.session.age = one.age
-      req.session.photo = one.photo
-      req.session._id = one._id
-      return done(null, one)
+      const two = await userManager.readByEmail(profile.id)
+      req.session.email = two.email
+      req.session.name = two.name
+      req.session.role = two.role
+      req.session.age = two.age
+      req.session.photo = two.photo
+      req.session._id = two._id
+      return done(null, two)
     } catch (error) {
       done(error)
     }

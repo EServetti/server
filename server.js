@@ -13,6 +13,7 @@ import dbConnect from './src/utils/DbConnection.js';
 import session from "express-session"
 import cookieParser from "cookie-parser";
 import cors from "cors"
+import Handlebars from "handlebars"
 
 import MongoStore from "connect-mongo";
 
@@ -35,6 +36,13 @@ export { socketServer }
 server.engine("handlebars",engine())
 server.set('view engine', 'handlebars')
 server.set('views', __dirname + '/src/views')
+Handlebars.registerHelper('equal', function(value1, value2, options) {
+  if (value1 === value2) {
+      return true
+  } else {
+      return false
+  }
+});
 
 //middlewares
 server.use(cookieParser(process.env.SECRET_COOKIE))
