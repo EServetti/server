@@ -4,7 +4,7 @@ const collection =  "users"
 
 const schema = new Schema ({
   name: {type: String, required: true, index: true},
-  age: {type: Number, required: true},
+  age: {type: Number, default: 12},
   photo: {type: String, default: "/img/defaultUser.webp"},
   email: {type: String, required: true, unique: true, index: true},
   password:{type: String, required: true},
