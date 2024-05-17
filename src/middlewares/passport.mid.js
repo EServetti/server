@@ -1,5 +1,6 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
+import CustomStrategy from "passport-custom"
 import { createHash, compareHash } from "../utils/hash.js";
 import userManager from "../data/mongo/managers/UserManager.db.js";
 
@@ -68,10 +69,10 @@ passport.use(
 //devuelve los datos del user
 passport.use(
   "data",
-  new LocalStrategy({ passReqToCallback: true, usernameField: "email" }, async (req, email, password, done) => {
+  new CustomStrategy( async (req, done) => {
     try {
-      const userEmail = req.session.email;
-      if (userEmail) {
+      const email = req.session.email;
+      if (email) {
         const {email, age, name, role, photo} = req.session
         const one = {
           email,
