@@ -58,4 +58,19 @@ sessionRouter.get("/signout", async (req, res, next) => {
   }
 });
 
+//ruta para logear/registrar con Google
+sessionRouter.get("/google", passport.authenticate("Google", { scope: ["email", "profile"]}))
+sessionRouter.get(
+ "/google/callback",
+ passport.authenticate("Google", {session: false}),
+ (req, res, next) => {
+   try {
+     return res.redirect("/")
+   } catch (error) {
+     return next(error);
+   }
+ }
+);
+
+
 export default sessionRouter;

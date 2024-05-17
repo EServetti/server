@@ -13,6 +13,7 @@ import dbConnect from './src/utils/DbConnection.js';
 import session from "express-session"
 import cookieParser from "cookie-parser";
 import cors from "cors"
+
 import MongoStore from "connect-mongo";
 
 //http server
@@ -48,13 +49,10 @@ server.use(
       saveUninitialized: true
     })
   );
-  server.use(cors({
-    origin: true, 
-    credentials: true 
-  }));
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }))
 server.use(express.static("public"))
+server.use(cors())
 
 
 //endpoints

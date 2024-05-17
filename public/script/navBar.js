@@ -10,9 +10,6 @@ async function navBar() {
          <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px ">
            Everything for your home
          </h5>
-         <a class="navbar-brand" href="" style="color: white;">
-           Navbar
-         </a>
          <button
            class="navbar-toggler"
            type="button"
@@ -25,7 +22,7 @@ async function navBar() {
          >
            <span class="navbar-toggler-icon"></span>
          </button>
-         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+         <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="border-bottom: 1px solid white">
            <div class="navbar-nav">
              <a
                class="nav-link active"
@@ -35,10 +32,10 @@ async function navBar() {
              >
                Home
              </a>
-             <a class="nav-link" href="/products/real" style="color: white">
+             <a class="nav-link" href="/products/real" style="color: white; white-space: nowrap;">
                Create a product
              </a>
-             <span style="width: 800px;"></span>
+             <span style="width: 700px;"></span>
              <details style="display: flex; align-items: center;margin-right:10px">
              <summary style="list-style: none; -webkit-details-marker: none;"><img src=${online.message.photo} style="height:50px;width:auto; border: 1px solid white; border-radius: 5px"/></summary>
              <a class="nav-link" href="/users" style="color: white">
@@ -63,9 +60,6 @@ async function navBar() {
          <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px ">
            Everything for your home
          </h5>
-         <a class="navbar-brand" href="" style="color: white;">
-           Navbar
-         </a>
          <button
            class="navbar-toggler"
            type="button"
@@ -78,7 +72,7 @@ async function navBar() {
          >
            <span class="navbar-toggler-icon"></span>
          </button>
-         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+         <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="border-bottom: 1px solid white">
            <div class="navbar-nav">
              <a
                class="nav-link active"

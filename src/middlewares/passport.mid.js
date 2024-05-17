@@ -1,8 +1,10 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import CustomStrategy from "passport-custom"
+import { Strategy as GoogleStrategy } from "passport-google-oauth2";
+import CustomStrategy from "passport-custom";
 import { createHash, compareHash } from "../utils/hash.js";
 import userManager from "../data/mongo/managers/UserManager.db.js";
+import { hash } from "bcrypt";
 
 passport.use(
   "register",
@@ -52,7 +54,7 @@ passport.use(
           } else {
             req.session.email = email;
             req.session.name = one.name;
-            req.session.age = one.age
+            req.session.age = one.age;
             req.session.role = one.role;
             req.session.photo = one.photo;
             req.session._id = one._id;
@@ -69,19 +71,19 @@ passport.use(
 //devuelve los datos del user
 passport.use(
   "data",
-  new CustomStrategy( async (req, done) => {
+  new CustomStrategy(async (req, done) => {
     try {
       const email = req.session.email;
       if (email) {
-        const {email, age, name, role, photo} = req.session
+        const { email, age, name, role, photo } = req.session;
         const one = {
           email,
           age,
           name,
           role,
-          photo
-        }
-        req.body = one
+          photo,
+        };
+        req.body = one;
         return done(null, one);
       } else {
         const error = new Error("You must login!");
@@ -94,9 +96,38 @@ passport.use(
   })
 );
 
-//passport para crear un carrito
-
 //register/login con Google
-
+passport.use(
+  "Google",
+  new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:8080/session/google/callback",
+    passReqToCallback: true,
+  }, async (req, accessToken, refreshToken, profile, done) => {
+    try {
+      let one = await userManager.readByEmail(profile.id)
+      if(!one) {
+         one = {
+          email: profile.id,
+          name: profile.name.givenName,
+          photo: profile.picture,
+          password: createHash(profile.id),
+          role: 0
+        }
+        await userManager.create(one)
+      }
+      req.session.email = one.email
+      req.session.name = one.name
+      req.session.role = one.role
+      req.session.age = one.age
+      req.session.photo = one.photo
+      req.session._id = one._id
+      return done(null, one)
+    } catch (error) {
+      done(error)
+    }
+  })
+);
 
 export default passport;
