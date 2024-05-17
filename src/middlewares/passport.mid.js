@@ -94,4 +94,9 @@ passport.use(
   })
 );
 
+//passport para crear un carrito
+
+//register/login con Google
+
+
 export default passport;
