@@ -5,7 +5,7 @@ class UserManager {
   create(data) {
     try {
       // Verificar si no se ingreso alguna propiedad
-      if (!data.email || !data.password) {
+      if (!data.email || !data.password || !data.name || !data.age) {
         console.log("¡Missing data!");
         return;
       }
@@ -17,6 +17,8 @@ class UserManager {
         photo:
           data.photo ||
           "https://www.informatique-mania.com/wp-content/uploads/2021/02/guest.png",
+        name: data.name,
+        age: data.age,
         email: data.email,
         password: data.password,
         role: data.role || 0,
