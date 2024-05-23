@@ -1,0 +1,37 @@
+<div class="main" style=" height:100vh; display:flex; justify-content:center">
+  <div
+    class="productData"
+    style="background-color: white; width: max-content; height:max-content; margin-top:100px; border:1px solid black; border-radius: 25px; padding: 10px 20px 10px 20px; display:flex; justify-content:center; flex-direction: column; align-items:center"
+  >
+    <span style="width:100%;margin:0 0 5px 0;border-bottom:1px solid black;"><h3
+      > {{product.title}}</h3></span>
+    <div
+      class="photo"
+      style="display:flex; justify-content:center;width: 100%; border: 1px solid black"
+    ><img
+        src={{product.photo}}
+        style="width: 300px; height:auto; max-height:350px"
+      /></div>
+    <p
+      style="display:flex;justify-content:center;width: 100%;border-bottom: 1px solid black;"
+    >Category: {{product.category}}</p>
+    <p style="display:flex;justify-content:center;width: 100%;border-bottom: 1px solid black;">
+      Price: ${{product.price}}
+    </p>
+    <p
+      id="pid"
+      style="display:flex;justify-content:center;width: 100%; border-bottom: 1px solid black; display:none"
+    >{{product._id}}</p>
+    <button
+      class="add2Cart"
+      id="add2Cart"
+      type="button"
+      style="display:flex;align-items:center;width: 100%;color:white;background-color:#67B473; display:flex; justify-content:center;border:0; border-radius: 10px"
+      >Do you like it? add to cart
+    <img src="/img/carrito-de-compras.png" style="width: 15px; height:auto; margin: 0 0 0 10px"></button>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/script/add2Cart.js"></script>
+
+
