@@ -1,0 +1,96 @@
+<div class="main">
+
+  <div class="custom-alert" style="display: none;">
+    <div class="alert-content">
+      <h2>{{alertTitle}}</h2>
+      <p>{{alertMessage}}</p>
+      <button class="close-btn">Cerrar</button>
+    </div>
+  </div>
+
+  <h1
+    style="color:white; border-bottom: 1px solid white; padding-bottom:10px; display:flex; justify-content:center"
+  >Our products</h1>
+  <div class="formCont">
+    <h3 style="color:white; display:flex; justify-content:center">Add a product</h3>
+    <form
+      class="form"
+      style="display: flex; justify-content:center; flex-direction: column; align-items:center "
+      id="productForm"
+    >
+      <input
+        type="file"
+        accept="image/*"
+        class="text"
+        id="photo"
+        style="width: 300px; display:none"
+      />
+      <label
+        for="photo"
+        id="photoLabel"
+        style="width:300px;
+      background-color:white;
+      display:flex;justify-content:center;
+      margin: 0 0 5px 0;
+      cursor:pointer; border-radius: 5px"
+      >Insert immage of the product</label>
+      <input
+        class="title"
+        type="text"
+        name="title"
+        id="title"
+        placeholder="Name of the product "
+        style="width: 300px;border-radius: 5px; border: none; margin-bottom:5px"
+      />
+      <input
+        class="category"
+        type="text"
+        name="category"
+        id="category"
+        placeholder="Category of the product (optional)"
+        style="width: 300px;border-radius: 5px; border: none; margin-bottom:5px "
+      />
+      <input
+        class="price"
+        type="number"
+        name="price"
+        id="price"
+        placeholder="Price of the product (optional)"
+        style="width: 300px;border-radius: 5px; border: none; margin-bottom:5px "
+      />
+      <input
+        class="stock"
+        type="number"
+        name="stock"
+        id="stock"
+        placeholder="Stock of the product (optional)"
+        style="width: 300px;border-radius: 5px; border: none; margin-bottom:5px "
+      />
+      <input
+        class="create"
+        type="submit"
+        name="create"
+        id="create"
+        value="Create"
+        style="align-self: center; margin-top:5px; cursor:pointer;  padding: 10px 20px;  border-radius: 5px;  border: none; "
+      />
+    </form>
+  </div>
+  <div
+    class="mainCont"
+    id="product"
+    style="display: flex; flex-wrap: wrap; justify-content:center;   "
+  >
+  </div>
+</div>
+<script>
+  //actualiza el input del archivo con el nombre del mismo
+  document.getElementById('photo').addEventListener('change', function (e) { let
+  fileName = e.target.files[0].name; let nextSibling =
+  e.target.nextElementSibling; //En el caso de que el nombre del archivo sea demasiado largo lo limita a 17 caracteres 
+  if (fileName.length > 20) { fileName
+  = fileName.slice(0, 17) + '...'; } nextSibling.innerText = fileName; });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/script/productReal.js"></script>
