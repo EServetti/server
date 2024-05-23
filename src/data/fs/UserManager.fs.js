@@ -39,7 +39,7 @@ class UserManager {
   async create(data) {
     try {
       //revisa que todas las propiedades necesarias de user sean ingresadas
-      if (!data.email || !data.password) {
+      if (!data.email || !data.password || !data.name || !data.age) {
         const error = new Error("Missing data!");
         error.statusCode = 400;
         throw error;
@@ -49,6 +49,8 @@ class UserManager {
           photo:
             data.photo ||
             "https://www.informatique-mania.com/wp-content/uploads/2021/02/guest.png",
+          name : data.name,
+          age: data.age,
           email: data.email,
           password: data.password,
           role: data.role || "0",
