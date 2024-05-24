@@ -42,20 +42,24 @@
         placeholder="Name of the product "
         style="width: 300px;border-radius: 5px; border: none; margin-bottom:5px"
       />
-      <input
+      <select
         class="category"
         type="text"
         name="category"
         id="category"
-        placeholder="Category of the product (optional)"
         style="width: 300px;border-radius: 5px; border: none; margin-bottom:5px "
-      />
+      >
+      <option value="" disabled selected >Category of the product</option>
+      <option value="hogar">house</option>
+      <option value="cocina">kitchen</option>
+      <option value="electrodomésticos">home appliances</option>
+      </select>
       <input
         class="price"
         type="number"
         name="price"
         id="price"
-        placeholder="Price of the product (optional)"
+        placeholder="Price of the product"
         style="width: 300px;border-radius: 5px; border: none; margin-bottom:5px "
       />
       <input
@@ -63,7 +67,7 @@
         type="number"
         name="stock"
         id="stock"
-        placeholder="Stock of the product (optional)"
+        placeholder="Stock of the product "
         style="width: 300px;border-radius: 5px; border: none; margin-bottom:5px "
       />
       <input
