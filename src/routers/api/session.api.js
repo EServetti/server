@@ -4,6 +4,7 @@ import isValidUser from "../../middlewares/isValidUser.mid.js";
 import passport from "../../middlewares/passport.mid.js";
 import isValidData from "../../middlewares/isValidData.js";
 import { token } from "morgan";
+import passportCb from "../../middlewares/passportCollback.js"
 
 const sessionRouter = Router();
 
@@ -11,7 +12,7 @@ const sessionRouter = Router();
 sessionRouter.post(
   "/register",
   isValidData,
-  passport.authenticate("register", { session: false }),
+  passportCb("register"),
   async (req, res, next) => {
     try {
       return res.json({
@@ -29,7 +30,7 @@ sessionRouter.post(
 sessionRouter.post(
   "/login",
   isValidUser,
-  passport.authenticate("login", { session: false }),
+  passportCb("login"),
   async (req, res, next) => {
     try {
       return res.cookie("token", req.user.token, { signedCookie: true }).json({
@@ -45,7 +46,7 @@ sessionRouter.post(
 //ruta para ver datos del user online
 sessionRouter.post(
   "/",
-  passport.authenticate("data", { session: false }),
+  passportCb("data"),
   async (req, res, next) => {
     try {
       const one = req.body;

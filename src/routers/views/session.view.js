@@ -3,13 +3,14 @@ import isValidUser from "../../middlewares/isValidUser.mid.js";
 import userManager from "../../data/mongo/managers/UserManager.db.js";
 import passport from "../../middlewares/passport.mid.js";
 import { signedCookie } from "cookie-parser";
+import passportCb from "../../middlewares/passportCollback.js"
 
 const sessionRouter = new Router();
 
 //ruta que devuelve los datos del user
 sessionRouter.get(
   "/",
-  passport.authenticate("data", { session: false }),
+  passportCb("data"),
   async (req, res, next) => {
     try {
       const one = req.body;
