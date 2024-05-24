@@ -16,7 +16,6 @@ usersRouter.delete("/:nid", destroy);
 async function read(req, res, next) {
   try {
     const { role } = req.query;
-    console.log("the role is " +role);
     const all = await UserManager.read();
     const allRole = all.filter((user) => user.role == role)
     //si existen usuarios con la category ingresada los devuelve

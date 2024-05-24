@@ -2,13 +2,15 @@ import { Router } from "express";
 import cartManager from "../../data/mongo/managers/CartManager.db.js";
 import userManager from "../../data/mongo/managers/UserManager.db.js";
 import isOnline from "../../middlewares/isOnline.js";
+import { createToken, verifyToken } from "../../utils/jwt.js"
 
 const carts = Router();
 
 
 carts.get("/", isOnline, async (req, res, next) => {
   try {
-    const { _id } = req.session;
+    const data = verifyToken(req.cookies.token)
+    const  _id  = data._id;
     const info = {
       uid: _id
     }
@@ -20,8 +22,9 @@ carts.get("/", isOnline, async (req, res, next) => {
 
 carts.post("/", async (req, res, next) => {
   try {
-    if (req.session.email) {
-      const { _id } = req.session
+    if (req.cookies.token) {
+      const token = verifyToken(req.cookies.token)
+      const  _id  = token._id
       const { product_id }= req.body
       const data = {
         user_id: _id,

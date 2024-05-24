@@ -4,7 +4,8 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import CustomStrategy from "passport-custom";
 import { createHash, compareHash } from "../utils/hash.js";
 import userManager from "../data/mongo/managers/UserManager.db.js";
-import { hash } from "bcrypt";
+import { createToken, verifyToken } from "../utils/jwt.js"
+import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 
 passport.use(
   "register",
@@ -52,13 +53,17 @@ passport.use(
             error.statusCode = 401;
             return done(error);
           } else {
-            req.session.email = email;
-            req.session.name = one.name;
-            req.session.age = one.age;
-            req.session.role = one.role;
-            req.session.photo = one.photo;
-            req.session._id = one._id;
-            return done(null, one);
+            const data = {
+              email,
+              name: one.name,
+              age: one.age,
+              role: one.role,
+              photo: one.photo,
+              _id: one._id
+            }
+            const token = createToken(data)
+            data.token = token
+            return done(null, data);
           }
         }
       } catch (error) {
@@ -73,15 +78,15 @@ passport.use(
   "data",
   new CustomStrategy(async (req, done) => {
     try {
-      const email = req.session.email;
-      if (email) {
-        const { email, age, name, role, photo } = req.session;
+      const token = req.cookies.token;
+      if (token) {
+        const data = verifyToken(token)
         const one = {
-          email,
-          age,
-          name,
-          role,
-          photo,
+          email: data.email,
+          age: data.age,
+          name: data.name,
+          role: data.role,
+          photo: data.photo,
         };
         req.body = one;
         return done(null, one);
@@ -99,36 +104,68 @@ passport.use(
 //register/login con Google
 passport.use(
   "Google",
-  new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:8080/session/google/callback",
-    passReqToCallback: true,
-  }, async (req, accessToken, refreshToken, profile, done) => {
-    try {
-      let one = await userManager.readByEmail(profile.id)
-      if(!one) {
-         one = {
-          email: profile.id,
-          name: profile.name.givenName,
-          photo: profile.picture,
-          password: createHash(profile.id),
-          role: 0
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:8080/session/google/callback",
+      passReqToCallback: true,
+    },
+    async (req, accessToken, refreshToken, profile, done) => {
+      try {
+        let one = await userManager.readByEmail(profile.id);
+        if (!one) {
+          one = {
+            email: profile.id,
+            name: profile.name.givenName,
+            photo: profile.picture,
+            password: createHash(profile.id),
+            role: 0,
+          };
+          await userManager.create(one);
         }
-        await userManager.create(one)
+        const two = await userManager.readByEmail(profile.id);
+        const data = {
+          email: two.email,
+          name: two.name,
+          role: two.role,
+          age: two.age,
+          photo: two.photo,
+          _id: two._id
+        }
+        const token = createToken(data)
+        data.token = token
+        return done(null, data);
+      } catch (error) {
+        done(error);
       }
-      const two = await userManager.readByEmail(profile.id)
-      req.session.email = two.email
-      req.session.name = two.name
-      req.session.role = two.role
-      req.session.age = two.age
-      req.session.photo = two.photo
-      req.session._id = two._id
-      return done(null, two)
-    } catch (error) {
-      done(error)
     }
-  })
+  )
+);
+
+//isAuth con jwt
+passport.use(
+  "jwt",
+  new JwtStrategy({
+    jwtFromRequest: ExtractJwt.fromExtractors([
+      (req) => req?.cookies["token"],
+    ]),
+    secretOrKey: process.env.SECRET_JWT
+  },
+  (data, done) => {
+    try {
+      if(data){
+        return done(null, data)
+      } else{
+        const error = new Error("You must login!");
+        error.statusCode = 401;
+        return done(error);
+      }
+    } catch (error) {
+      return(error)
+    }
+  }
+)
 );
 
 export default passport;

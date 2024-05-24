@@ -2,25 +2,9 @@ import { Router } from "express";
 import isValidUser from "../../middlewares/isValidUser.mid.js";
 import userManager from "../../data/mongo/managers/UserManager.db.js";
 import passport from "../../middlewares/passport.mid.js";
+import { signedCookie } from "cookie-parser";
 
 const sessionRouter = new Router();
-
-//ruta para iniciar sesión
-sessionRouter.post(
-  "/login",
-  isValidUser,
-  passport.authenticate("login", { session: false }),
-  async (req, res, next) => {
-    try {
-      return res.json({
-        statusCode: 200,
-        message: "You're welcome ",
-      });
-    } catch (error) {
-      return next(error);
-    }
-  }
-);
 
 //ruta que devuelve los datos del user
 sessionRouter.get(
@@ -41,9 +25,9 @@ sessionRouter.get(
 
 sessionRouter.get("/signout", async (req, res, next) => {
   try {
-    const online = req.session.email;
+    const online = req.cookies.token;
     if (online) {
-      req.session.destroy();
+      res.clearCookie("token")
       return res.json({
         statusCode: 200,
         message: "loged out!",
@@ -65,7 +49,7 @@ sessionRouter.get(
  passport.authenticate("Google", {session: false}),
  (req, res, next) => {
    try {
-     return res.redirect("/")
+     return res.cookie("token", req.user.token, {signedCookie: true}).redirect("/")
    } catch (error) {
      return next(error);
    }

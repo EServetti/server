@@ -5,6 +5,8 @@ import uploader from "../../middlewares/multer.mid.js";
 import isPhoto from "../../middlewares/isPhoto.js";
 import isOnline from "../../middlewares/isOnline.js";
 import alreadyUpdated from "../../middlewares/alreadyUpdated.js";
+import {createToken, verifyToken, updateToken} from"../../utils/jwt.js"
+import _ from "mongoose-paginate-v2";
 
 const users = Router();
 
@@ -26,7 +28,8 @@ users.get("/login", async (req, res, next) => {
 
 users.get("/", isOnline, async (req, res, next) => {
   try {
-    const { _id } = req.session;
+    const data = verifyToken(req.cookies.token)
+    const  _id  = data._id;
     const user = await userManager.readOne(_id);
     res.render("userData", { title: "USER DATA", content: user });
   } catch (error) {
@@ -36,7 +39,8 @@ users.get("/", isOnline, async (req, res, next) => {
 
 users.get("/settings", isOnline, async (req, res, next) => {
   try {
-    const { _id } = req.session;
+    const data = verifyToken(req.cookies.token)
+    const  _id  = data._id;
     const user = await userManager.readOne(_id);
     res.render("userSettings", { title: "SETTINGS", content: user });
   } catch (error) {
@@ -55,15 +59,25 @@ users.get("/role",isOnline, async (req, res, next) => {
 users.put("/", isOnline, alreadyUpdated, uploader.single("photo"), isPhoto, async (req, res, next) => {
   try {
     const { name, photo, role, age } = req.body;
+    const token = verifyToken(req.cookies.token)
 
     //actualizo el session para que se actualize la foto y el role de la navbar
     if(photo){
-      req.session.photo = photo
+      token.photo = photo;
+      delete token.exp
+      res.clearCookie("token")
+      const updatedToken = updateToken(req.cookies.token, token)
+      res.cookie("token", updatedToken, {signedCookie: true})
     }
     if(role){
-      req.session.role = role
+      token.role = role
+      delete token.exp
+      res.clearCookie("token")
+      const updatedToken = updateToken(req.cookies.token, token)
+      res.cookie("token", updatedToken, {signedCookie: true})
     }
-    const _id = req.session;
+    
+    const _id = token._id;
     
     const data = {
       name: name,

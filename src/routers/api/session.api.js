@@ -3,6 +3,7 @@ import userManager from "../../data/mongo/managers/UserManager.db.js";
 import isValidUser from "../../middlewares/isValidUser.mid.js";
 import passport from "../../middlewares/passport.mid.js";
 import isValidData from "../../middlewares/isValidData.js";
+import { token } from "morgan";
 
 const sessionRouter = Router();
 
@@ -31,7 +32,7 @@ sessionRouter.post(
   passport.authenticate("login", { session: false }),
   async (req, res, next) => {
     try {
-      return res.json({
+      return res.cookie("token", req.user.token, { signedCookie: true }).json({
         statusCode: 200,
         message: "You're welcome ",
       });
@@ -61,9 +62,9 @@ sessionRouter.post(
 //ruta de log out
 sessionRouter.post("/signout", async (req, res, next) => {
   try {
-    const online = req.session.email;
+    const online = req.cookies.token;
     if (online) {
-      req.session.destroy();
+      res.clearCookie("token")
       return res.json({
         statusCode: 200,
         message: "loged out!",

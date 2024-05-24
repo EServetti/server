@@ -4,6 +4,7 @@ async function navBar() {
     credentials: "include",
   });
   online = await online.json();
+  console.log("Is "+ JSON.stringify(online));
   //NavBar para customers
   if (online.statusCode === 200 & online.message.role !== 1) {
     const navBarContent = `
