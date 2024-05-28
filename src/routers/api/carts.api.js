@@ -1,17 +1,27 @@
 import { Router } from "express";
 import exist from "../../middlewares/userExist.js";
 import CartManager from "../../data/mongo/managers/CartManager.db.js";
+import CustomRouter from "../customRouter.js";
+import { verifyToken } from "../../utils/jwt.js";
 
 
-const cartsRouter = Router();
+
+class CartsRouter extends CustomRouter {
+  init() {
+    this.read("/",["USER","ADMIN"], read);
+    this.read("/paginate",["USER","ADMIN"], paginate);
+    this.read("/:nid",["USER","ADMIN"], readOne);
+    this.create("/",["USER","ADMIN"], exist, create);
+    this.update("/:nid",["USER","ADMIN"], update);
+    this.destroy("/:nid",["USER","ADMIN"], destroy);   
+  }
+}
 
 
-cartsRouter.get("/", read);
-cartsRouter.get("/paginate", paginate);
-cartsRouter.get("/:nid", readOne);
-cartsRouter.post("/", exist, create);
-cartsRouter.put("/:nid", update);
-cartsRouter.delete("/:nid", destroy);
+
+
+
+
 
 //metodo read
 async function read(req, res, next) {
@@ -21,22 +31,14 @@ async function read(req, res, next) {
     const allUser = all.filter((cart) => cart.user_id._id == user)
     //si existen carritos con el user_id ingresado los devuelve
     if (allUser.length !== 0 ) {
-      return res.json({
-        statusCode: 200,
-        message: allUser,
-      })}
+      return res.message200(allUser)}
     //sino se ingreso una query devuelve todos los carritos
     else if (!user){
-      return res.json({
-        statusCode: 200,
-        message: all,
-      });
+      return res.message200(all);
     } 
-    //si no existe un carrito con ese user_id devuelve todos
+    //si no existe un carrito con ese user_id devuelve error
     else {
-      const error = new Error('Not found!')
-      error.statusCode = 404;
-      throw error;
+      return res.error404()
     }
   } catch (error) {
     return next(error)
@@ -58,11 +60,7 @@ async function paginate (req, res, next) {
       nextPage: all.nextPage,
       totalPages: all.totalPages
     }
-    res.json({
-      statusCode: 200,
-      message: all.docs,
-      info: info
-    })
+    res.paginate(all, info)
   } catch (error) {
     return next(error)
   }
@@ -72,10 +70,10 @@ async function readOne(req, res, next) {
   try {
     const { nid } = req.params;
     const one = await CartManager.readOne(nid);
-    return res.json({
-      statusCode: 200,
-      message: one,
-    });
+    if(!one){
+      return res.error404()
+    }
+    return res.message200(one);
   } catch (error) {
     return next(error)
   }
@@ -84,11 +82,13 @@ async function readOne(req, res, next) {
 async function create(req, res, next) {
   try {
     const data = req.body;
+    const token = verifyToken(req.cookies.token)
+    data.user_id = token._id
+    if(Object.keys(data).length === 0) {
+      return res.error400("You must enter at least quantity and product_id!")
+    }
     const created = await CartManager.create(data);
-    return res.json({
-      statusCode: 201,
-      message: `Created cart id = ${created.id}`,
-    });
+    return res.message200("The product has been added to cart");
   } catch (error) {
     return next(error)
   }
@@ -98,11 +98,14 @@ async function update(req, res, next) {
 try {
   const { nid } = req.params;
   const data = req.body;
+  if (Object.keys(data).length === 0 || nid === ":nid") {
+    return res.error400("You must enter data and nid!");
+  }
   const updated = await CartManager.update(nid, data);
-  return res.json({
-    statusCode: 200,
-    message: updated
-  })
+  if(!updated) {
+    return res.error404()
+  }
+  return res.message200(updated)
 } catch (error) {
   return next(error);
 }
@@ -111,15 +114,18 @@ try {
 async function destroy (req, res, next) {
   try {
     const { nid } = req.params;
+    if(nid === ":nid") {
+      return res.error400("You must enter nid!")
+    }
     const eliminated = await CartManager.destroy(nid)
-    return res.json({
-      statusCode: 200,
-      message: `Eliminated cart id: ${eliminated.id}`
-    })
+    console.log(eliminated);
+    return res.message200(`The product has been eliminated of the cart!`)
   } catch (error) {
     return next(error)
   }  
 }
-export default cartsRouter;
+
+const cartsRouter = new CartsRouter()
+export default cartsRouter.getRouter();
 
 
