@@ -7,42 +7,6 @@ import passportCb from "../../middlewares/passportCollback.js"
 
 const sessionRouter = new Router();
 
-//ruta que devuelve los datos del user
-sessionRouter.get(
-  "/",
-  passportCb("data"),
-  async (req, res, next) => {
-    try {
-      const one = req.body;
-      res.json({
-        statusCode: 200,
-        message: one,
-      });
-    } catch (error) {
-      return next(error);
-    }
-  }
-);
-
-sessionRouter.get("/signout", async (req, res, next) => {
-  try {
-    const online = req.cookies.token;
-    if (online) {
-      res.clearCookie("token")
-      return res.json({
-        statusCode: 200,
-        message: "loged out!",
-      });
-    } else {
-      const error = new Error("First log in!");
-      error.statusCode = 401;
-      throw error;
-    }
-  } catch (error) {
-    return next(error);
-  }
-});
-
 //ruta para logear/registrar con Google
 sessionRouter.get("/google", passport.authenticate("Google", { scope: ["email", "profile"]}))
 sessionRouter.get(
