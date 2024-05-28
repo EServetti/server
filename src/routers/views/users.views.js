@@ -64,17 +64,21 @@ users.put("/", isOnline, alreadyUpdated, uploader.single("photo"), isPhoto, asyn
     //actualizo el session para que se actualize la foto y el role de la navbar
     if(photo){
       token.photo = photo;
+      const timeLeft = token.exp
+      const maxAge = timeLeft * 1000 - Date.now()
       delete token.exp
       res.clearCookie("token")
       const updatedToken = updateToken(req.cookies.token, token)
-      res.cookie("token", updatedToken, {signedCookie: true})
+      res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
     }
     if(role){
       token.role = role
+      const timeLeft = token.exp
+      const maxAge = timeLeft * 1000 - Date.now()
       delete token.exp
       res.clearCookie("token")
       const updatedToken = updateToken(req.cookies.token, token)
-      res.cookie("token", updatedToken, {signedCookie: true})
+      res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
     }
     
     const _id = token._id;

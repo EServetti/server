@@ -50,7 +50,7 @@ sessionRouter.get(
  passport.authenticate("Google", {session: false}),
  (req, res, next) => {
    try {
-     return res.cookie("token", req.user.token, {signedCookie: true}).redirect("/")
+     return res.cookie("token", req.user.token, {signedCookie: true, maxAge: 3600000}).redirect("/")
    } catch (error) {
      return next(error);
    }

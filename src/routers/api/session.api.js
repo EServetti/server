@@ -33,7 +33,7 @@ sessionRouter.post(
   passportCb("login"),
   async (req, res, next) => {
     try {
-      return res.cookie("token", req.user.token, { signedCookie: true }).json({
+      return res.cookie("token", req.user.token, { signedCookie: true, maxAge:3600000 }).json({
         statusCode: 200,
         message: "You're welcome ",
       });
