@@ -20,7 +20,6 @@ socket.on("products", (data) => {
   document.querySelector("#product").innerHTML = content;
 });
 //envia los datos del producto
-
 document
   .querySelector("#productForm")
   .addEventListener("submit", async (event) => {

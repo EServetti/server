@@ -42,8 +42,9 @@ class CustomRouter {
     if (policies.includes("PUBLIC")) return next();
     else {
       let token = req.cookies["token"];
-      if (!token) return res.error401();
-      else {
+      if (!token) {
+        return res.error401();
+      } else {
         try {
           token = verifyToken(token);
           const { role, email } = token;

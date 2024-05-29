@@ -101,11 +101,8 @@ socket.on("anything", message => {
 
   //Cancela compra
   function cancel(){
-  const uid = document.querySelector("#uid").textContent.trim();
-  const info = {
-    uid: uid,
-  }
-  socket.emit("cancel", info)
+  const token = document.cookie
+  socket.emit("cancel", token)
   socket.on("canceled", () => {
       location.reload();
     })

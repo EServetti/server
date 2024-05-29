@@ -18,7 +18,7 @@ class ViewsRouter extends CustomRouter {
     //vista session
     this.use("/session", sessionRouter);
 
-    this.read("/",["USER","ADMIN"], async (req, res, next) => {
+    this.read("/",["PUBLIC"], async (req, res, next) => {
       try {
         const filter = {};
         const opts = {

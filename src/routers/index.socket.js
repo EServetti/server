@@ -87,20 +87,20 @@ socket.on("delete", async info => {
 })
 
 //socket para cancelar
-socket.on("cancel", async info => {
-  const filter = {
-    user_id: info.uid,
-  }
-  const opts = {};
-  let allCarts = await CartManager.paginate(filter, opts)
-  allCarts = allCarts.docs 
-  allCarts.forEach(async element => {
-    await CartManager.destroy(element._id)
-  });
-  let all = await CartManager.paginate(filter, opts)
-  //despues de eliminar los carritos actualizo all y lo envío
-  all = all.docs
-  socket.emit("cart", all)
+socket.on("cancel", async token => {
+  //saco la palabra token= de la cookie enviada en el emit para que quede solo el token
+  token = token.split("=")[1]
+  let all = await fetch("http://localhost:8080/api/carts/all", {
+    method: "DELETE",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token: token })
+  })
+  console.log("IS "+JSON.stringify(all) );
+  all = await all.json()
+  socket.emit("cart", all.message)
   socket.emit("canceled")
 })
 
