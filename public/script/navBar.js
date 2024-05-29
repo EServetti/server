@@ -9,7 +9,7 @@ async function navBar() {
   if ((online.statusCode === 200) & (online.message.role !== 1)) {
     const navBarContent = `
        <div class="container-fluid">
-         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px ">
+         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px; white-space: nowrap; ">
            Everything for your home
          </h5>
          <button
@@ -58,7 +58,7 @@ async function navBar() {
   else if (online.message.role === 1) {
     const navBarContent = `
        <div class="container-fluid">
-         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px ">
+         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px; white-space: nowrap; ">
            Everything for your home
          </h5>
          <button
@@ -110,7 +110,7 @@ async function navBar() {
   else {
     const navBarContent = `
        <div class="container-fluid">
-         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px ">
+         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px; white-space: nowrap; ">
            Everything for your home
          </h5>
          <button
