@@ -6,6 +6,7 @@ import products from "./products.view.js";
 import carts from "./cart.view.js";
 import sessionRouter from "./session.view.js";
 import CustomRouter from "../customRouter.js";
+import ticketsRouter from "../views/tickets.views.js";
 
 class ViewsRouter extends CustomRouter {
   init() {
@@ -17,6 +18,8 @@ class ViewsRouter extends CustomRouter {
     this.use("/carts", carts);
     //vista session
     this.use("/session", sessionRouter);
+    //vista ticket
+    this.use("/tickets", ticketsRouter)
 
     this.read("/",["PUBLIC"], async (req, res, next) => {
       try {
