@@ -87,6 +87,7 @@ passport.use(
           name: data.name,
           role: data.role,
           photo: data.photo,
+          _id: data._id
         };
         req.body = one;
         return done(null, one);

@@ -13,14 +13,16 @@
         id="cancel"
         style="align-self: center; margin-top:5px;margin-right:10px; cursor:pointer;  padding: 10px 20px;  border-radius: 5px;  border: none; color:white; background-color:red"
       >Cancel buy</button>
+      
       <button
-    onclick="finish()"
     class="finish"
     id="finish"
     style="align-self: center; margin-top:5px;margin-left:10px; cursor:pointer;  padding: 10px 20px;  border-radius: 5px; border: none; color:white; background-color:green"
     >Finish buy</button>
 </div>
 <script src="/socket.io/socket.io.js"></script>
+<script src="/script/finishBuy.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 const socket = io();
 socket.on("here", message => {
@@ -39,7 +41,7 @@ socket.on("cart", allCarts => {
         style=" width:350px;height:min-content;display:flex;justify-content:center;align-items:center;flex-direction:column;background-color:white; padding: 0 10px 0 10px; margin: 10px 30px 10px 30px; border: 1px solid black; border-radius:10px"
       >
         <img
-          src=${each.product_id.photo}
+          src=${each.photo}
           class="productImage"
           style="width: 300px; height: 300px; margin: 10px 0 0 0;border: 1px solid #6781B4; border-radius:10px"
         />
@@ -47,8 +49,9 @@ socket.on("cart", allCarts => {
           class="productInfo"
           style="display: flex; justify-content:center;  flex-direction:column; align-items: center;  "
         >
-        <span>Price $${each.product_id.price}</span>
+        <span>Price $${each.price}</span>
         <span>The quantity of ${each.quantity}</span>
+        <span>Total price ${each.subTotal}</span>
         <div class="quantCont" style="display: flex; justify-content:center; align-items:center">
         <div style="display: flex; justify-content: center; flex-direction: column">
         <div>
@@ -68,6 +71,7 @@ socket.on("cart", allCarts => {
 })
 
 socket.on("anything", message => {
+  console.log(message)
   const content = `<h1 style="color: white; margin-top: 50px;display: flex;align-items: center; ">${message}</h1>`;
   document.querySelector("#cartCont").innerHTML = content;
 })
@@ -104,18 +108,6 @@ socket.on("anything", message => {
   const token = document.cookie
   socket.emit("cancel", token)
   socket.on("canceled", () => {
-      location.reload();
-    })
-  }
-
-  //Finaliza compra
-  function finish(){
-  const uid = document.querySelector("#uid").textContent.trim();
-  const info = {
-    uid: uid,
-  }
-  socket.emit("finish", info)
-  socket.on("completed", () => {
       location.reload();
     })
   }
