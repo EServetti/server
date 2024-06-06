@@ -1,15 +1,15 @@
 async function navBar() {
-  let online = await fetch("/session", {
-    method: "GET",
-    credentials: "include",
-  });
+  let online = await fetch("/api/sessions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    }});
   online = await online.json();
-  console.log("Is "+ JSON.stringify(online));
   //NavBar para customers
-  if (online.statusCode === 200 & online.message.role !== 1) {
+  if ((online.statusCode === 200) & (online.message.role !== 1)) {
     const navBarContent = `
        <div class="container-fluid">
-         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px ">
+         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px; white-space: nowrap; ">
            Everything for your home
          </h5>
          <button
@@ -55,10 +55,10 @@ async function navBar() {
     document.querySelector("#mainNavbar").innerHTML = navBarContent;
   }
   // NavBar para sellers
-   else if (online.message.role === 1) {
+  else if (online.message.role === 1) {
     const navBarContent = `
        <div class="container-fluid">
-         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px ">
+         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px; white-space: nowrap; ">
            Everything for your home
          </h5>
          <button
@@ -107,10 +107,10 @@ async function navBar() {
     document.querySelector("#mainNavbar").innerHTML = navBarContent;
   }
   //NavBar para sesiones NO iniciadas
-   else {
+  else {
     const navBarContent = `
        <div class="container-fluid">
-         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px ">
+         <h5 style="color:white ;margin-right:20px; border: 2px solid white; padding: 20px 10px 20px 10px; white-space: nowrap; ">
            Everything for your home
          </h5>
          <button
@@ -151,7 +151,12 @@ async function navBar() {
   document
     .querySelector("#closeSession")
     .addEventListener("click", async () => {
-      await fetch("/session/signout");
+      await fetch("/api/sessions/signout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       return location.replace("/");
     });
 }

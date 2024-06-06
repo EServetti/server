@@ -60,7 +60,11 @@ server.use(
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }))
 server.use(express.static("public"))
-server.use(cors())
+server.use(cors({
+  origin: 'http://localhost:8080', 
+  credentials: true 
+}
+))
 
 
 //endpoints

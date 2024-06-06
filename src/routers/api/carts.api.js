@@ -1,70 +1,62 @@
 import { Router } from "express";
 import exist from "../../middlewares/userExist.js";
 import CartManager from "../../data/mongo/managers/CartManager.db.js";
+import CustomRouter from "../customRouter.js";
+import { verifyToken } from "../../utils/jwt.js";
 
-
-const cartsRouter = Router();
-
-
-cartsRouter.get("/", read);
-cartsRouter.get("/paginate", paginate);
-cartsRouter.get("/:nid", readOne);
-cartsRouter.post("/", exist, create);
-cartsRouter.put("/:nid", update);
-cartsRouter.delete("/:nid", destroy);
+class CartsRouter extends CustomRouter {
+  init() {
+    this.read("/", ["USER", "ADMIN"], read);
+    this.read("/paginate", ["USER", "ADMIN"], paginate);
+    this.read("/:nid", ["USER", "ADMIN"], readOne);
+    this.create("/", ["USER", "ADMIN"], exist, create);
+    this.update("/:nid", ["USER", "ADMIN"], update);
+    this.destroy("/all", ["USER","PUBLIC"], desAll);
+    this.destroy("/:nid", ["USER", "ADMIN"], destroy);
+  }
+}
 
 //metodo read
 async function read(req, res, next) {
   try {
-    const { user } = req.query
+    const { user } = req.query;
     const all = await CartManager.read();
-    const allUser = all.filter((cart) => cart.user_id._id == user)
+    const allUser = all.filter((cart) => cart.user_id._id == user);
     //si existen carritos con el user_id ingresado los devuelve
-    if (allUser.length !== 0 ) {
-      return res.json({
-        statusCode: 200,
-        message: allUser,
-      })}
+    if (allUser.length !== 0) {
+      return res.message200(allUser);
+    }
     //sino se ingreso una query devuelve todos los carritos
-    else if (!user){
-      return res.json({
-        statusCode: 200,
-        message: all,
-      });
-    } 
-    //si no existe un carrito con ese user_id devuelve todos
+    else if (!user) {
+      return res.message200(all);
+    }
+    //si no existe un carrito con ese user_id devuelve error
     else {
-      const error = new Error('Not found!')
-      error.statusCode = 404;
-      throw error;
+      return res.error404();
     }
   } catch (error) {
-    return next(error)
+    return next(error);
   }
 }
 //metodo paginate
-async function paginate (req, res, next) {
+async function paginate(req, res, next) {
   try {
     const { user } = req.query;
-    const filter = {}
-    const opts = {}
-    if(user) {
-      filter.user_id= user
+    const filter = {};
+    const opts = {};
+    if (user) {
+      filter.user_id = user;
     }
-    const all = await CartManager.paginate(filter, opts)
+    const all = await CartManager.paginate(filter, opts);
     const info = {
       page: all.page,
       prevPage: all.prevPage,
       nextPage: all.nextPage,
-      totalPages: all.totalPages
-    }
-    res.json({
-      statusCode: 200,
-      message: all.docs,
-      info: info
-    })
+      totalPages: all.totalPages,
+    };
+    res.paginate(all, info);
   } catch (error) {
-    return next(error)
+    return next(error);
   }
 }
 //metodo readOne
@@ -72,54 +64,86 @@ async function readOne(req, res, next) {
   try {
     const { nid } = req.params;
     const one = await CartManager.readOne(nid);
-    return res.json({
-      statusCode: 200,
-      message: one,
-    });
+    if (!one) {
+      return res.error404();
+    }
+    return res.message200(one);
   } catch (error) {
-    return next(error)
+    return next(error);
   }
 }
 //metodo create
 async function create(req, res, next) {
   try {
     const data = req.body;
+    const token = verifyToken(req.cookies.token);
+    data.user_id = token._id;
+    if (Object.keys(data).length === 0) {
+      return res.error400("You must enter at least quantity and product_id!");
+    }
     const created = await CartManager.create(data);
-    return res.json({
-      statusCode: 201,
-      message: `Created cart id = ${created.id}`,
-    });
+    return res.message200("The product has been added to cart");
   } catch (error) {
-    return next(error)
+    return next(error);
   }
 }
 //metodo update
 async function update(req, res, next) {
-try {
-  const { nid } = req.params;
-  const data = req.body;
-  const updated = await CartManager.update(nid, data);
-  return res.json({
-    statusCode: 200,
-    message: updated
-  })
-} catch (error) {
-  return next(error);
-}
-}
-//metodo destroy
-async function destroy (req, res, next) {
   try {
     const { nid } = req.params;
-    const eliminated = await CartManager.destroy(nid)
-    return res.json({
-      statusCode: 200,
-      message: `Eliminated cart id: ${eliminated.id}`
-    })
+    const data = req.body;
+    if (Object.keys(data).length === 0 || nid === ":nid") {
+      return res.error400("You must enter data and nid!");
+    }
+    const updated = await CartManager.update(nid, data);
+    if (!updated) {
+      return res.error404();
+    }
+    return res.message200(updated);
   } catch (error) {
-    return next(error)
-  }  
+    return next(error);
+  }
 }
-export default cartsRouter;
+//metodo destroy
+async function destroy(req, res, next) {
+  try {
+    const { nid } = req.params;
+    if (nid === ":nid") {
+      return res.error400("You must enter nid!");
+    }
+    const eliminated = await CartManager.destroy(nid);
+    console.log(eliminated);
+    return res.message200(`The product has been eliminated of the cart!`);
+  } catch (error) {
+    return next(error);
+  }
+}
+//metodo destroy (todos los carritos de un user)
+async function desAll(req, res, next) {
+  try {
+    const token = verifyToken(req.body.token);
+    console.log("Token id is "+ token._id );
+    if (token._id) {
+      const filter = {
+        user_id: token._id,
+      };
+      const opts = {};
+      let allCarts = await CartManager.paginate(filter, opts);
+      allCarts = allCarts.docs;
+      allCarts.forEach(async (element) => {
+        await CartManager.destroy(element._id);
+      });
+      //despues de eliminar los carritos actualizo all y lo envío
+      let all = await CartManager.paginate(filter, opts);
+      all = all.docs;
+      return res.message200(all);
+    } else {
+      return res.error400("You must log in!");
+    }
+  } catch (error) {
+    return next(error);
+  }
+}
 
-
+const cartsRouter = new CartsRouter();
+export default cartsRouter.getRouter();
