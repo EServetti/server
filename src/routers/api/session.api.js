@@ -5,20 +5,19 @@ import passport from "../../middlewares/passport.mid.js";
 import isValidData from "../../middlewares/isValidData.js";
 import { token } from "morgan";
 import passportCb from "../../middlewares/passportCollback.js"
+import CustomRouter from "../customRouter.js";
 
-const sessionRouter = Router();
-
+class SessionRouter extends CustomRouter {
+  init(){
 //ruta de register
-sessionRouter.post(
+this.create(
   "/register",
+  ["PUBLIC"],
   isValidData,
   passportCb("register"),
   async (req, res, next) => {
     try {
-      return res.json({
-        statusCode: 201,
-        message: "The acount has been created!",
-      });
+      return res.message201("The account has been created!");
     } catch (error) {
       console.log(error);
       return next(error);
@@ -27,16 +26,14 @@ sessionRouter.post(
 );
 
 //ruta de login
-sessionRouter.post(
+this.create(
   "/login",
+  ["PUBLIC"],
   isValidUser,
   passportCb("login"),
   async (req, res, next) => {
     try {
-      return res.cookie("token", req.user.token, { signedCookie: true }).json({
-        statusCode: 200,
-        message: "You're welcome ",
-      });
+      return res.cookie("token", req.user.token, { signedCookie: true, maxAge:3600000 }).message200("You're welcome!");
     } catch (error) {
       return next(error);
     }
@@ -44,16 +41,14 @@ sessionRouter.post(
 );
 
 //ruta para ver datos del user online
-sessionRouter.post(
+this.create(
   "/",
+  ["USER","ADMIN"],
   passportCb("data"),
   async (req, res, next) => {
     try {
       const one = req.body;
-      res.json({
-        statusCode: 200,
-        message: one
-      });
+      res.message200(one);
     } catch (error) {
       return next(error);
     }
@@ -61,23 +56,21 @@ sessionRouter.post(
 );
 
 //ruta de log out
-sessionRouter.post("/signout", async (req, res, next) => {
+this.create("/signout",
+["USER","ADMIN"],
+async (req, res, next) => {
   try {
     const online = req.cookies.token;
-    if (online) {
       res.clearCookie("token")
-      return res.json({
-        statusCode: 200,
-        message: "loged out!",
-      });
-    } else {
-      const error = new Error("First log in!");
-      error.statusCode = 401;
-      throw error;
-    }
+      return res.message200("Loged out!");
   } catch (error) {
     return next(error);
   }
 });
+  }
+}
 
-export default sessionRouter;
+
+
+const sessionRouter = new SessionRouter();
+export default sessionRouter.getRouter();

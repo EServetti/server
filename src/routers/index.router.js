@@ -2,11 +2,15 @@ import { Router } from 'express';
 import errorHandler from '../middlewares/errorHandler.mid.js'
 import apiRouter from './api/index.api.js';
 import viewsRouter from './views/index.views.js';
+import CustomRouter from './customRouter.js';
 
 
-const indexRouter = Router();
+class IndexRouter extends CustomRouter {
+   init() {
+    this.use('/api', apiRouter);
+    this.use("/", viewsRouter);
+   }
+}
+ const indexRouter= new IndexRouter()
 
-indexRouter.use('/api', apiRouter);
-indexRouter.use("/", viewsRouter);
-
-export default indexRouter;
+export default indexRouter.getRouter();

@@ -1,0 +1,57 @@
+    <h1 style="color:white; border-bottom: 1px solid white; padding-bottom:10px; display:flex; justify-content:center" >Finish buy</h1>
+<div class="main" style="display: flex; justify-content:center">
+<div class="mainCont" style="width: 700px; height:auto; justify-content:center; display:flex; flex-direction:column; margin-top:20px;">
+    {{#each total}}
+    <div class="cartCont" style="display: flex; align-items: center;width: 100%; height:auto; background-color:white; margin:5px 0; border-radius:25px; padding:10px;">
+        <img src={{this.photo}} style="width: 150px; height:150px; margin: 0 10px; border-radius:25px"/>
+        <div class="cartData" style="display: flex; justify-content:center; flex-direction:column">
+            <h3>{{this.title}} x {{this.quantity}}</h3>
+            <h4 style="display: flex; justify-content:center">${{this.subTotal}}</h4>
+        </div>
+    </div>
+    {{/each}}
+    <div class="totalPrice" style="display: flex;justify-content:center; align-items: center;width: 100%; height:auto; background-color:white; margin:5px 0; border-radius:25px; padding:10px;">
+        <h2>Total price: ${{totalPrice}}</h2>
+    </div>
+    <div class="paymentMethods" style="display: flex;justify-content:center; align-items: center;width: 100%; height:auto; background-color:white; margin:5px 0; border-radius:25px; padding:10px;">
+        <h3>Payment methods: </h3>
+        <select
+        class="methods"
+        type="text"
+        name="methods"
+        id="methods"
+        style="width: 300px;border-radius: 5px; border: none; margin: 5px 5px "
+      >
+      <option value="" disabled selected >Select a method</option>
+      <option value="Visa">Visa</option>
+      <option value="Mastercard">Mastercard</option>
+      <option value="Naranja">Naranja</option>
+      </select>
+    </div>
+    <div class="pay" style="display: flex; align-items: center;flex-direction:column;width: 100%; height:auto; background-color:white; margin:5px 0; border-radius:25px; padding:10px;">
+        <span style="display: flex; align-items: center;">
+        <div class="cardImmage" id="cardImmage"></div>
+        <p style="display:flex; align-items:center; margin: 0 5px">Card number: </p>
+        <input class="cardNum" id="cardNum" type="text" placeholder="as it appears on the card" style="width: 300px; border: none">
+        </span>
+        <span style="display: flex; align-items: center;">
+            <p style="display:flex; align-items:center; margin: 0 5px">Name of owner: </p>
+        <input class="owner" id="owner" type="text" placeholder="as it appears on the card" style="width: 300px; border: none">
+        </span>
+        <span style="display: flex; align-items: center;">
+            <p style="display:flex; align-items:center; margin: 0 5px">Expiration date: </p>
+        <input class="expDate" id="expDate" type="date" style="width: 300px; border: none">
+        </span>
+        <span style="display: flex; align-items: center;">
+            <p style="display:flex; align-items:center; margin: 0 5px">CVV/CVC: </p>
+        <input class="cvv" id="cvv" type="number" style="width: 300px; border: none">
+        </span>
+        <span style="display: flex; align-items: center;">
+            <button class="pay" style="align-self: center; margin-top:5px;margin-right:10px; cursor:pointer;  padding: 10px 20px;  border-radius: 5px;">
+                PAY
+            </button>
+        </span>
+    </div>
+</div>
+</div>
+<script src="/script/cardImmage.js"></script>

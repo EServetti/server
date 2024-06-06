@@ -42,6 +42,14 @@ class Manager {
       throw error;
     }
   }
+  async aggregate(obj) {
+    try {
+      const result = await this.Model.aggregate(obj)
+      return result
+    } catch (error) {
+      throw error
+    }
+  }
   async update (id, data) {
     try {
       const one = await this.Model.findByIdAndUpdate(id, data, {new:true}).lean();

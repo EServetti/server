@@ -23,7 +23,7 @@ document.querySelector("#add2Cart").addEventListener("click", async () => {
     Swal.fire({
       title: response.message,
       confirmButtonText: "Accept",
-      item: "error",
+      icon: "error",
       timer: 5000,
       timerProgressBar: true,
       confirmButtonColor: "#466365",

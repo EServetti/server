@@ -3,11 +3,13 @@ import cartManager from "../../data/mongo/managers/CartManager.db.js";
 import userManager from "../../data/mongo/managers/UserManager.db.js";
 import isOnline from "../../middlewares/isOnline.js";
 import { createToken, verifyToken } from "../../utils/jwt.js"
+import CustomRouter from "../customRouter.js";
 
-const carts = Router();
 
-
-carts.get("/", isOnline, async (req, res, next) => {
+class CartsRouter extends CustomRouter {
+init(){
+  
+this.read("/",["USER","ADMIN"], isOnline, async (req, res, next) => {
   try {
     const data = verifyToken(req.cookies.token)
     const  _id  = data._id;
@@ -20,9 +22,8 @@ carts.get("/", isOnline, async (req, res, next) => {
   }
 });
 
-carts.post("/", async (req, res, next) => {
+this.create("/",["USER","ADMIN"],  async (req, res, next) => {
   try {
-    if (req.cookies.token) {
       const token = verifyToken(req.cookies.token)
       const  _id  = token._id
       const { product_id }= req.body
@@ -32,19 +33,14 @@ carts.post("/", async (req, res, next) => {
         quantity: 1
       }
       await cartManager.create(data)
-      return res.json({
-        statusCode: 201,
-        message: "The product has been added to cart"
-      })
-    } else {
-      console.log("Must log in!");
-      return res.json({
-        statusCode: 401,
-        message: "You must login first!"
-      })
-    }
+      return res.message201("The product has been added to cart")
   } catch (error) {
     return next(error)
   }
 })
-export default carts;
+
+}
+}
+
+const carts = new CartsRouter();
+export default carts.getRouter();
