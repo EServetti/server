@@ -28,6 +28,9 @@ async function read(req, res, next) {
     try {
     const filter = {}
     const opts = {}
+    if(req.query.category) {
+      filter.category = req.query.category
+    }
     if(req.query.limit) {
         opts.limit = req.query.limit;
     }
