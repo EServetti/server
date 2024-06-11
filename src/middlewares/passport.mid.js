@@ -6,6 +6,7 @@ import { createHash, compareHash } from "../utils/hash.js";
 import userManager from "../data/mongo/managers/UserManager.db.js";
 import { createToken, verifyToken } from "../utils/jwt.js"
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
+import environment from "../utils/env.utils.js";
 
 passport.use(
   "register",
@@ -107,8 +108,8 @@ passport.use(
   "Google",
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientID: environment.GOOGLE_CLIENT_ID,
+      clientSecret: environment.GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:8080/session/google/callback",
       passReqToCallback: true,
     },

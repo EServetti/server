@@ -1,4 +1,4 @@
-import "dotenv/config";
+import environment from './src/utils/env.utils.js';
 import express from 'express';
 import errorHandler from './src/middlewares/errorHandler.mid.js';
 import pathHandler from './src/middlewares/pathHandler.mid.js'
@@ -14,11 +14,12 @@ import dbConnect from './src/utils/DbConnection.js';
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import Handlebars from "handlebars"
+import argsUtil from "./src/utils/args.util.js"
 
 
 //http server
 const server = express();
-const port = process.env.PORT
+const port = environment.PORT
 const ready = async () => {
     console.log(`Server listening on port ${port}`);
     await dbConnect();
@@ -44,7 +45,7 @@ Handlebars.registerHelper('equal', function(value1, value2, options) {
 });
 
 //middlewares
-server.use(cookieParser(process.env.SECRET_COOKIE))
+server.use(cookieParser(environment.SECRET_COOKIE))
 // server.use(
 //     session({
 //       store: new MongoStore({
@@ -71,3 +72,5 @@ server.use('/', indexRouter)
 server.use(morgan('dev'));
 server.use(errorHandler);
 server.use(pathHandler)
+
+console.log(process.env);

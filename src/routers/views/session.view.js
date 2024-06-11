@@ -6,6 +6,7 @@ import { signedCookie } from "cookie-parser";
 import passportCb from "../../middlewares/passportCollback.js";
 import CustomRouter from "../customRouter.js";
 
+
 class SessionRouter extends CustomRouter {
   init() {
     //ruta para logear/registrar con Google
