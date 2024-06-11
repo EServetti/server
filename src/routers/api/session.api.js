@@ -1,11 +1,9 @@
 import { Router } from "express";
-import userManager from "../../data/mongo/managers/UserManager.db.js";
 import isValidUser from "../../middlewares/isValidUser.mid.js";
-import passport from "../../middlewares/passport.mid.js";
 import isValidData from "../../middlewares/isValidData.js";
-import { token } from "morgan";
 import passportCb from "../../middlewares/passportCollback.js"
 import CustomRouter from "../customRouter.js";
+import { register, login, data, signout } from "../../controllers/api/controller.api.session.js";
 
 class SessionRouter extends CustomRouter {
   init(){
@@ -15,14 +13,7 @@ this.create(
   ["PUBLIC"],
   isValidData,
   passportCb("register"),
-  async (req, res, next) => {
-    try {
-      return res.message201("The account has been created!");
-    } catch (error) {
-      console.log(error);
-      return next(error);
-    }
-  }
+  register
 );
 
 //ruta de login
@@ -31,13 +22,7 @@ this.create(
   ["PUBLIC"],
   isValidUser,
   passportCb("login"),
-  async (req, res, next) => {
-    try {
-      return res.cookie("token", req.user.token, { signedCookie: true, maxAge:3600000 }).message200("You're welcome!");
-    } catch (error) {
-      return next(error);
-    }
-  }
+  login
 );
 
 //ruta para ver datos del user online
@@ -45,31 +30,16 @@ this.create(
   "/",
   ["USER","ADMIN"],
   passportCb("data"),
-  async (req, res, next) => {
-    try {
-      const one = req.body;
-      res.message200(one);
-    } catch (error) {
-      return next(error);
-    }
-  }
+  data
 );
 
 //ruta de log out
 this.create("/signout",
 ["USER","ADMIN"],
-async (req, res, next) => {
-  try {
-    const online = req.cookies.token;
-      res.clearCookie("token")
-      return res.message200("Loged out!");
-  } catch (error) {
-    return next(error);
-  }
-});
-  }
+signout
+);
 }
-
+}
 
 
 const sessionRouter = new SessionRouter();

@@ -2,7 +2,7 @@ import { Router } from "express";
 import exist from "../../middlewares/userExist.js";
 import CartManager from "../../data/mongo/managers/CartManager.db.js";
 import CustomRouter from "../customRouter.js";
-import { verifyToken } from "../../utils/jwt.js";
+import { paginate, readOne, create, update, destroy, desAll } from "../../controllers/api/controller.api.carts.js";
 
 class CartsRouter extends CustomRouter {
   init() {
@@ -38,112 +38,7 @@ async function read(req, res, next) {
     return next(error);
   }
 }
-//metodo paginate
-async function paginate(req, res, next) {
-  try {
-    const { user } = req.query;
-    const filter = {};
-    const opts = {};
-    if (user) {
-      filter.user_id = user;
-    }
-    const all = await CartManager.paginate(filter, opts);
-    const info = {
-      page: all.page,
-      prevPage: all.prevPage,
-      nextPage: all.nextPage,
-      totalPages: all.totalPages,
-    };
-    res.paginate(all, info);
-  } catch (error) {
-    return next(error);
-  }
-}
-//metodo readOne
-async function readOne(req, res, next) {
-  try {
-    const { nid } = req.params;
-    const one = await CartManager.readOne(nid);
-    if (!one) {
-      return res.error404();
-    }
-    return res.message200(one);
-  } catch (error) {
-    return next(error);
-  }
-}
-//metodo create
-async function create(req, res, next) {
-  try {
-    const data = req.body;
-    const token = verifyToken(req.cookies.token);
-    data.user_id = token._id;
-    if (Object.keys(data).length === 0) {
-      return res.error400("You must enter at least quantity and product_id!");
-    }
-    const created = await CartManager.create(data);
-    return res.message200("The product has been added to cart");
-  } catch (error) {
-    return next(error);
-  }
-}
-//metodo update
-async function update(req, res, next) {
-  try {
-    const { nid } = req.params;
-    const data = req.body;
-    if (Object.keys(data).length === 0 || nid === ":nid") {
-      return res.error400("You must enter data and nid!");
-    }
-    const updated = await CartManager.update(nid, data);
-    if (!updated) {
-      return res.error404();
-    }
-    return res.message200(updated);
-  } catch (error) {
-    return next(error);
-  }
-}
-//metodo destroy
-async function destroy(req, res, next) {
-  try {
-    const { nid } = req.params;
-    if (nid === ":nid") {
-      return res.error400("You must enter nid!");
-    }
-    const eliminated = await CartManager.destroy(nid);
-    console.log(eliminated);
-    return res.message200(`The product has been eliminated of the cart!`);
-  } catch (error) {
-    return next(error);
-  }
-}
-//metodo destroy (todos los carritos de un user)
-async function desAll(req, res, next) {
-  try {
-    const token = verifyToken(req.body.token);
-    console.log("Token id is "+ token._id );
-    if (token._id) {
-      const filter = {
-        user_id: token._id,
-      };
-      const opts = {};
-      let allCarts = await CartManager.paginate(filter, opts);
-      allCarts = allCarts.docs;
-      allCarts.forEach(async (element) => {
-        await CartManager.destroy(element._id);
-      });
-      //despues de eliminar los carritos actualizo all y lo envío
-      let all = await CartManager.paginate(filter, opts);
-      all = all.docs;
-      return res.message200(all);
-    } else {
-      return res.error400("You must log in!");
-    }
-  } catch (error) {
-    return next(error);
-  }
-}
+
 
 const cartsRouter = new CartsRouter();
 export default cartsRouter.getRouter();
