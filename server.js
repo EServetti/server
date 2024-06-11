@@ -10,12 +10,11 @@ import { createServer } from "http"
 import { Server } from "socket.io"
 import socketCb from "./src/routers/index.socket.js"
 import dbConnect from './src/utils/DbConnection.js';
-import session from "express-session"
+// import session from "express-session"
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import Handlebars from "handlebars"
 
-import MongoStore from "connect-mongo";
 
 //http server
 const server = express();
@@ -46,22 +45,22 @@ Handlebars.registerHelper('equal', function(value1, value2, options) {
 
 //middlewares
 server.use(cookieParser(process.env.SECRET_COOKIE))
-server.use(
-    session({
-      store: new MongoStore({
-        mongoUrl: process.env.MONGO_URI,
-        ttl: 60 * 60
-      }),
-      secret: process.env.SECRET_SESSION,
-      resave: true,
-      saveUninitialized: true
-    })
-  );
+// server.use(
+//     session({
+//       store: new MongoStore({
+//         mongoUrl: process.env.MONGO_URI,
+//         ttl: 60 * 60
+//       }),
+//       secret: process.env.SECRET_SESSION,
+//       resave: true,
+//       saveUninitialized: true
+//     })
+//   );
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }))
 server.use(express.static("public"))
 server.use(cors({
-  origin: 'http://localhost:8080', 
+  origin: true, 
   credentials: true 
 }
 ))
