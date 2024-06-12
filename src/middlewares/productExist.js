@@ -1,4 +1,4 @@
-import productManager from "../data/mongo/managers/ProductManager.db.js";
+import productManager from "../DAO/mongo/managers/ProductManager.db.js";
 async function exist (req, res, next) {
 try { 
     const { title } = req.body;

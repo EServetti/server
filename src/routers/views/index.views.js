@@ -1,6 +1,6 @@
 import { Router } from "express";
 //import ProductManager from "../../data/fs/ProductManager.fs.js"
-import productManager from "../../data/mongo/managers/ProductManager.db.js";
+import productManager from "../../DAO/mongo/managers/ProductManager.db.js";
 import users from "./users.views.js";
 import products from "./products.view.js";
 import carts from "./cart.view.js";

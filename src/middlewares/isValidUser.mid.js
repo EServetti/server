@@ -1,4 +1,4 @@
-import userManager from "../data/mongo/managers/UserManager.db.js";
+import userManager from "../DAO/mongo/managers/UserManager.db.js";
 
 async function isValidUser(req, res, next) {
   try {

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import exist from "../../middlewares/userExist.js";
-import CartManager from "../../data/mongo/managers/CartManager.db.js";
+import CartManager from "../../DAO/mongo/managers/CartManager.db.js";
 import CustomRouter from "../customRouter.js";
 import { paginate, readOne, create, update, destroy, desAll } from "../../controllers/api/controller.api.carts.js";
 

@@ -1,4 +1,4 @@
-import cartsManager from "../../data/mongo/managers/CartManager.db.js";
+import cartsManager from "../../DAO/mongo/managers/CartManager.db.js";
 import CustomService from "../customService.js"; 
 
 const cartsService = new CustomService(cartsManager)

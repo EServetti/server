@@ -1,8 +1,8 @@
-import ProductManager from "../data/mongo/managers/ProductManager.db.js";
+import ProductManager from "../DAO/mongo/managers/ProductManager.db.js";
 import path from "path";
 import fs from "fs";
 import __dirname from "../../utils.js";
-import CartManager from "../data/mongo/managers/CartManager.db.js";
+import CartManager from "../DAO/mongo/managers/CartManager.db.js";
 import { log } from "console";
 
 //toma el dato de base64 (photo), lo guarda en /img y le da el nombre con la ruta adecuada

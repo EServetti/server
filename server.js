@@ -73,4 +73,3 @@ server.use(morgan('dev'));
 server.use(errorHandler);
 server.use(pathHandler)
 
-console.log(process.env);
