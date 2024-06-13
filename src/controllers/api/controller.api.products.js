@@ -45,6 +45,9 @@ async function read(req, res, next) {
       nextPage: all.nextPage,
       maxPage: all.limit
     }
+    if(!all.docs) {
+      return res.error404()
+    }
     return res.paginate(all, info)
     } catch (error) {
       return next(error)
@@ -54,7 +57,13 @@ async function read(req, res, next) {
   async function readOne(req, res, next) {
     try {
       const { nid } = req.params;
+      if(nid === ":nid"){
+        return res.error400("You must enter nid!")
+      }
       const one = await readOneService(nid);
+      if (!one) {
+        return res.error404();
+      }
       return res.message200(one)
     } catch (error) {
       return next(error)
@@ -64,7 +73,7 @@ async function read(req, res, next) {
   async function create(req, res, next) {
     try {
       const data = req.body;
-      if(Object.keys(data).length === 0) {
+      if(Object.keys(data).length === 0 || !data.title) {
         return res.error400("You must enter at least title of the product!")
       }
       const created = await createService(data);
@@ -82,6 +91,9 @@ async function read(req, res, next) {
       return res.error400("You must enter data and nid!");
     }
     const updated = await updateService(nid, data);
+    if(!updated){
+      return res.error404()
+    }
     return res.message200(updated)
   } catch (error) {
     return next(error);
@@ -95,6 +107,9 @@ async function read(req, res, next) {
         return res.error400("You must enter nid!")
       }
       const eliminated = await destroyService(nid)
+      if(!eliminated){
+        return res.error404()
+      }
       return res.message200(`The product ${eliminated.title} has been eliminated!`)
     } catch (error) {
       return next(error)
