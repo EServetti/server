@@ -1,31 +1,24 @@
+import crypto from "crypto";
+import { on } from "events";
+
 class ProductManager {
   //Se crea el array de clase y priviado que contiene a todos los productos
   static #products = [];
   //metodo para crear un nuevo producto
   create(data) {
     try {
-      // Verificar si no se ingreso alguna propiedad
-      if (!data.title) {
-        console.log("¡Missing data!");
-        return;
-      }
       const product = {
-        id:
-          ProductManager.#products.length === 0
-            ? 1
-            : ProductManager.#products[ProductManager.#products.length - 1].id +
-              1,
+        _id: crypto.randomBytes(12).toString("hex"),
         title: data.title,
-        photo: data.photo || "default",
+        photo: data.photo || "/img/defaultProduct.png",
         category: data.category || "product",
         price: data.price || 1,
         stock: data.stock || 1,
       };
       ProductManager.#products.push(product);
-      console.log(`The product has been created`);
-      console.log(product);
+      return product;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
   //metodo para leer todos los productos
@@ -33,258 +26,95 @@ class ProductManager {
     try {
       const all = ProductManager.#products;
       return all;
-      console.log(all);
     } catch (error) {
-      console.log(error);
+      throw error;
+    }
+  }
+  //paginate
+  paginate(filter, opts) {
+    try {
+      let all = ProductManager.#products;
+      const totalDocs = all.length;
+      const { category } = filter;
+      const limit = opts.limit || 10;
+      const page = opts.page || 1;
+      if (Object.keys(filter).length !== 0) {
+        all = all.filter((c) => c.category === category);
+      }
+      //defino funcion para dividir segun cantidad de carts por pagina
+      function dividePages(array, limit) {
+        const result = [];
+        for (let i = 0; i < array.length; i += limit) {
+          result.push(array.slice(i, i + limit));
+        }
+        const totalPages = Math.ceil(array.length / limit);
+        return { result, totalPages };
+      }
+      //divido el contenido en paginas segun el limite que se ingrese
+      const paginated = dividePages(all, Number(limit));
+      const totalPages = paginated.totalPages;
+      all = paginated.result;
+      // devuelvo solo la page seleccionada
+      const pageArray = page - 1;
+      const prevPage = page - 1;
+      const nextPage = Number(page) + 1;
+      const currentPageDocs = all[pageArray];
+      const response = {
+        docs: currentPageDocs,
+        totalDocs: totalDocs,
+        limit: limit,
+        totalPages: totalPages,
+        page: page,
+        prevPage: prevPage > 0 ? prevPage : null,
+        nextPage: nextPage > totalPages ? null : nextPage,
+      };
+      return response;
+    } catch (error) {
+      throw error;
     }
   }
   //metodo para leer un producto especifico
-  readOne(data) {
+  readOne(id) {
     try {
-      for (const product of ProductManager.#products) {
-        if (data === product.id) {
-          return product;
-          console.log(product);
-        }
-      }
-      return console.log("¡Product not found!");
+      const all = this.read();
+      const one = all.find((p) => p._id === id);
+      return one;
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
   //metodo para actializar un producto
   update(id, data) {
     try {
-      if (!id || !data) {
-        console.log("Missing data!");
-      } else {
-        const all = this.read();
-        let one = all.find((each) => each.id === id);
-        if (one) {
-          for (let prop in data) {
-            one[prop] = data[prop];
-          }
-          console.log(`The product has been updated`);
-          console.log(one);
-        } else {
-          console.log("¡Product not found!");
-        }
+      const all = this.read();
+      let one = all.find((each) => each._id === id);
+      for (let prop in data) {
+        one[prop] = data[prop];
       }
+      return one;
     } catch (error) {
-      console.log(error);
+      throw error
     }
   }
   //metodo para eliminar un producto especifico
-  destroy(data) {
+  destroy(id) {
     try {
-      const delOne = ProductManager.#products.filter(
-        (product) => product.id === data
+      const all = this.read()
+      const delOne = all.find(
+        (product) => product._id === id
       );
       const filtered = ProductManager.#products.filter(
-        (product) => product.id !== data
+        (product) => product._id !== id
       );
       ProductManager.#products = filtered;
-      console.log(`The product has been eliminated`);
+      return delOne
     } catch (error) {
       console.log(error);
     }
   }
 }
 
-//Creo una constante que invoca a la clase ProductManager
+//Creo una constante que trae la clase ProductManager
 const producto = new ProductManager();
-//Invoco al metodo create de la clase
-producto.create({
-  title: "Tatin",
-  photo:
-    "https://masonlineprod.vtexassets.com/arquivos/ids/246188/Alfajor-Simple-Tatin-Negro-33g-1-32815.jpg?v=637883553702800000",
-  category: "comida",
-  price: 250,
-  stock: 25,
-});
-//producto 2
-producto.create({
-  title: "Tarta de Frutas",
-  photo:
-    "https://placeralplato.com/files/2015/05/Receta-de-tarta-de-frutas-640x480.jpg?width=1200&enable=upscale",
-  category: "repostería",
-  price: 350,
-  stock: 20,
-});
-//producto 3
-producto.create({
-  title: "Auriculares Inalámbricos",
-  photo:
-    "https://images-na.ssl-images-amazon.com/images/I/71IvLIxaLCL._AC_SL1500_.jpg",
-  category: "tecnología",
-  price: 1200,
-  stock: 15,
-});
 
-producto.create({
-  title: "Vestido de Noche",
-  photo:
-    "https://thumbs.dreamstime.com/b/vestido-de-noche-en-un-maniqu%C3%AD-18692928.jpg",
-  category: "moda",
-  price: 1800,
-  stock: 10,
-});
-//producto 5
-producto.create({
-  title: "Set de Pinceles de Maquillaje",
-  photo:
-    "https://tienda.artepierrot.cl/wp-content/uploads/2020/10/Pinceles-Social-AP2-600x600.png",
-  category: "belleza",
-  price: 500,
-  stock: 30,
-});
-//producto 6
-producto.create({
-  title: "Balón de Fútbol",
-  photo:
-    "https://img.planetafobal.com/2021/07/uefa-champions-league-pelota-oficial-2021-2022-pyrostorm-yu.jpg",
-  category: "deportes",
-  price: 800,
-  stock: 25,
-});
-//producto 7
-producto.create({
-  title: "Mochila Escolar",
-  photo:
-    "https://images-na.ssl-images-amazon.com/images/I/71fU3CrTNZL._AC_SL1500_.jpg",
-  category: "accesorios",
-  price: 600,
-  stock: 18,
-});
-//producto 8
-producto.create({
-  title: "Juego de Mesa de Estrategia",
-  photo:
-    "https://tse4.mm.bing.net/th?id=OIP.rvtOjGzBffRXMx1Pyb-PegHaE9&pid=Api&P=0&h=180",
-  category: "entretenimiento",
-  price: 900,
-  stock: 12,
-});
-//producto 9
-producto.create({
-  title: "Botines de Fútbol",
-  photo:
-    "https://www.deportesapalategui.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/a/o/ao3258-400-phcfh001-1000.jpeg",
-  category: "deportes",
-  price: 1500,
-  stock: 8,
-});
-//producto 10
-producto.create({
-  title: "Juego de Sábanas de Algodón",
-  photo:
-    "https://tse4.mm.bing.net/th?id=OIP.ZdaYwifhD9W2xNU9xAa9MQHaHa&pid=Api&P=0&h=180",
-  category: "hogar",
-  price: 1000,
-  stock: 20,
-});
-// Producto 11
-producto.create({
-  title: "Manta de Lana Tejida a Mano",
-  photo: "foto.png",
-  category: "hogar",
-  price: 1500,
-  stock: 15,
-});
-// Producto 12
-producto.create({
-  title: "Almohadas de Plumas",
-  photo: "foto.png",
-  category: "hogar",
-  price: 500,
-  stock: 15,
-});
-
-// Producto 13
-producto.create({
-  title: "Set de Ollas de Acero Inoxidable",
-  photo: "foto.png",
-  category: "cocina",
-  price: 2000,
-  stock: 10,
-});
-
-// Producto 14
-producto.create({
-  title: "Lámpara de Escritorio LED",
-  photo: "foto.png",
-  category: "hogar",
-  price: 800,
-  stock: 25,
-});
-
-// Producto 15
-producto.create({
-  title: "Set de Toallas de Baño",
-  photo: "foto.png",
-  category: "hogar",
-  price: 1200,
-  stock: 18,
-});
-
-// Producto 16
-producto.create({
-  title: "Silla Ergonómica de Oficina",
-  photo: "foto.png",
-  category: "hogar",
-  price: 1500,
-  stock: 12,
-});
-
-// Producto 17
-producto.create({
-  title: "Juego de Tazas de Porcelana",
-  photo: "foto.png",
-  category: "cocina",
-  price: 600,
-  stock: 30,
-});
-
-// Producto 18
-producto.create({
-  title: "Cortinas Opacas para Ventanas",
-  photo: "foto.png",
-  category: "hogar",
-  price: 1800,
-  stock: 8,
-});
-
-// Producto 19
-producto.create({
-  title: "Espejo de Cuerpo Entero",
-  photo: "foto.png",
-  category: "hogar",
-  price: 1600,
-  stock: 10,
-});
-
-// Producto 20
-producto.create({
-  title: "Set de Cubiertos de Acero Inoxidable",
-  photo: "foto.png",
-  category: "cocina",
-  price: 1000,
-  stock: 20,
-});
-
-//devuelve todos los productos
-producto.read();
-//devuelve un producto especifico segun el id
-producto.readOne(1);
-//que pasa en el caso de que el producto solicitado tenda un id no existente
-console.log(producto.readOne(11));
-//elimino el 5 producto
-producto.destroy(5);
-//actualizo el producto 20
-producto.update(20, {
-  title: "Set de Cubiertos de Acero Inoxidable",
-  photo: "foto.png",
-  category: "cocina",
-  price: 3000,
-  stock: 10,
-});
+export default producto;
