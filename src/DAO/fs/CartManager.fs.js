@@ -41,18 +41,25 @@ class CartManager {
       }
 
       const cart = {
-        id: crypto.randomBytes(12).toString("hex"),
-        userId: crypto.randomBytes(12).toString("hex"),
-        productId: crypto.randomBytes(12).toString("hex"),
+        _id: crypto.randomBytes(12).toString("hex"),
+        user_id: data.user_id,
+        product_id: data.product_id,
         quantity: data.quantity,
-        state: data.state || "reserved"
+        state: data.state || "reserved",
       };
 
       let content = await this.read();
-      if (!content.some(c => c.userId === data.userId && c.productId === data.productId)) {
+      if (
+        !content.some(
+          (c) => c.user_id === data.user_id && c.product_id === data.product_id
+        )
+      ) {
         content.push(cart);
         console.log("Cart created");
-        await fs.promises.writeFile(this.path, JSON.stringify(content, null, 2));
+        await fs.promises.writeFile(
+          this.path,
+          JSON.stringify(content, null, 2)
+        );
         return cart;
       } else {
         const error = new Error("The cart already exists!");
@@ -69,22 +76,58 @@ class CartManager {
       const content = await fs.promises.readFile(this.path, "utf-8");
       return JSON.parse(content);
     } catch (error) {
-      const defaultContent = [];
-      await fs.promises.writeFile(this.path, JSON.stringify(defaultContent, null, 2));
-      return defaultContent;
+      throw error;
+    }
+  }
+
+  async paginate(filter, opts) {
+    try {
+      let all = await fs.promises.readFile(this.path, "utf-8");
+      all = JSON.parse(all);
+      const totalDocs = all.length;
+      const { user_id } = filter;
+      const limit = opts.limit || 10;
+      const page = opts.page || 1;
+      if (Object.keys(filter).length !== 0) {
+        all = all.filter((c) => c.user_id === user_id);
+      }
+      //defino funcion para dividir segun cantidad de carts por pagina
+      function dividePages(array, limit) {
+        const result = [];
+        for (let i = 0; i < array.length; i += limit) {
+          result.push(array.slice(i, i + limit));
+        }
+        const totalPages = Math.ceil(array.length / limit);
+        return { result, totalPages };
+      }
+      //divido el contenido en paginas segun el limite que se ingrese
+      const paginated = dividePages(all, Number(limit));
+      const totalPages = paginated.totalPages;
+      all = paginated.result;
+      // devuelvo solo la page seleccionada
+      const pageArray = page - 1;
+      const prevPage = page - 1;
+      const nextPage = Number(page) + 1;
+      const currentPageDocs = all[pageArray];
+      const response = {
+        docs: currentPageDocs,
+        totalDocs: totalDocs,
+        limit: limit,
+        totalPages: totalPages,
+        page: page,
+        prevPage: prevPage > 0 ? prevPage : null,
+        nextPage: nextPage > totalPages ? null : nextPage,
+      };
+      return response;
+    } catch (error) {
+      throw error;
     }
   }
 
   async readOne(id) {
     try {
       const content = await this.read();
-      const cart = content.find(c => c.id === id);
-      if (!cart) {
-        const error = new Error("Cart not found!");
-        error.statusCode = 404;
-        throw error;
-      }
-      console.log("Cart found");
+      const cart = content.find((c) => c._id === id);
       return cart;
     } catch (error) {
       throw error;
@@ -93,75 +136,34 @@ class CartManager {
 
   async update(id, data) {
     try {
-      if (!id || !data) {
-        const error = new Error("Missing data!");
-        error.statusCode = 400;
-        throw error;
+      let all = await this.read();
+      let one = all.find((each) => each._id === id);
+      if (!one) {
+        return null;
       }
-
-      let content = await this.read();
-      const index = content.findIndex(c => c.id === id);
-      if (index !== -1) {
-        content[index] = { ...content[index], ...data };
-        console.log("The cart has been updated");
-        console.log(content[index]);
-        await fs.promises.writeFile(this.path, JSON.stringify(content, null, 2));
-        return content[index];
-      } else {
-        const error = new Error("Cart not found!");
-        error.statusCode = 404;
-        throw error;
+      for (let prop in data) {
+        one[prop] = data[prop];
       }
+      all = JSON.stringify(all, null, 2);
+      await fs.promises.writeFile(this.path, all);
+      return one;
     } catch (error) {
       throw error;
     }
   }
 
   async destroy(id) {
-    try {
-      let content = await this.read();
-      const cart = content.find(c => c.id === id);
-      if (!cart) {
-        const error = new Error("Cart not found!");
-        error.statusCode = 404;
-        throw error;
-      }
-
-      content = content.filter(c => c.id !== id);
-      await fs.promises.writeFile(this.path, JSON.stringify(content, null, 2));
-      console.log("The cart has been deleted");
-      console.log(cart);
-      return cart;
-    } catch (error) {
-      throw error;
-    }
+    let contant = await this.read()
+    const delProduct = contant.find((product) => product._id === id);
+      let filtered = contant.filter((product) => product._id !== id);
+      filtered = JSON.stringify(filtered, null, 2);
+      await fs.promises.writeFile(this.path, filtered);
+      return delProduct;
+    
   }
 
-  async getNextId(property) {
-    const content = await this.read();
-    const ids = content.map(c => c[property]);
-    const maxId = Math.max(...ids);
-    return maxId + 1;
-  }
 }
-/*
-async function test()  {
-  const cart = new CartManager();
-  //creo un carrito
-  await cart.create({  quantity: 1, state: "paid" });
-  //leo todos los carritos
-  const carts = await cart.read();
-  console.log(carts);
-  //leo un carrito
-  const cart1 = await cart.readOne("4aee07486d475ec3e3559dae");
-  //console.log(cart1);
-  //actualizo un carrito
-  //await cart.update(4aee07486d475ec3e3559dae, { quantity: 2, state: "paid" });
-  //elimino un carrito
-  //await cart.destroy(1);
-}
-test();
-*/
+
 
 const cartManager = new CartManager();
 export default cartManager;
