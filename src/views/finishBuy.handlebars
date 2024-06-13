@@ -11,7 +11,7 @@
     </div>
     {{/each}}
     <div class="totalPrice" style="display: flex;justify-content:center; align-items: center;width: 100%; height:auto; background-color:white; margin:5px 0; border-radius:25px; padding:10px;">
-        <h2>Total price: ${{totalPrice}}</h2>
+        <h2>Total price: ${{totalPrice || "change of persistence to mongo"}}</h2>
     </div>
     <div class="paymentMethods" style="display: flex;justify-content:center; align-items: center;width: 100%; height:auto; background-color:white; margin:5px 0; border-radius:25px; padding:10px;">
         <h3>Payment methods: </h3>

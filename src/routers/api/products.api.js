@@ -11,7 +11,7 @@ class ProductsRouter extends CustomRouter {
     this.read("/", ["PUBLIC"], read);
     this.read('/paginate', ["PUBLIC"], paginate)
     this.read("/:nid", ["PUBLIC"], readOne);
-    this.create("/", ["ADMIN"],uploader.single("photo"),exist,isPhoto, create,);
+    this.create("/", ["ADMIN"],exist, create,);
     this.update("/:nid",["ADMIN"], update);
     this.destroy("/:nid",["ADMIN"], destroy);
   }
