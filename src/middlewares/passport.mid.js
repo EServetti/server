@@ -3,7 +3,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import CustomStrategy from "passport-custom";
 import { createHash, compareHash } from "../utils/hash.js";
-import userManager from "../DAO/mongo/managers/UserManager.db.js";
+import { readByEmailService, createService } from "../service/api/users.api.service.js"
 import { createToken, verifyToken } from "../utils/jwt.js"
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import environment from "../utils/env.utils.js";
@@ -16,7 +16,7 @@ passport.use(
       try {
         //Si no se ingresan los daros email o password no funciona el passport, por lo tanto se debe seguir utilizando el midd isValidData
         //Revisa que no exista anteriormente un user con este email
-        const exist = await userManager.readByEmail(email);
+        const exist = await readByEmailService(email);
         if (exist) {
           const error = new Error("Bad auth from register!");
           error.statusCode = 401;
@@ -24,7 +24,7 @@ passport.use(
         }
         const hashPassword = createHash(password);
         req.body.password = hashPassword;
-        const one = await userManager.create(req.body);
+        const one = await createService(req.body);
         return done(null, one);
       } catch (error) {
         return done(error);
@@ -40,7 +40,7 @@ passport.use(
     async (req, email, password, done) => {
       try {
         //Error si no existe un user con ese email
-        const one = await userManager.readByEmail(email);
+        const one = await readByEmailService(email);
         if (!one) {
           const error = new Error("Bad auth!");
           error.statusCode = 401;
@@ -115,7 +115,7 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
-        let one = await userManager.readByEmail(profile.id);
+        let one = await readByEmailService(profile.id);
         if (!one) {
           one = {
             email: profile.id,
@@ -126,7 +126,7 @@ passport.use(
           };
           await userManager.create(one);
         }
-        const two = await userManager.readByEmail(profile.id);
+        const two = await  readByEmailService(profile.id);
         const data = {
           email: two.email,
           name: two.name,
