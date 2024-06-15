@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import crypto from "crypto";
+import { readOneService as readOneUser } from "../../service/api/users.api.service.js";
+import { readOneService as readOneProduct } from "../../service/api/products.api.service.js";
 
 class CartManager {
   constructor() {
@@ -34,16 +36,18 @@ class CartManager {
 
   async create(data) {
     try {
-      if (!data.quantity) {
-        const error = new Error("Missing data!");
-        error.statusCode = 400;
-        throw error;
-      }
+      //emulo el paginate de mongo
+      const user_id = await readOneUser(data.user_id)
+      delete user_id.role
+      delete user_id.password
+      delete user_id.age
+      
+      const product_id = await readOneProduct(data.product_id)
 
       const cart = {
         _id: crypto.randomBytes(12).toString("hex"),
-        user_id: data.user_id,
-        product_id: data.product_id,
+        user_id: user_id,
+        product_id: product_id,
         quantity: data.quantity,
         state: data.state || "reserved",
       };

@@ -1,21 +1,30 @@
 import crypto from "crypto"
+import { readOneService as readOneUser } from "../../service/api/users.api.service.js";
+import { readOneService as readOneProduct } from "../../service/api/products.api.service.js";
 
 class CartManager {
   static #carts = [];
 
   // Método para crear un nuevo carrito
-  create(data) {
+  async create(data) {
     try {
-      // Verificar si no se ingresaron datos obligatorios
-      if (!data.quantity) {
-        console.log("Missing data!");
-        return;
+      //emulo el populate de mongo
+      const user_id = await readOneUser(data.user_id)
+      delete user_id.role
+      delete user_id.password
+      delete user_id.age
+      
+      const product_id = await readOneProduct(data.product_id)
+      if(!product_id) {
+        const error = new Error("The product doesn't exists!")
+        error.statusCode = 400
+        throw error
       }
-
+      
       const cart = {
         _id: crypto.randomBytes(12).toString("hex"),
-        user_id: data.user_id,
-        product_id: data.product_id,
+        user_id: user_id,
+        product_id: product_id,
         quantity: data.quantity,
         state: data.state || "reserved",
       };
