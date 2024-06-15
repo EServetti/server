@@ -1,11 +1,11 @@
 [
   {
-    "_id": "0d85c8a1b0faf0d0aa45bd06",
+    "_id": "3ba7df4a38a2dfe72a70a1f9",
     "photo": "/img/defaultUser.webp",
-    "name": "Mara",
+    "name": "JUAN",
     "age": 12,
-    "email": "mara@gmail.com",
-    "password": "1011",
-    "role": 0
+    "email": "juan@gmail.com",
+    "password": "$2b$10$fAQBU.jIEPm2i/ssH7maduNX2Rl9beM2hnQgzXHlCsCteL4cBB23i",
+    "role": 1
   }
 ]

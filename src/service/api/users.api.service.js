@@ -5,5 +5,5 @@ import userManager from "../../DAO/fs/UserManager.fs.js";
 import CustomService from "../customService.js";
 
 const usersService = new CustomService(userManager)
-const {readService, readOneService, createService, updateService, destroyService} = usersService
-export {readService, readOneService, createService, updateService, destroyService}
+const {readService, readOneService, readByEmailService, createService, updateService, destroyService} = usersService
+export {readService, readOneService, readByEmailService, createService, updateService, destroyService}

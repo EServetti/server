@@ -66,7 +66,15 @@ class UserManager {
     try {
       const contant = await this.read();
       let theUser = contant.find((user) => user._id === id);
-      console.log(theUser);
+      return theUser;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async readByEmail(email) {
+    try {
+      const contant = await this.read();
+      let theUser = contant.find((user) => user.email === email);
       return theUser;
     } catch (error) {
       throw error;

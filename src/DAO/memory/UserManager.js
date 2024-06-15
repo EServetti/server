@@ -40,6 +40,15 @@ class UserManager {
       throw error
     }
   }
+  readByEmail(email) {
+    try {
+      const all = this.read();
+      const one = all.find((u) => u.email === email);
+      return one;
+    } catch (error) {
+      throw error
+    }
+  }
   //metodo para actializar un usuario
   update(id, data) {
     try {
