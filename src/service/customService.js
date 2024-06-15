@@ -32,7 +32,14 @@ class CustomService {
       throw error
     }
   }
-  
+  readByEmailService = async (email) => {
+    try {
+      const one = await this.manager.readByEmail(email) 
+      return one
+    } catch (error) {
+      throw error
+    }
+  }
   aggregateService = async (arrayConfig) => {
     try {
       const total = await this.manager.aggregate(arrayConfig)
