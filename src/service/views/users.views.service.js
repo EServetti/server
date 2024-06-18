@@ -1,6 +1,6 @@
-import userManager from "../../DAO/mongo/managers/UserManager.db.js";
+import dao from "../../DAO/dao.factory.js";
 import CustomService from "../customService.js"; 
 
-const usersService = new CustomService(userManager)
+const usersService = new CustomService(dao.userManager)
 const {readOneService, updateService} = usersService
 export {readOneService, updateService}
