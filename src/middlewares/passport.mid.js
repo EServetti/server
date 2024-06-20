@@ -3,7 +3,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import CustomStrategy from "passport-custom";
 import { createHash, compareHash } from "../utils/hash.js";
-import { readByEmailService, createService } from "../service/api/users.api.service.js"
+import { readByEmailService, createService } from "../service/users.api.service.js"
 import { createToken, verifyToken } from "../utils/jwt.js"
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import environment from "../utils/env.utils.js";
@@ -22,8 +22,6 @@ passport.use(
           error.statusCode = 401;
           return done(error);
         }
-        const hashPassword = createHash(password);
-        req.body.password = hashPassword;
         const one = await createService(req.body);
         return done(null, one);
       } catch (error) {

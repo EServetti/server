@@ -1,4 +1,4 @@
-import { readService  } from "../service/api/users.api.service.js";
+import { readService } from "../service/users.api.service.js";
 async function exist (req, res, next) {
 try { 
     const { email } = req.body;

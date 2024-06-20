@@ -1,4 +1,4 @@
-import { readService } from "../service/api/products.api.service.js";
+import { readService } from "../service/products.api.service.js";
 async function exist (req, res, next) {
 try { 
     const { title } = req.body;
