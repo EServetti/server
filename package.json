@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon ./server.js -p 8080 --env dev --pers mongo",
-    "start": "node ./server.js -p 9000 --env prod --pers mongo"
+    "start": "node ./server.js -p 9000 --env prod --pers memory"
   },
   "keywords": [],
   "author": "",

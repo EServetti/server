@@ -1,8 +1,8 @@
-import ProductManager from "../DAO/mongo/managers/ProductManager.db.js";
+import { readService as readProductsService } from "../service/products.api.service.js";
+import { destroyService as destroyCartService, updateService as updateCartService } from "../service/carts.api.service.js";
 import path from "path";
 import fs from "fs";
 import __dirname from "../../utils.js";
-import CartManager from "../DAO/mongo/managers/CartManager.db.js";
 import { log } from "console";
 
 //toma el dato de base64 (photo), lo guarda en /img y le da el nombre con la ruta adecuada
@@ -18,7 +18,7 @@ export default async (socket) => {
   console.log("Client online" + socket.id);
 
   //socket para real-products
-  socket.emit("products", await ProductManager.read());
+  socket.emit("products", await readProductsService());
 
   socket.on("product", async (data) => {
 
@@ -29,13 +29,13 @@ export default async (socket) => {
       data.photo = saveBase64Image(data.photo, fileName);
     }
 
-    const allProducts = await ProductManager.read();
+    const allProducts = await readProductsService();
     const exist = allProducts.some((each) => each.title === data.title);
     if (exist) {
       socket.emit("alert", "The product has already been created!");
     } else {
       await ProductManager.create(data);
-      socket.emit("products", await ProductManager.read());
+      socket.emit("products", await readProductsService());
     }
   });
 
@@ -66,7 +66,7 @@ socket.on("quantity", async info => {
   const data = {
     quantity: info.quantity
   }
-  await CartManager.update(_id, data);
+  await updateCartService(_id, data);
   const path = `http://localhost:8080/api/tickets/${info.uid}`
   let response = await fetch(path,{
     method: "GET",
@@ -87,7 +87,7 @@ socket.on("quantity", async info => {
 
 //socket para eliminar un carrito
 socket.on("delete", async info => {
-  await CartManager.destroy(info.cid);
+  await destroyCartService(info.cid);
   const path = `http://localhost:8080/api/tickets/${info.uid}`
   let resp = await fetch(path,{
     method: "GET",
