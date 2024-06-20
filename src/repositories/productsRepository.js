@@ -41,14 +41,7 @@ class ProductsRepository {
         throw error
       }
     }
-    aggregateRepository = async (arrayConfig) => {
-      try {
-        const total = await this.manager.aggregate(arrayConfig)
-        return total
-      } catch (error) {
-        throw error
-      }
-    }
+    
     createRepository = async (data) => {
       try {
         data = new ProductDTO(data)

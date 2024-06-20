@@ -1,4 +1,4 @@
-import { readService as readProductsService } from "../service/products.api.service.js";
+import { readService as readProductsService, createService as createProductService } from "../service/products.api.service.js";
 import { destroyService as destroyCartService, updateService as updateCartService } from "../service/carts.api.service.js";
 import path from "path";
 import fs from "fs";
@@ -34,7 +34,7 @@ export default async (socket) => {
     if (exist) {
       socket.emit("alert", "The product has already been created!");
     } else {
-      await ProductManager.create(data);
+      await createProductService(data);
       socket.emit("products", await readProductsService());
     }
   });
@@ -51,6 +51,7 @@ export default async (socket) => {
     }
   })
   response = await response.json()
+  console.log(response);
   const allCarts = response.message
   if(response.statusCode !== 404) {
     socket.emit("cart", allCarts)

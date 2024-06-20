@@ -78,6 +78,14 @@ class CartManager {
     }
   }
 
+  agreggate(obj) {
+    try {
+      return []
+    } catch (error) {
+      throw error
+    }
+  }
+
   // Método para leer un carrito específico
   readOne(id) {
     try {

@@ -121,6 +121,14 @@ class CartManager {
     }
   }
 
+  agreggate(obj) {
+    try {
+      return []
+    } catch (error) {
+      throw error
+    }
+  }
+
   async readOne(id) {
     try {
       const content = await this.read();

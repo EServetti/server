@@ -21,7 +21,6 @@ class Manager {
   async paginate(filter, opts) {
     try {
       const all = await this.Model.paginate(filter, opts);
-      console.log(all);
       return all;
     } catch (error) {
       throw error;

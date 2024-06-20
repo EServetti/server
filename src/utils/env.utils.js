@@ -3,8 +3,14 @@ import argsUtil from "./args.util.js";
 
 const {env} = argsUtil
 console.log(env);
-const path = env === "dev" ? "./.env.dev" : "./.env.prod"
-
+let path = ""
+if(env === "prod"){
+    path = "./.env.prod"
+}else if(env === "dev") {
+    path = "./.env.dev"
+} else {
+    path = "./.env.test"
+}
 config({path})
 
 const environment = {
