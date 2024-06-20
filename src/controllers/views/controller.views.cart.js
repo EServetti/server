@@ -1,4 +1,4 @@
-import { createService } from "../../service/views/carts.views.service.js";
+import { createService } from "../../service/carts.api.service.js";
 import { createToken, verifyToken } from "../../utils/jwt.js"
 
 async function read (req, res, next) {

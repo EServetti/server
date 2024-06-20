@@ -1,5 +1,4 @@
-import passport from "../../middlewares/passport.mid.js";
-import userManager from "../../DAO/mongo/managers/UserManager.db.js";
+
 
 async function register (req, res, next) {
     try {

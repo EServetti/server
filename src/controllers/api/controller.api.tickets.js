@@ -1,4 +1,4 @@
-import { aggregateService } from "../../service/api/tickets.api.service.js";
+import { aggregateService } from "../../service/tickets.api.service.js";
 import { Types } from "mongoose";
 
 async function read(req, res, next) {

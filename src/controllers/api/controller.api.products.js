@@ -1,4 +1,4 @@
-import { paginateService, readService, readOneService, createService, updateService, destroyService } from "../../service/api/products.api.service.js";
+import { paginateService, readService, readOneService, createService, updateService, destroyService } from "../../service/products.api.service.js";
 
 
 

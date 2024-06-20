@@ -4,7 +4,7 @@ import {
   createService,
   updateService,
   destroyService,
-} from "../../service/api/users.api.service.js";
+} from "../../service/users.api.service.js";
 import { createHash } from "../../utils/hash.js";
 
 //metodo read
@@ -60,7 +60,6 @@ async function create(req, res, next) {
     ) {
       return res.error400("You must enter at least name, email and password!");
     }
-    data.password = createHash(data.password)
     const created = await createService(data);
     return res.message201(created);
   } catch (error) {

@@ -1,4 +1,4 @@
-import { readOneService, updateService } from "../../service/views/users.views.service.js";
+import { readOneService, updateService } from "../../service/users.api.service.js";
 import {createToken, verifyToken, updateToken} from"../../utils/jwt.js"
 
 async function register (req, res, next) {
@@ -52,7 +52,7 @@ async function register (req, res, next) {
       const { name, photo, role, age } = req.body;
       const token = verifyToken(req.cookies.token)
   
-      //actualizo el session para que se actualize la foto y el role de la navbar
+      //actualizo la session para que se actualize la foto y el role de la navbar
       if(photo){
         token.photo = photo;
         const timeLeft = token.exp

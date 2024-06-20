@@ -1,4 +1,4 @@
-import { aggregateService } from "../../service/views/tickets.views.service.js";
+import { aggregateService } from "../../service/tickets.api.service.js";
 import { verifyToken } from "../../utils/jwt.js";
 import { Types } from "mongoose";
 
