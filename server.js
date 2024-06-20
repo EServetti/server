@@ -9,12 +9,11 @@ import __dirname from "./utils.js"
 import { createServer } from "http"
 import { Server } from "socket.io"
 import socketCb from "./src/routers/index.socket.js"
-import dbConnect from './src/utils/DbConnection.js';
 // import session from "express-session"
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import Handlebars from "handlebars"
-import argsUtil from "./src/utils/args.util.js"
+
 
 
 //http server
@@ -22,7 +21,6 @@ const server = express();
 const port = environment.PORT
 const ready = async () => {
     console.log(`Server listening on port ${port}`);
-    await dbConnect();
 }
  const nodeServer = createServer(server)
 nodeServer.listen(port, ready)
