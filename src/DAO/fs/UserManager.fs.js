@@ -24,7 +24,7 @@ class UserManager {
         fs.writeFileSync(this.path, stringData);
         console.log("File created successfully");
       } else {
-        throw new Error("¡The file has already been created!");
+        console.log("The file users has already been created!");
       }
     } catch (error) {
       console.log(error);
@@ -34,13 +34,13 @@ class UserManager {
   async create(data) {
     try {
       const user = {
-        _id:crypto.randomBytes(12).toString("hex"),
-        photo: data.photo || "/img/defaultUser.webp",
+        _id: data._id,
+        photo: data.photo,
         name: data.name,
-        age: data.age || 12,
+        age: data.age, 
         email: data.email,
         password: data.password,
-        role: data.role || 0,
+        role: data.role
       };
       let contant = await this.read();
       contant.push(user);
@@ -113,5 +113,5 @@ class UserManager {
   }
 }
 
-const users = new UserManager();
-export default users;
+const userManager = new UserManager();
+export default userManager;

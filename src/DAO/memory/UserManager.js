@@ -7,13 +7,15 @@ class UserManager {
   create(data) {
     try {
       const user = {
-        _id:crypto.randomBytes(12).toString("hex"),
-        photo: data.photo || "/img/defaultUser.webp",
+        _id: data._id,
+        photo: data.photo,
         name: data.name,
-        age: data.age || 12,
+        age: data.age,
         email: data.email,
         password: data.password,
-        role: data.role || 0,
+        role: data.role,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt
       };
       UserManager.#users.push(user);
       return user
@@ -80,5 +82,5 @@ class UserManager {
   }
 }
 
-const users = new UserManager();
-export default users
+const userManager = new UserManager();
+export default userManager

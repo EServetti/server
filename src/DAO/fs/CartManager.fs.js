@@ -2,8 +2,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import crypto from "crypto";
-import { readOneService as readOneUser } from "../../service/api/users.api.service.js";
-import { readOneService as readOneProduct } from "../../service/api/products.api.service.js";
+
 
 class CartManager {
   constructor() {
@@ -27,7 +26,7 @@ class CartManager {
         fs.writeFileSync(this.path, stringData);
         console.log("File created successfully");
       } else {
-        console.log("The file has already been created!");
+        console.log("The file carts has already been created!");
       }
     } catch (error) {
       console.log(error);
@@ -36,20 +35,14 @@ class CartManager {
 
   async create(data) {
     try {
-      //emulo el paginate de mongo
-      const user_id = await readOneUser(data.user_id)
-      delete user_id.role
-      delete user_id.password
-      delete user_id.age
-      
-      const product_id = await readOneProduct(data.product_id)
-
       const cart = {
-        _id: crypto.randomBytes(12).toString("hex"),
-        user_id: user_id,
-        product_id: product_id,
+        _id: data._id,
+        user_id: data.user_id,
+        product_id: data.product_id,
         quantity: data.quantity,
-        state: data.state || "reserved",
+        state: data.state,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt
       };
 
       let content = await this.read();

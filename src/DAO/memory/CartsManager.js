@@ -1,6 +1,4 @@
-import crypto from "crypto"
-import { readOneService as readOneUser } from "../../service/api/users.api.service.js";
-import { readOneService as readOneProduct } from "../../service/api/products.api.service.js";
+import crypto from "crypto";
 
 class CartManager {
   static #carts = [];
@@ -8,25 +6,15 @@ class CartManager {
   // Método para crear un nuevo carrito
   async create(data) {
     try {
-      //emulo el populate de mongo
-      const user_id = await readOneUser(data.user_id)
-      delete user_id.role
-      delete user_id.password
-      delete user_id.age
-      
-      const product_id = await readOneProduct(data.product_id)
-      if(!product_id) {
-        const error = new Error("The product doesn't exists!")
-        error.statusCode = 400
-        throw error
-      }
-      
+
       const cart = {
-        _id: crypto.randomBytes(12).toString("hex"),
-        user_id: user_id,
-        product_id: product_id,
+        _id: data._id,
+        user_id: data.user_id,
+        product_id: data.product_id,
         quantity: data.quantity,
-        state: data.state || "reserved",
+        state: data.state,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt
       };
 
       CartManager.#carts.push(cart);
@@ -74,7 +62,7 @@ class CartManager {
       const pageArray = page - 1;
       const prevPage = page - 1;
       const nextPage = Number(page) + 1;
-      const currentPageDocs = all[pageArray] 
+      const currentPageDocs = all[pageArray];
       const response = {
         docs: currentPageDocs,
         totalDocs: totalDocs,
@@ -97,19 +85,19 @@ class CartManager {
       const cart = CartManager.#carts.find((cart) => cart._id === id);
       return cart;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
   // Método para actualizar un carrito
   update(id, data) {
     try {
-      let all = this.read()
-      let one = all.find(cart => cart._id === id)
+      let all = this.read();
+      let one = all.find((cart) => cart._id === id);
       for (let prop in data) {
         one[prop] = data[prop];
       }
-      return one
+      return one;
     } catch (error) {
       console.log(error);
     }
@@ -118,14 +106,14 @@ class CartManager {
   // Método para eliminar un carrito específico
   destroy(id) {
     try {
-      const delOne = this.readOne(id)
+      const delOne = this.readOne(id);
       const filtered = CartManager.#carts.filter(
         (product) => product._id !== id
       );
       CartManager.#carts = filtered;
-      return delOne
+      return delOne;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }

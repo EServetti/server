@@ -29,7 +29,7 @@ class ProductManager {
         fs.writeFileSync(this.path, stringData);
         console.log("File created successfully");
       } else {
-        throw new Error("¡The file has already been created!");
+        console.log("The file products has already been created!");
       }
     } catch (error) {
       console.log(error);
@@ -39,12 +39,12 @@ class ProductManager {
   async create(data) {
     try {
       const product = {
-        _id: crypto.randomBytes(12).toString("hex"),
+        _id: data._id,
         title: data.title,
-        photo: data.photo || "/img/defaultProduct.png",
-        category: data.category || "product",
-        price: data.price || 1,
-        stock: data.stock || 1,
+        photo: data.photo,
+        category: data.category,
+        price: data.price,
+        stock: data.stock
       };
       let contant = await fs.promises.readFile(this.path, "utf-8");
       contant = JSON.parse(contant);
@@ -153,5 +153,5 @@ class ProductManager {
   }
 }
 
-const productos = new ProductManager();
-export default productos;
+const productManager = new ProductManager();
+export default productManager;

@@ -8,12 +8,12 @@ class ProductManager {
   create(data) {
     try {
       const product = {
-        _id: crypto.randomBytes(12).toString("hex"),
+        _id: data._id,
         title: data.title,
-        photo: data.photo || "/img/defaultProduct.png",
-        category: data.category || "product",
-        price: data.price || 1,
-        stock: data.stock || 1,
+        photo: data.photo,
+        category: data.category,
+        price: data.price,
+        stock: data.stock
       };
       ProductManager.#products.push(product);
       return product;
@@ -115,6 +115,5 @@ class ProductManager {
 }
 
 //Creo una constante que trae la clase ProductManager
-const producto = new ProductManager();
-
-export default producto;
+const productManager = new ProductManager();
+export default productManager;

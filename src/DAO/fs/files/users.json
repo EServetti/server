@@ -9,12 +9,12 @@
     "role": 1
   },
   {
-    "_id": "11af9d12ff10cb653f66a2d5",
+    "_id": "4126aa7fc7f6112dd36aea22",
     "photo": "/img/defaultUser.webp",
-    "name": "Mara",
+    "name": "JUAN",
     "age": 12,
-    "email": "Mara@gmail.com",
-    "password": "$2b$10$UKk6pb9vdX9Vg1dv2fBV/elB.Ti4Qfw7JkgtlyMn3P4ZtHotGBBHm",
-    "role": 0
+    "email": "emilio@gmail.com",
+    "password": "$2b$10$rG6rwmE85xMch6T.RIpG5e0QWZVY39gmFTMcR.zGK8Yd.y6LjEtZa",
+    "role": 1
   }
 ]
