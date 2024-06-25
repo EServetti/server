@@ -3,7 +3,10 @@ import { destroyService as destroyCartService, updateService as updateCartServic
 import path from "path";
 import fs from "fs";
 import __dirname from "../../utils.js";
-import { log } from "console";
+import environment from "../utils/env.utils.js";
+
+const { PORT } = environment
+
 
 //toma el dato de base64 (photo), lo guarda en /img y le da el nombre con la ruta adecuada
 const saveBase64Image = (base64String, fileName) => {
@@ -42,7 +45,7 @@ export default async (socket) => {
 //socket para cart
   socket.emit("here", "connected")
   socket.on("uid", async (uid) => {
-  const path = `http://localhost:8080/api/tickets/${uid}`
+  const path = `http://localhost:${PORT}/api/tickets/${uid}`
   let response = await fetch(path,{
     method: "GET",
     credentials: "include",
@@ -51,7 +54,6 @@ export default async (socket) => {
     }
   })
   response = await response.json()
-  console.log(response);
   const allCarts = response.message
   if(response.statusCode !== 404) {
     socket.emit("cart", allCarts)
@@ -68,7 +70,7 @@ socket.on("quantity", async info => {
     quantity: info.quantity
   }
   await updateCartService(_id, data);
-  const path = `http://localhost:8080/api/tickets/${info.uid}`
+  const path = `http://localhost:${PORT}/api/tickets/${info.uid}`
   let response = await fetch(path,{
     method: "GET",
     credentials: "include",
@@ -89,7 +91,7 @@ socket.on("quantity", async info => {
 //socket para eliminar un carrito
 socket.on("delete", async info => {
   await destroyCartService(info.cid);
-  const path = `http://localhost:8080/api/tickets/${info.uid}`
+  const path = `http://localhost:${PORT}/api/tickets/${info.uid}`
   let resp = await fetch(path,{
     method: "GET",
     credentials: "include",
@@ -111,7 +113,7 @@ socket.on("delete", async info => {
 socket.on("cancel", async token => {
   //saco la palabra token= de la cookie enviada en el emit para que quede solo el token
   token = token.split("=")[1]
-  let response = await fetch("http://localhost:8080/api/carts/all", {
+  let response = await fetch(`http://localhost:${PORT}/api/carts/all`, {
     method: "DELETE",
     credentials: "include",
     headers: {

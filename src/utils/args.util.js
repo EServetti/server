@@ -7,5 +7,4 @@ args.option("--env <env>","environment", "prod")
 args.option("--pers <pers>", "persistence", "mongo")
 
 args.parse()
-
 export default args.opts()

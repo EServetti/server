@@ -40,7 +40,11 @@ class UserManager {
         age: data.age, 
         email: data.email,
         password: data.password,
-        role: data.role
+        role: data.role,
+        verify: data.verify,
+        verifyCode: data.verifyCode,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt
       };
       let contant = await this.read();
       contant.push(user);

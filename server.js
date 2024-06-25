@@ -56,7 +56,7 @@ server.use(cookieParser(environment.SECRET_COOKIE))
 //   );
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }))
-server.use(express.static("public"))
+server.use(express.static('public'))
 server.use(cors({
   origin: true, 
   credentials: true 

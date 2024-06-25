@@ -14,6 +14,8 @@ class UserDTO {
         this.name = data.name;
         this.age = data.age || 12;
         this.role = data.role || 0;
+        this.verify =  data.verify || false
+        this.verifyCode =crypto.randomBytes(6).toString("hex")
         pers !== "mongo" && (this.createdAt = new Date())
         pers !== "mongo" && (this.updatedAt = new Date())
     }

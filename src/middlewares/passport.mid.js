@@ -7,6 +7,10 @@ import { readByEmailService, createService } from "../service/users.api.service.
 import { createToken, verifyToken } from "../utils/jwt.js"
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import environment from "../utils/env.utils.js";
+import { sendEmail } from "../utils/mailing.util.js";
+
+
+
 
 passport.use(
   "register",
@@ -23,6 +27,7 @@ passport.use(
           return done(error);
         }
         const one = await createService(req.body);
+        await sendEmail({ to : email, name : one.name, verifyCode : one.verifyCode})
         return done(null, one);
       } catch (error) {
         return done(error);
@@ -47,7 +52,7 @@ passport.use(
         //Error si el password no coincide con el user
         else {
           const correct = compareHash(password, one.password);
-          if (!correct) {
+          if (!correct || !one.verify) {
             const error = new Error("Invalid credentials!");
             error.statusCode = 401;
             return done(error);
@@ -121,8 +126,9 @@ passport.use(
             photo: profile.picture,
             password: createHash(profile.id),
             role: 0,
+            verify: true
           };
-          await userManager.create(one);
+          await createService(one);
         }
         const two = await  readByEmailService(profile.id);
         const data = {
@@ -131,7 +137,7 @@ passport.use(
           role: two.role,
           age: two.age,
           photo: two.photo,
-          _id: two._id
+          _id: two._id,
         }
         const token = createToken(data)
         data.token = token

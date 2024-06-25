@@ -30,7 +30,7 @@ document.querySelector("#Register").addEventListener("click", async () => {
     console.log(response);
     if (response.statusCode === 201) {
       Swal.fire({
-        title: response.message,
+        title: "We've sent you a verification mail",
         confirmButtonText: "Accept",
         timer: 5000,
         timerProgressBar: true,

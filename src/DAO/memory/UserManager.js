@@ -1,4 +1,4 @@
-import crypto from "crypto"
+import crypto, { verify } from "crypto"
 
 class UserManager {
   //Se crea el array de clase y priviado que contiene a todos los usuarios
@@ -14,6 +14,8 @@ class UserManager {
         email: data.email,
         password: data.password,
         role: data.role,
+        verify: data.verify,
+        verifyCode: data.verifyCode,
         createdAt: data.createdAt,
         updatedAt: data.updatedAt
       };

@@ -1,6 +1,8 @@
 import { aggregateService } from "../../service/tickets.api.service.js";
 import { verifyToken } from "../../utils/jwt.js";
 import { Types } from "mongoose";
+import environment from "../../utils/env.utils.js";
+const {PORT} = environment
 
 async function read(req, res, next) {
     try {
@@ -37,7 +39,7 @@ async function read(req, res, next) {
         },
       ]);
       //total de carritos
-      let response = await fetch("http://localhost:8080/api/tickets/total", {
+      let response = await fetch(`http://localhost:${PORT}/api/tickets/total`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
