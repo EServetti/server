@@ -1,12 +1,13 @@
 import { Router } from "express";
 //import ProductManager from "../../data/fs/ProductManager.fs.js"
-import productManager from "../../data/mongo/managers/ProductManager.db.js";
 import users from "./users.views.js";
 import products from "./products.view.js";
 import carts from "./cart.view.js";
 import sessionRouter from "./session.view.js";
 import CustomRouter from "../customRouter.js";
 import ticketsRouter from "../views/tickets.views.js";
+import { paginateService } from "../../service/products.api.service.js";
+import args from "../../utils/args.util.js"
 
 class ViewsRouter extends CustomRouter {
   init() {
@@ -35,7 +36,7 @@ class ViewsRouter extends CustomRouter {
         if (req.query.page) {
           opts.page = req.query.page;
         }
-        let all = await productManager.paginate(filter, opts);
+        let all = await paginateService(filter, opts);
         const info = {
           page: all.page,
           prevPage: all.prevPage,
@@ -44,7 +45,15 @@ class ViewsRouter extends CustomRouter {
           category: category,
         };
         //los paso a JSON para poder ser leidos
-        all = all.docs.map((doc) => doc.toJSON());
+        const { pers } = args
+        if(pers === "mongo" && all.docs.length !== 0){
+          all = all.docs.map((doc) => doc.toJSON())
+        }else if(all.docs.length !== 0){
+          all = all.docs
+        }else {
+          all = []
+        }
+
         return res.render("index", { title: "HOME", content: all, info: info });
       } catch (error) {
         return next(error);

@@ -1,6 +1,6 @@
 import CustomRouter from "../customRouter.js";
 import { read, readOne } from "../../controllers/api/controller.api.tickets.js";
-import { Types } from "mongoose";
+
 
 class TicketsRouter extends CustomRouter {
   init() {

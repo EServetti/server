@@ -1,14 +1,11 @@
-import userManager from "../data/mongo/managers/UserManager.db.js";
+import { readService } from "../service/users.api.service.js";
 async function exist (req, res, next) {
 try { 
     const { email } = req.body;
-    const all = await userManager.read();
+    const all = await readService();
     const exist = all.some((user) => user.email === email);
     if (exist) {
-        res.status(400).json({
-            statusCode: 400,
-            message: "The user has already been created",
-        })
+      return res.error400("Bad auth!")
     } else {
         next()
     }

@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "f61fdb73c89b158f780648a9",
+    "title": "Set de platos",
+    "photo": "/img/defaultProduct.png",
+    "category": "cocina",
+    "price": 700,
+    "stock": 20
+  },
+  {
+    "_id": "e281ad7e7dc8ba81713f7092",
+    "title": "Set de cubiertos",
+    "photo": "/img/defaultProduct.png",
+    "category": "cocina",
+    "price": 600,
+    "stock": 20
+  },
+  {
+    "_id": "d386e1fc4ab96b709c15cf25",
+    "title": "Set de copas",
+    "photo": "/img/defaultProduct.png",
+    "category": "cocina",
+    "price": 600,
+    "stock": 20
+  }
+]

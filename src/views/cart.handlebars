@@ -21,12 +21,11 @@
     >Finish buy</button>
 </div>
 <script src="/socket.io/socket.io.js"></script>
-<script src="/script/finishBuy.js"></script>
+<script type="module" src="/script/finishBuy.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 const socket = io();
 socket.on("here", message => {
-  console.log(message)
   const uid = document.querySelector("#uid").textContent.trim();
   socket.emit("uid", uid);
 })
@@ -71,7 +70,6 @@ socket.on("cart", allCarts => {
 })
 
 socket.on("anything", message => {
-  console.log(message)
   const content = `<h1 style="color: white; margin-top: 50px;display: flex;align-items: center; ">${message}</h1>`;
   document.querySelector("#cartCont").innerHTML = content;
 })

@@ -1,4 +1,4 @@
-import { readOneService } from "../../service/views/products.view.service.js";
+import { readOneService } from "../../service/products.api.service.js";
 
 async function read (req, res, next)  {
     try {

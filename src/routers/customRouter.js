@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { verifyToken } from "../utils/jwt.js";
-import usersManager from "../data/mongo/managers/UserManager.db.js";
+import { readByEmailService } from "../service/users.api.service.js";
 
 class CustomRouter {
   //para construir y configurar cada instancia del enrutador
@@ -52,7 +52,7 @@ class CustomRouter {
             (policies.includes("USER") && role === 0) ||
             (policies.includes("ADMIN") && role === 1)
           ) {
-            const user = await usersManager.readByEmail(email);
+            const user = await readByEmailService(email);
             //proteger contraseña del usuario!!!
             req.user = user;
             return next();

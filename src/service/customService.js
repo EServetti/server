@@ -1,14 +1,12 @@
-import userManager from "../data/mongo/managers/UserManager.db.js";
 
-userManager
 class CustomService {
-  constructor(manager) {
-    this.manager = manager;
+  constructor(repository) {
+    this.repository = repository;
   }
   
   paginateService= async (filter, opts) => {
     try {
-      const all = await this.manager.paginate(filter, opts)
+      const all = await this.repository.paginateRepository(filter, opts)
       return all
     } catch (error) {
       throw error
@@ -17,7 +15,7 @@ class CustomService {
 
    readService = async () => {
     try {
-      const all = await this.manager.read()
+      const all = await this.repository.readRepository()
       return all
     } catch (error) {
       throw error
@@ -26,16 +24,23 @@ class CustomService {
 
    readOneService = async (id) => {
     try {
-      const one = await this.manager.readOne(id) 
+      const one = await this.repository.readOneRepository(id) 
       return one
     } catch (error) {
       throw error
     }
   }
-  
+  readByEmailService = async (email) => {
+    try {
+      const one = await this.repository.readByEmailRepository(email) 
+      return one
+    } catch (error) {
+      throw error
+    }
+  }
   aggregateService = async (arrayConfig) => {
     try {
-      const total = await this.manager.aggregate(arrayConfig)
+      const total = await this.repository.aggregateRepository(arrayConfig)
       return total
     } catch (error) {
       throw error
@@ -43,7 +48,7 @@ class CustomService {
   }
   createService = async (data) => {
     try {
-      const one = await this.manager.create(data)
+      const one = await this.repository.createRepository(data)
       return one
     } catch (error) {
       throw error
@@ -52,7 +57,7 @@ class CustomService {
 
   updateService = async (id, data) => {
     try {
-      const one = await this.manager.update(id, data)
+      const one = await this.repository.updateRepository(id, data)
       return one
     } catch (error) {
       throw error
@@ -61,7 +66,7 @@ class CustomService {
 
   destroyService = async (id) => {
     try {
-      const one = await this.manager.destroy(id)
+      const one = await this.repository.destroyRepository(id)
       return one
     } catch (error) {
       throw error

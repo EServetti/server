@@ -1,4 +1,4 @@
-import "dotenv/config";
+import environment from './src/utils/env.utils.js';
 import express from 'express';
 import errorHandler from './src/middlewares/errorHandler.mid.js';
 import pathHandler from './src/middlewares/pathHandler.mid.js'
@@ -9,21 +9,20 @@ import __dirname from "./utils.js"
 import { createServer } from "http"
 import { Server } from "socket.io"
 import socketCb from "./src/routers/index.socket.js"
-import dbConnect from './src/utils/DbConnection.js';
 // import session from "express-session"
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import Handlebars from "handlebars"
+import compression from 'express-compression';
 
 
 //http server
 const server = express();
-const port = process.env.PORT
+const port = environment.PORT
 const ready = async () => {
     console.log(`Server listening on port ${port}`);
-    await dbConnect();
 }
- const nodeServer = createServer(server)
+const nodeServer = createServer(server)
 nodeServer.listen(port, ready)
 
 //tcp server
@@ -44,7 +43,7 @@ Handlebars.registerHelper('equal', function(value1, value2, options) {
 });
 
 //middlewares
-server.use(cookieParser(process.env.SECRET_COOKIE))
+server.use(cookieParser(environment.SECRET_COOKIE))
 // server.use(
 //     session({
 //       store: new MongoStore({
@@ -58,12 +57,17 @@ server.use(cookieParser(process.env.SECRET_COOKIE))
 //   );
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }))
-server.use(express.static("public"))
+server.use(express.static('public'))
 server.use(cors({
   origin: true, 
   credentials: true 
 }
 ))
+server.use(
+  compression({
+  brotli: { enabled: true, zlib: {} },
+  })
+  );
 
 
 //endpoints
@@ -71,3 +75,4 @@ server.use('/', indexRouter)
 server.use(morgan('dev'));
 server.use(errorHandler);
 server.use(pathHandler)
+
