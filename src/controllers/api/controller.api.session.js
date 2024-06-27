@@ -1,5 +1,4 @@
-import passport from "../../middlewares/passport.mid.js";
-import userManager from "../../data/mongo/managers/UserManager.db.js";
+import { readByEmailService, updateService } from "../../service/users.api.service.js";
 
 async function register (req, res, next) {
     try {
@@ -26,6 +25,25 @@ async function register (req, res, next) {
       return next(error);
     }
   }
+
+  async function authenticate (req, res, next) {
+    try {
+      const {email, verifyCode } = req.query
+      const one = await readByEmailService(email)
+      const verified = verifyCode === one.verifyCode
+      if(!verified) {
+        return res.error400("Invalid credentials!")
+      } else {
+        await updateService(one._id, {
+          verify: true
+        })
+        const message = `The account ${one.email} has been authenticated!`
+        return res.render("verify", {title: "VERIFY", message})
+      }
+    } catch (error) {
+      return next(error)
+    }
+  }
   
   async function signout (req, res, next) {
     try {
@@ -37,4 +55,4 @@ async function register (req, res, next) {
     }
   }
 
-export {register, login, data, signout}
+export {register, login, data, authenticate, signout}

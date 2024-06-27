@@ -1,9 +1,12 @@
-import ProductManager from "../data/mongo/managers/ProductManager.db.js";
+import { readService as readProductsService, createService as createProductService } from "../service/products.api.service.js";
+import { destroyService as destroyCartService, updateService as updateCartService } from "../service/carts.api.service.js";
 import path from "path";
 import fs from "fs";
 import __dirname from "../../utils.js";
-import CartManager from "../data/mongo/managers/CartManager.db.js";
-import { log } from "console";
+import environment from "../utils/env.utils.js";
+
+const { PORT } = environment
+
 
 //toma el dato de base64 (photo), lo guarda en /img y le da el nombre con la ruta adecuada
 const saveBase64Image = (base64String, fileName) => {
@@ -18,7 +21,7 @@ export default async (socket) => {
   console.log("Client online" + socket.id);
 
   //socket para real-products
-  socket.emit("products", await ProductManager.read());
+  socket.emit("products", await readProductsService());
 
   socket.on("product", async (data) => {
 
@@ -29,20 +32,20 @@ export default async (socket) => {
       data.photo = saveBase64Image(data.photo, fileName);
     }
 
-    const allProducts = await ProductManager.read();
+    const allProducts = await readProductsService();
     const exist = allProducts.some((each) => each.title === data.title);
     if (exist) {
       socket.emit("alert", "The product has already been created!");
     } else {
-      await ProductManager.create(data);
-      socket.emit("products", await ProductManager.read());
+      await createProductService(data);
+      socket.emit("products", await readProductsService());
     }
   });
 
 //socket para cart
   socket.emit("here", "connected")
   socket.on("uid", async (uid) => {
-  const path = `http://localhost:8080/api/tickets/${uid}`
+  const path = `http://localhost:${PORT}/api/tickets/${uid}`
   let response = await fetch(path,{
     method: "GET",
     credentials: "include",
@@ -66,8 +69,8 @@ socket.on("quantity", async info => {
   const data = {
     quantity: info.quantity
   }
-  await CartManager.update(_id, data);
-  const path = `http://localhost:8080/api/tickets/${info.uid}`
+  await updateCartService(_id, data);
+  const path = `http://localhost:${PORT}/api/tickets/${info.uid}`
   let response = await fetch(path,{
     method: "GET",
     credentials: "include",
@@ -87,8 +90,8 @@ socket.on("quantity", async info => {
 
 //socket para eliminar un carrito
 socket.on("delete", async info => {
-  await CartManager.destroy(info.cid);
-  const path = `http://localhost:8080/api/tickets/${info.uid}`
+  await destroyCartService(info.cid);
+  const path = `http://localhost:${PORT}/api/tickets/${info.uid}`
   let resp = await fetch(path,{
     method: "GET",
     credentials: "include",
@@ -110,7 +113,7 @@ socket.on("delete", async info => {
 socket.on("cancel", async token => {
   //saco la palabra token= de la cookie enviada en el emit para que quede solo el token
   token = token.split("=")[1]
-  let response = await fetch("http://localhost:8080/api/carts/all", {
+  let response = await fetch(`http://localhost:${PORT}/api/carts/all`, {
     method: "DELETE",
     credentials: "include",
     headers: {

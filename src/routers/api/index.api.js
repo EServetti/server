@@ -6,6 +6,7 @@ import sessionRouter from "./session.api.js";
 import CustomRouter from "../customRouter.js";
 import ticketsRouter from "./tickets.api.js";
 
+
 class ApiRouter extends CustomRouter {
   init() {
     this.use("/products", productsRouter);

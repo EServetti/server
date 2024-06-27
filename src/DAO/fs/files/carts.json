@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "cb642771ad8adaa5c0fdffea",
+    "user_id": {
+      "_id": "3ba7df4a38a2dfe72a70a1f9",
+      "photo": "/img/defaultUser.webp",
+      "email": "juan@gmail.com",
+      "role": 1
+    },
+    "product_id": {
+      "_id": "f61fdb73c89b158f780648a9",
+      "title": "Set de platos",
+      "photo": "/img/defaultProduct.png",
+      "category": "cocina",
+      "price": 700,
+      "stock": 20
+    },
+    "quantity": 1,
+    "state": "reserved",
+    "createdAt": "2024-06-20T02:38:12.862Z",
+    "updatedAt": "2024-06-20T02:38:12.862Z"
+  }
+]

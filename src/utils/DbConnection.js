@@ -1,9 +1,9 @@
 import { connect } from "mongoose";
+import environment from "./env.utils.js";
 
 async function dbConnect() {
     try {
-      await connect(process.env.MONGO_URI);
-      console.log("connected to mongo database");
+      await connect(environment.MONGO_URI);
     } catch (error) {
       console.log(error);
     }
