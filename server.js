@@ -13,6 +13,7 @@ import socketCb from "./src/routers/index.socket.js"
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import Handlebars from "handlebars"
+import compression from 'express-compression';
 
 
 //http server
@@ -62,6 +63,11 @@ server.use(cors({
   credentials: true 
 }
 ))
+server.use(
+  compression({
+  brotli: { enabled: true, zlib: {} },
+  })
+  );
 
 
 //endpoints
