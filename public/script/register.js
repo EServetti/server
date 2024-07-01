@@ -27,7 +27,6 @@ document.querySelector("#Register").addEventListener("click", async () => {
       body: JSON.stringify(data),
     });
     const response = await register.json();
-    console.log(response);
     if (response.statusCode === 201) {
       Swal.fire({
         title: "We've sent you a verification mail",

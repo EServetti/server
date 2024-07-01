@@ -8,6 +8,8 @@ import { createToken, verifyToken } from "../utils/jwt.js"
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import environment from "../utils/env.utils.js";
 import { sendEmail } from "../utils/mailing.util.js";
+import CustomError from "../utils/errors/customError.js";
+import errors from "../utils/errors/errors.js";
 
 
 
@@ -22,8 +24,7 @@ passport.use(
         //Revisa que no exista anteriormente un user con este email
         const exist = await readByEmailService(email);
         if (exist) {
-          const error = new Error("Bad auth from register!");
-          error.statusCode = 401;
+          const error = CustomError(errors.auth)
           return done(error);
         }
         const one = await createService(req.body);
@@ -45,16 +46,14 @@ passport.use(
         //Error si no existe un user con ese email
         const one = await readByEmailService(email);
         if (!one) {
-          const error = new Error("Bad auth!");
-          error.statusCode = 401;
+          const error = CustomError(errors.auth)
           return done(error);
         }
         //Error si el password no coincide con el user
         else {
           const correct = compareHash(password, one.password);
           if (!correct || !one.verify) {
-            const error = new Error("Invalid credentials!");
-            error.statusCode = 401;
+            const error = CustomError(errors.invalid)
             return done(error);
           } else {
             const data = {
@@ -96,8 +95,7 @@ passport.use(
         req.body = one;
         return done(null, one);
       } else {
-        const error = new Error("You must login!");
-        error.statusCode = 401;
+        const error = CustomError(errors.notLogged)
         return done(error);
       }
     } catch (error) {
@@ -163,8 +161,7 @@ passport.use(
       if(data){
         return done(null, data)
       } else{
-        const error = new Error("You must login!");
-        error.statusCode = 401;
+        const error = CustomError(errors.notLogged)
         return done(error);
       }
     } catch (error) {
