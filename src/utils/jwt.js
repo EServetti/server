@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken"
 import environment from "./env.utils.js"
+import CustomError from "./errors/customError.js"
+import errors from "./errors/errors.js"
 
 function createToken (data) {
   const token = jwt.sign(data, environment.SECRET_JWT, { expiresIn: 60 * 60})
@@ -22,7 +24,8 @@ function updateToken(currentToken, newToken) {
     const updatedToken = jwt.sign(newToken, environment.SECRET_JWT);
     return updatedToken;
   } else {
-    throw new Error('El token actual no tiene una fecha de expiración válida.');
+    const error = CustomError(errors.expDateToken)
+    throw error
   }
 }
 
