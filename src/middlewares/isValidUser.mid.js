@@ -7,7 +7,7 @@ async function isValidUser(req, res, next) {
     const { email, password } = req.body
     const one = await readByEmailService(email)
     if(!email || !password){
-      const error = CustomError(errors.missingData)
+      const error = CustomError.new(errors.missingData)
       throw error
     }
     return next()

@@ -9,7 +9,9 @@ const errors = {
   forbidden: { message: "Forbidden", statusCode: 403 },
   notFound: { message: "Not found", statusCode: 404 },
   fatal: { message: "Fatal", statusCode: 500 },
-  expDateToken: {message: "The current token doesn't have a valid exp date", statusCode: 500}
+  expDateToken: {message: "The current token doesn't have a valid exp date", statusCode: 500},
+  productExist: {message: "There's already a product with this name!", statusCode: 401},
+  userExists: {message: "There's already a user with this email!", statusCode: 401}
 };
 
 export default errors;

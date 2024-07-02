@@ -3,16 +3,16 @@ import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import CustomStrategy from "passport-custom";
 import { createHash, compareHash } from "../utils/hash.js";
-import { readByEmailService, createService } from "../service/users.api.service.js"
-import { createToken, verifyToken } from "../utils/jwt.js"
+import {
+  readByEmailService,
+  createService,
+} from "../service/users.api.service.js";
+import { createToken, verifyToken } from "../utils/jwt.js";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import environment from "../utils/env.utils.js";
 import { sendEmail } from "../utils/mailing.util.js";
 import CustomError from "../utils/errors/customError.js";
 import errors from "../utils/errors/errors.js";
-
-
-
 
 passport.use(
   "register",
@@ -20,15 +20,16 @@ passport.use(
     { passReqToCallback: true, usernameField: "email" },
     async (req, email, password, done) => {
       try {
-        //Si no se ingresan los daros email o password no funciona el passport, por lo tanto se debe seguir utilizando el midd isValidData
+        //Si no se ingresan los datos email o password no funciona el passport, por lo tanto se debe seguir utilizando el midd isValidData
         //Revisa que no exista anteriormente un user con este email
         const exist = await readByEmailService(email);
         if (exist) {
-          const error = CustomError(errors.auth)
+          const error = CustomError.new(errors.auth);
           return done(error);
         }
         const one = await createService(req.body);
-        await sendEmail({ to : email, name : one.name, verifyCode : one.verifyCode})
+        const data = { to: email, name: one.name, verifyCode: one.verifyCode };
+        await sendEmail(data);
         return done(null, one);
       } catch (error) {
         return done(error);
@@ -46,14 +47,15 @@ passport.use(
         //Error si no existe un user con ese email
         const one = await readByEmailService(email);
         if (!one) {
-          const error = CustomError(errors.auth)
+          console.log(errors.auth);
+          const error = CustomError.new(errors.auth);
           return done(error);
         }
         //Error si el password no coincide con el user
         else {
           const correct = compareHash(password, one.password);
           if (!correct || !one.verify) {
-            const error = CustomError(errors.invalid)
+            const error = CustomError.new(errors.invalid);
             return done(error);
           } else {
             const data = {
@@ -62,10 +64,10 @@ passport.use(
               age: one.age,
               role: one.role,
               photo: one.photo,
-              _id: one._id
-            }
-            const token = createToken(data)
-            data.token = token
+              _id: one._id,
+            };
+            const token = createToken(data);
+            data.token = token;
             return done(null, data);
           }
         }
@@ -83,19 +85,19 @@ passport.use(
     try {
       const token = req.cookies.token;
       if (token) {
-        const data = verifyToken(token)
+        const data = verifyToken(token);
         const one = {
           email: data.email,
           age: data.age,
           name: data.name,
           role: data.role,
           photo: data.photo,
-          _id: data._id
+          _id: data._id,
         };
         req.body = one;
         return done(null, one);
       } else {
-        const error = CustomError(errors.notLogged)
+        const error = CustomError.new(errors.notLogged);
         return done(error);
       }
     } catch (error) {
@@ -124,11 +126,11 @@ passport.use(
             photo: profile.picture,
             password: createHash(profile.id),
             role: 0,
-            verify: true
+            verify: true,
           };
           await createService(one);
         }
-        const two = await  readByEmailService(profile.id);
+        const two = await readByEmailService(profile.id);
         const data = {
           email: two.email,
           name: two.name,
@@ -136,9 +138,9 @@ passport.use(
           age: two.age,
           photo: two.photo,
           _id: two._id,
-        }
-        const token = createToken(data)
-        data.token = token
+        };
+        const token = createToken(data);
+        data.token = token;
         return done(null, data);
       } catch (error) {
         done(error);
@@ -150,25 +152,26 @@ passport.use(
 //isAuth con jwt
 passport.use(
   "jwt",
-  new JwtStrategy({
-    jwtFromRequest: ExtractJwt.fromExtractors([
-      (req) => req?.cookies["token"],
-    ]),
-    secretOrKey: process.env.SECRET_JWT
-  },
-  (data, done) => {
-    try {
-      if(data){
-        return done(null, data)
-      } else{
-        const error = CustomError(errors.notLogged)
-        return done(error);
+  new JwtStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (req) => req?.cookies["token"],
+      ]),
+      secretOrKey: process.env.SECRET_JWT,
+    },
+    (data, done) => {
+      try {
+        if (data) {
+          return done(null, data);
+        } else {
+          const error = CustomError.new(errors.notLogged);
+          return done(error);
+        }
+      } catch (error) {
+        return error;
       }
-    } catch (error) {
-      return(error)
     }
-  }
-)
+  )
 );
 
 export default passport;

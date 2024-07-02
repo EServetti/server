@@ -24,7 +24,7 @@ function updateToken(currentToken, newToken) {
     const updatedToken = jwt.sign(newToken, environment.SECRET_JWT);
     return updatedToken;
   } else {
-    const error = CustomError(errors.expDateToken)
+    const error = CustomError.new(errors.expDateToken)
     throw error
   }
 }

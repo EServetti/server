@@ -10,7 +10,7 @@ async function alreadyUpdated(req, res, next) {
       const _id = token._id;
       const one = await readOneService(_id);
       if (one.role === 1) {
-        const error = CustomError(errors.alreadyUpdated)
+        const error = CustomError.new(errors.alreadyUpdated)
         throw error;
       }
       return next();

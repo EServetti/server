@@ -14,7 +14,7 @@ async function sendEmail(data) {
       },
     });
     await transport.verify();
-    const verificationUrl = `http://localhost:8080/api/sessions/verify?email=${encodeURIComponent(data.to)}&verifyCode=${encodeURIComponent(data.verifyCode)}`;
+    const verificationUrl = `http://localhost:${PORT}/api/sessions/verify?email=${encodeURIComponent(data.to)}&verifyCode=${encodeURIComponent(data.verifyCode)}`;
     const htmlContent = `
       <h1>Welcome to our store!</h1>
       <p>Click the link below to verify your email:</p>
@@ -29,6 +29,7 @@ async function sendEmail(data) {
       html: htmlContent
     });
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }

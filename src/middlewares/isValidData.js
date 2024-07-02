@@ -7,7 +7,7 @@ async function isValidData(req, res, next) {
     const password = req.body.password;
     const name = req.body.name;
     if (!email || !password || !name ) {
-      const error = CustomError(errors.missingData)
+      const error = CustomError.new(errors.missingData)
       throw error;
     }
     return next()

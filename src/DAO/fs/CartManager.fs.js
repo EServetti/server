@@ -3,7 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import crypto from "crypto";
 import errors from "../../utils/errors/errors.js";
-import CustomError from "../../utils/errors/customError";
+import CustomError from "../../utils/errors/customError.js";
 
 
 class CartManager {
@@ -61,7 +61,7 @@ class CartManager {
         );
         return cart;
       } else {
-        const error = CustomError(errors.exists)
+        const error = CustomError.new(errors.exists)
         throw error;
       }
     } catch (error) {
