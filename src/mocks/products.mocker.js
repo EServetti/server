@@ -21,6 +21,7 @@ async function productMocker(){
     for (let i= 0; i < 1000; i++){
       const product = {
         title: await newTitle(),
+        description: faker.commerce.productDescription(),
         // imagenes random ya que faker no provee imagenes de products
         photo: faker.image.url(),
         category: simpleFaker.helpers.arrayElement(categories),
