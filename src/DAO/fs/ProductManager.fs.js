@@ -41,6 +41,7 @@ class ProductManager {
       const product = {
         _id: data._id,
         title: data.title,
+        description: data.description,
         photo: data.photo,
         category: data.category,
         price: data.price,
