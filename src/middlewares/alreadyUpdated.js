@@ -1,4 +1,6 @@
 import { readOneService } from "../service/users.api.service.js";
+import CustomError from "../utils/errors/customError.js";
+import errors from "../utils/errors/errors.js";
 import { verifyToken } from "../utils/jwt.js";
 
 async function alreadyUpdated(req, res, next) {
@@ -8,8 +10,7 @@ async function alreadyUpdated(req, res, next) {
       const _id = token._id;
       const one = await readOneService(_id);
       if (one.role === 1) {
-        const error = new Error("You have already updated your role!");
-        error.statusCode = 401;
+        const error = CustomError.new(errors.alreadyUpdated)
         throw error;
       }
       return next();

@@ -14,7 +14,7 @@ this.create(
   ["PUBLIC"],
   isValidData,
   passportCb("register"),
-  register
+  register,
 );
 
 //ruta de login

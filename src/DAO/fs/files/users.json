@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "_id": "760c5c6d3b6d6ae0353a1ae5",
+    "photo": "/img/defaultUser.webp",
+    "name": "Emilio",
+    "age": 12,
+    "email": "eservetti2018@gmail.com",
+    "password": "$2b$10$HikbHN9Aa63c/WfrW4JGCujcqtLlTTRbKR/5j/Sa22XWW5nZBODz6",
+    "role": 0,
+    "verify": false,
+    "verifyCode": "da2c3f98736f",
+    "createdAt": "2024-07-02T18:03:11.615Z",
+    "updatedAt": "2024-07-02T18:03:11.615Z"
+  }
+]
