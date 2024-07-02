@@ -7,6 +7,7 @@ class ProductDTO {
     constructor(data) {
         pers !== "mongo" && (this._id = crypto.randomBytes(12).toString("hex"));
         this.title = data.title;
+        this.description = data.description;
         this.photo = data.photo || "/img/defaultProduct.png"
         this.category = data.category || "product"
         this.price = data.price || 1;
