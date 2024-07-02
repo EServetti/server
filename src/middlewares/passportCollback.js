@@ -4,6 +4,7 @@ function passportCb(strategy) {
   return (req, res, next) => {
     passport.authenticate(strategy, (error, user, info) => {
       if(error) {
+        console.log(error);
         return next(error)
       }
       if(user) {

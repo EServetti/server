@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import crypto from "crypto";
+import errors from "../../utils/errors/errors.js";
+import CustomError from "../../utils/errors/customError.js";
 
 
 class CartManager {
@@ -59,8 +61,7 @@ class CartManager {
         );
         return cart;
       } else {
-        const error = new Error("The cart already exists!");
-        error.statusCode = 409;
+        const error = CustomError.new(errors.exists)
         throw error;
       }
     } catch (error) {

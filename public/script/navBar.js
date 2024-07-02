@@ -4,7 +4,8 @@ async function navBar() {
     headers: {
       "Content-Type": "application/json",
     }});
-  online = await online.json();
+    online = await online.json()
+
   //NavBar para customers
   if ((online.statusCode === 200) & (online.message.role !== 1)) {
     const navBarContent = `
@@ -148,9 +149,7 @@ async function navBar() {
       `;
     document.querySelector("#mainNavbar").innerHTML = navBarContent;
   }
-  document
-    .querySelector("#closeSession")
-    .addEventListener("click", async () => {
+  document.querySelector("#closeSession").addEventListener("click", async () => {
       await fetch("/api/sessions/signout", {
         method: "POST",
         headers: {

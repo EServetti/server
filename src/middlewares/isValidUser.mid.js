@@ -1,12 +1,13 @@
 import { readByEmailService } from "../service/users.api.service.js";
+import CustomError from "../utils/errors/customError.js";
+import errors from "../utils/errors/errors.js";
 
 async function isValidUser(req, res, next) {
   try {
     const { email, password } = req.body
     const one = await readByEmailService(email)
     if(!email || !password){
-      const error = new Error("You must enter the email and password");
-      error.statusCode = 401;
+      const error = CustomError.new(errors.missingData)
       throw error
     }
     return next()
