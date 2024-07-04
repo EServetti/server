@@ -83,6 +83,14 @@ async function paginate(req, res, next) {
       const data = req.body;
       const token = verifyToken(req.cookies.token);
       data.user_id = token._id;
+      //verifico que el user no tenga un carrito con el mismo producto
+      const carts = await paginateService({
+        user_id: data.user_id
+      },{})
+      const exists = carts.docs.find((c) => c.product_id._id == data.product_id)
+      if(exists){
+        return res.error400("You have already added this product to cart!")
+      }
       if (Object.keys(data).length === 0 || !data.product_id || !data.quantity) {
         return res.error400("You must enter at least quantity and product_id!");
       }
@@ -128,10 +136,11 @@ async function paginate(req, res, next) {
   //metodo destroy (todos los carritos de un user)
   async function desAll(req, res, next) {
     try {
-      const token = verifyToken(req.body.token);
-      if (token._id) {
+      // const token = verifyToken(req.body.token);
+      const _id = req.body._id
+      if (_id) {
         const filter = {
-          user_id: token._id,
+          user_id: _id,
         };
         const opts = {};
         let allCarts = await paginateService(filter, opts);
@@ -142,7 +151,7 @@ async function paginate(req, res, next) {
         //despues de eliminar los carritos actualizo all y lo envío
         let all = await paginateService(filter, opts);
         all = all.docs;
-        return res.message200(all);
+        return res.message200("The products has been eliminated");
       } else {
         return res.error400("You must log in!");
       }
