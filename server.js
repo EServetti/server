@@ -14,6 +14,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors"
 import Handlebars from "handlebars"
 import compression from 'express-compression';
+import { cpus } from 'os';
+import cluster from 'cluster';
 
 
 //http server
@@ -23,7 +25,16 @@ const ready = async () => {
     console.log(`Server listening on port ${port}`);
 }
 const nodeServer = createServer(server)
-nodeServer.listen(port, ready)
+const numOfProc = cpus().length
+if(cluster.isPrimary) {
+for (let i=1; i<=numOfProc; i++) {
+cluster.fork()
+}
+console.log("proceso primario");
+} else {
+console.log("proceso worker "+process.pid);
+nodeServer.listen(port, ready);
+}
 
 //tcp server
 const socketServer = new Server(nodeServer)
