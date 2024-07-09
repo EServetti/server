@@ -1,0 +1,25 @@
+config:
+  pluggins:
+    metrics-by-endpoint : {}
+  target: http://localhost:8080/api
+  phases:
+    - duration: 10
+      arrivalRate: 50
+scenarios:
+  - name: login
+    flow:
+      - log: login
+      - post: 
+          url: /sessions/login
+          json:
+            email: eservetti2018@gmail.com
+            password: 1011
+      - log: read all products
+      - get:
+          url: /products
+      - log: create a cart
+      - post:
+          url: /pets
+          json:
+            product_id: 6684501acfbcff73d405d899
+            quantity: 1
