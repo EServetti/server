@@ -29,7 +29,6 @@ async function sendEmail(data) {
       html: htmlContent
     });
   } catch (error) {
-    console.log(error);
     throw error;
   }
 }

@@ -1,21 +1,25 @@
-import environment from './src/utils/env.utils.js';
+//modules
 import express from 'express';
-import errorHandler from './src/middlewares/errorHandler.mid.js';
-import pathHandler from './src/middlewares/pathHandler.mid.js'
-import indexRouter from './src/routers/index.router.js';
-import morgan from 'morgan';
 import { engine } from "express-handlebars"
-import __dirname from "./utils.js"
 import { createServer } from "http"
 import { Server } from "socket.io"
-import socketCb from "./src/routers/index.socket.js"
-// import session from "express-session"
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import Handlebars from "handlebars"
 import compression from 'express-compression';
-import { cpus } from 'os';
+// import session from "express-session"
+// import morgan from 'morgan';
 import cluster from 'cluster';
+import { cpus } from 'os';
+//middlewares
+import indexRouter from './src/routers/index.router.js';
+import pathHandler from './src/middlewares/pathHandler.mid.js'
+import errorHandler from './src/middlewares/errorHandler.mid.js';
+import winston from './src/middlewares/winston.mid.js';
+//server data
+import environment from './src/utils/env.utils.js';
+import __dirname from "./utils.js"
+import socketCb from "./src/routers/index.socket.js"
 
 
 //http server
@@ -83,6 +87,6 @@ server.use(
 
 //endpoints
 server.use('/', indexRouter)
-server.use(morgan('dev'));
+server.use(winston);
 server.use(errorHandler);
 server.use(pathHandler)

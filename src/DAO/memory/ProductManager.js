@@ -110,7 +110,7 @@ class ProductManager {
       ProductManager.#products = filtered;
       return delOne
     } catch (error) {
-      console.log(error);
+      return error
     }
   }
 }

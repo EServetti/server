@@ -33,6 +33,7 @@ async function productMocker(){
     console.log("The products has been created");
   } catch (error) {
     console.log(error);
+    return error
   }
 }
 

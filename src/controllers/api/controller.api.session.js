@@ -4,7 +4,6 @@ async function register (req, res, next) {
     try {
       return res.message201("We've sent you a verification mail!");
     } catch (error) {
-      console.log(error);
       return next(error);
     }
   }
