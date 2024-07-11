@@ -19,7 +19,7 @@ async function userMocker(){
     }
     console.log("The users has been created");
   } catch (error) {
-    console.log(error);
+    return errors
   }
 }
 

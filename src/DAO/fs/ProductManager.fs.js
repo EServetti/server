@@ -32,7 +32,7 @@ class ProductManager {
         console.log("The file products has already been created!");
       }
     } catch (error) {
-      console.log(error);
+      return error
     }
   }
   //metodo para crear un producto
@@ -41,6 +41,7 @@ class ProductManager {
       const product = {
         _id: data._id,
         title: data.title,
+        description: data.description,
         photo: data.photo,
         category: data.category,
         price: data.price,

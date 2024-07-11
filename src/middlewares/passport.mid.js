@@ -47,7 +47,6 @@ passport.use(
         //Error si no existe un user con ese email
         const one = await readByEmailService(email);
         if (!one) {
-          console.log(errors.auth);
           const error = CustomError.new(errors.auth);
           return done(error);
         }

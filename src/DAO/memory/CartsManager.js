@@ -107,7 +107,7 @@ class CartManager {
       }
       return one;
     } catch (error) {
-      console.log(error);
+      return error
     }
   }
 
