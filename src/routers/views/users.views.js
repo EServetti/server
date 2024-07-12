@@ -1,12 +1,12 @@
 import { Router } from "express";
 //import userManager from "../../data/fs/UserManager.fs.js"
 import { register, login, data, settings, role, update } from "../../controllers/views/controller.views.users.js";
-import uploader from "../../middlewares/multer.mid.js";
-import isPhoto from "../../middlewares/isPhoto.js";
+import {uploader, uploadFile} from "../../middlewares/multer.mid.js";
 import isOnline from "../../middlewares/isOnline.js";
 import alreadyUpdated from "../../middlewares/alreadyUpdated.js";
 import _ from "mongoose-paginate-v2";
 import CustomRouter from "../customRouter.js"
+
 
 class UsersRouter extends CustomRouter {
   init(){
@@ -20,7 +20,7 @@ class UsersRouter extends CustomRouter {
     
     this.read("/role",["USER","ADMIN"], isOnline, role )
     
-    this.update("/",["USER","ADMIN"], isOnline, alreadyUpdated, uploader.single("photo"), isPhoto, update);
+    this.update("/",["USER","ADMIN"], isOnline, alreadyUpdated, uploader.single("photo"), uploadFile, update);
   }
 }
 
