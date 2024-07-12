@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { verifyToken } from "../utils/jwt.js";
 import { readByEmailService } from "../service/users.api.service.js";
+import logger from "../utils/winston.js";
 
 class CustomRouter {
   //para construir y configurar cada instancia del enrutador
@@ -29,13 +30,22 @@ class CustomRouter {
     res.paginate = (message, info) =>
       res.json({ statusCode: 200, message, info });
     res.message201 = (message) => res.json({ statusCode: 201, message });
-    res.error400 = (message) => res.json({ statusCode: 400, message });
-    res.error401 = () =>
-      res.json({ statusCode: 401, message: "Bad auth from poliecies!" });
-    res.error403 = () =>
-      res.json({ statusCode: 403, message: "Forbidden from poliecies!" });
-    res.error404 = () =>
-      res.json({ statusCode: 404, message: "Not found docs" });
+    res.error400 = (message) => {
+      const errorMessage = `${req.method} - ${req.url} - 400 - message: ${message} - ${new Date().toLocaleDateString()}`
+      logger.ERROR(errorMessage)
+      res.json({ statusCode: 400, message });}
+    res.error401 = () =>{
+      const errorMessage = `${req.method} - ${req.url} - 401 - message: "Bad auth from poliecies!" - ${new Date().toLocaleDateString()}`
+      logger.ERROR(errorMessage)
+      res.json({ statusCode: 401, message: "Bad auth from poliecies!" });}
+    res.error403 = () =>{
+      const errorMessage = `${req.method} - ${req.url} - 403 - message: "Forbidden from poliecies!" - ${new Date().toLocaleDateString()}`
+      logger.ERROR(errorMessage)
+      res.json({ statusCode: 403, message: "Forbidden from poliecies!" });}
+    res.error404 = () => {
+      const errorMessage = `${req.method} - ${req.url} - 404 - message: "Not found docs" - ${new Date().toLocaleDateString()}`
+      logger.ERROR(errorMessage)
+      res.json({ statusCode: 404, message: "Not found docs" });}
     return next();
   };
   policies = (policies) => async (req, res, next) => {

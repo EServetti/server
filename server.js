@@ -1,19 +1,25 @@
-import environment from './src/utils/env.utils.js';
+//modules
 import express from 'express';
-import errorHandler from './src/middlewares/errorHandler.mid.js';
-import pathHandler from './src/middlewares/pathHandler.mid.js'
-import indexRouter from './src/routers/index.router.js';
-import morgan from 'morgan';
 import { engine } from "express-handlebars"
-import __dirname from "./utils.js"
 import { createServer } from "http"
 import { Server } from "socket.io"
-import socketCb from "./src/routers/index.socket.js"
-// import session from "express-session"
 import cookieParser from "cookie-parser";
 import cors from "cors"
 import Handlebars from "handlebars"
 import compression from 'express-compression';
+// import session from "express-session"
+// import morgan from 'morgan';
+import cluster from 'cluster';
+import { cpus } from 'os';
+//middlewares
+import indexRouter from './src/routers/index.router.js';
+import pathHandler from './src/middlewares/pathHandler.mid.js'
+import errorHandler from './src/middlewares/errorHandler.mid.js';
+import winston from './src/middlewares/winston.mid.js';
+//server data
+import environment from './src/utils/env.utils.js';
+import __dirname from "./utils.js"
+import socketCb from "./src/routers/index.socket.js"
 
 
 //http server
@@ -23,7 +29,16 @@ const ready = async () => {
     console.log(`Server listening on port ${port}`);
 }
 const nodeServer = createServer(server)
-nodeServer.listen(port, ready)
+const numOfProc = cpus().length
+if(cluster.isPrimary) {
+for (let i=1; i<=numOfProc; i++) {
+cluster.fork()
+}
+console.log("proceso primario");
+} else {
+console.log("proceso worker "+process.pid);
+nodeServer.listen(port, ready);
+}
 
 //tcp server
 const socketServer = new Server(nodeServer)
@@ -72,6 +87,6 @@ server.use(
 
 //endpoints
 server.use('/', indexRouter)
-server.use(morgan('dev'));
+server.use(winston);
 server.use(errorHandler);
 server.use(pathHandler)

@@ -131,4 +131,15 @@ En el caso de que el usuario no tenga un product en el cart se mostrara un carte
 ## Finish buy
 Al seleccionar la opcion finish buy, nos llevara a una pagina donde tendremos todos nuestros carritos con su precio y el precio total, debajo aparecera un formulario para finalizar la compra (obviamente no funcional actualmente), en el mismo aparecera la imagen de la tarjeta de credito que seleccionemos y luego unos campos donde se deberian ingresar los datos.
 
+# Logger
+Con la implementacion del logger cree 4 nuevos endpoints para poder probar facilmente los logs, todos ellos saldran de la url principal /api/logger.
+## /error
+Esto nos devuelve un error de status 400 con un mensaje "Logged error".
+## /auth
+Esto nos devuelve un error de status 401 con un mensaje "Bad auth!".
+## /forbidden
+Esto nos devuelve un error de status 403 con un mensaje "Forbidden from policies!".
+## /notfound
+Esto nos devuelve un error de status 404 con un mensaje "Not found docs!".
 
+Entrando en estos endpoints podras ver como se consologuean todos los errores en la consola en el caso de que estemos en un ambiente de desarrollo, y en caso de un ambiente de producción ademas de consologuearse se guardaran en un archivo.

@@ -27,7 +27,7 @@ class UserManager {
         console.log("The file users has already been created!");
       }
     } catch (error) {
-      console.log(error);
+      return error
     }
   }
   //metodo para crear un usuario

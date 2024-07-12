@@ -32,7 +32,7 @@ class ProductManager {
         console.log("The file products has already been created!");
       }
     } catch (error) {
-      console.log(error);
+      return error
     }
   }
   //metodo para crear un producto

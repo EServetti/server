@@ -51,7 +51,7 @@ async function register (req, res, next) {
     try {
       const { name, photo, role, age } = req.body;
       const token = verifyToken(req.cookies.token)
-  
+
       //actualizo la session para que se actualize la foto y el role de la navbar
       if(photo){
         token.photo = photo;

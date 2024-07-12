@@ -5,7 +5,7 @@ async function dbConnect() {
     try {
       await connect(environment.MONGO_URI);
     } catch (error) {
-      console.log(error);
+      return error
     }
   }
 

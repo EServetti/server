@@ -31,7 +31,7 @@ class CartManager {
         console.log("The file carts has already been created!");
       }
     } catch (error) {
-      console.log(error);
+      return error
     }
   }
 

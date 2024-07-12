@@ -5,6 +5,7 @@ import cartsRouter from "./carts.api.js";
 import sessionRouter from "./session.api.js";
 import CustomRouter from "../customRouter.js";
 import ticketsRouter from "./tickets.api.js";
+import loggerRouter from "./logger.js"
 
 
 
@@ -15,6 +16,7 @@ class ApiRouter extends CustomRouter {
     this.use("/carts", cartsRouter);
     this.use("/sessions", sessionRouter);
     this.use("/tickets", ticketsRouter);
+    this.use("/logger", loggerRouter)
   }
 }
 

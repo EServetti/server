@@ -27,7 +27,7 @@ class SessionRouter extends CustomRouter {
               signedCookie: true,
               maxAge: 3600000,
             })
-            .redirect("/");
+            .redirect("http://localhost:5173/");
         } catch (error) {
           return next(error);
         }
