@@ -14,8 +14,10 @@ class UserManager {
         email: data.email,
         password: data.password,
         role: data.role,
+        phone: data.phone,
         verify: data.verify,
         verifyCode: data.verifyCode,
+        complete: data.complete,
         createdAt: data.createdAt,
         updatedAt: data.updatedAt
       };
