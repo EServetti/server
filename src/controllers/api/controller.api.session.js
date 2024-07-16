@@ -40,7 +40,7 @@ async function register (req, res, next) {
           verify: true
         })
         const message = `The account ${one.email} has been authenticated!`
-        return res.render("verify", {title: "VERIFY", message})
+        return res.message200("The account has been verified!")
       }
     } catch (error) {
       return next(error)

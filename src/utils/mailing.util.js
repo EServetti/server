@@ -1,6 +1,6 @@
 import { createTransport } from "nodemailer";
 import environment from "../utils/env.utils.js";
-const {PORT} = environment
+const { PORT } = environment;
 
 async function sendEmail(data) {
   try {
@@ -14,9 +14,10 @@ async function sendEmail(data) {
       },
     });
     await transport.verify();
-    const verificationUrl = `http://localhost:${PORT}/api/sessions/verify?email=${encodeURIComponent(data.to)}&verifyCode=${encodeURIComponent(data.verifyCode)}`;
+    // const verificationUrl = `http://localhost:${PORT}/api/sessions/verify?email=${encodeURIComponent(data.to)}&verifyCode=${encodeURIComponent(data.verifyCode)}`;
+    const verificationUrl = `http://localhost:5173/verify/${encodeURIComponent(data.to)}/${encodeURIComponent(data.verifyCode)}`;
     const htmlContent = `
-      <h1>Welcome to our store!</h1>
+    <h1>Welcome to our store!</h1>
       <p>Click the link below to verify your email:</p>
       <a href="${verificationUrl}" style="padding: 10px 20px; background-color: blue; color: white; text-decoration: none; border-radius: 5px;">
         Verify Email
@@ -26,7 +27,7 @@ async function sendEmail(data) {
       from: `Everithing for your home <${environment.GOOGLE_EMAIL}>`,
       to: data.to,
       subject: `Verification to ${data.name}`,
-      html: htmlContent
+      html: htmlContent,
     });
   } catch (error) {
     throw error;
