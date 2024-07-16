@@ -64,6 +64,8 @@ passport.use(
               role: one.role,
               photo: one.photo,
               _id: one._id,
+              phone: one.phone,
+              complete: one.complete
             };
             const token = createToken(data);
             data.token = token;
@@ -92,6 +94,8 @@ passport.use(
           role: data.role,
           photo: data.photo,
           _id: data._id,
+          phone: data.phone,
+          complete: data.complete
         };
         req.body = one;
         return done(null, one);
@@ -137,6 +141,8 @@ passport.use(
           age: two.age,
           photo: two.photo,
           _id: two._id,
+          phone: two.phone,
+          complete: two.complete
         };
         const token = createToken(data);
         data.token = token;

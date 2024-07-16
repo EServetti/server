@@ -29,7 +29,7 @@ const uploader = multer({
 const uploadFile = (req, res, next) => {
   try {
     if (!req.file) {
-      return res.error400("You must upload a file!");
+      return next()
     }
 
     const bucket = storage.bucket(bucketName);

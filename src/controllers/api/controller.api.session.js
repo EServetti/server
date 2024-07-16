@@ -1,4 +1,7 @@
 import { readByEmailService, updateService } from "../../service/users.api.service.js";
+import { recovePassword } from "../../utils/mailing.password.js";
+import usersRepository from "../../repositories/usersRepository.js";
+import { createHash } from "../../utils/hash.js";
 
 async function register (req, res, next) {
     try {
@@ -54,4 +57,34 @@ async function register (req, res, next) {
     }
   }
 
-export {register, login, data, authenticate, signout}
+  async function password (req, res, next) {
+    try {
+      const {email} = req.body
+      const one = await usersRepository.readByEmailRepository(email)
+      const {_id} = one
+      const data = {
+        email,
+        _id
+      }
+      recovePassword(data)
+      return res.message200("We've sent you an email")
+    } catch (error) {
+      return next(error)
+    }
+  }
+
+  async function passwordUpdate(req, res, next) {
+    try {
+      const {uid, password} = req.body
+      const pass = createHash(password)
+      const data = {
+        password: pass
+      }
+      const one = await usersRepository.updateRepository(uid, data)
+      return res.message200(one)
+    } catch (error) {
+      return next(error)
+    }
+  }
+
+export {register, login, data, authenticate, signout, password, passwordUpdate}

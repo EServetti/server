@@ -49,7 +49,7 @@ async function register (req, res, next) {
   
   async function update (req, res, next) {
     try {
-      const { name, photo, role, age } = req.body;
+      const { name, photo, role, phone, age, complete } = req.body;
       const token = verifyToken(req.cookies.token)
 
       //actualizo la session para que se actualize la foto y el role de la navbar
@@ -71,6 +71,44 @@ async function register (req, res, next) {
         const updatedToken = updateToken(req.cookies.token, token)
         res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
       }
+      if(name) {
+        token.name = name
+        const timeLeft = token.exp
+        const maxAge = timeLeft * 1000 - Date.now()
+        delete token.exp
+        res.clearCookie("token")
+        const updatedToken = updateToken(req.cookies.token, token)
+        res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
+      }
+      if(complete) {
+        token.complete = complete
+        const timeLeft = token.exp
+        const maxAge = timeLeft * 1000 - Date.now()
+        delete token.exp
+        res.clearCookie("token")
+        const updatedToken = updateToken(req.cookies.token, token)
+        res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
+      }
+      if(age) {
+        token.age = age
+        const timeLeft = token.exp
+        const maxAge = timeLeft * 1000 - Date.now()
+        delete token.exp
+        res.clearCookie("token")
+        const updatedToken = updateToken(req.cookies.token, token)
+        res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
+      }
+
+      if(phone) {
+        token.phone = phone
+        const timeLeft = token.exp
+        const maxAge = timeLeft * 1000 - Date.now()
+        delete token.exp
+        res.clearCookie("token")
+        const updatedToken = updateToken(req.cookies.token, token)
+        res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
+      }
+
       
       const _id = token._id;
       
@@ -78,7 +116,9 @@ async function register (req, res, next) {
         name: name,
         photo: photo,
         role: role,
-        age: age
+        phone: phone,
+        age: age,
+        complete: complete
       };
       await updateService(_id, data);
       return res.message200("The account has been updated!")
