@@ -1,5 +1,4 @@
 import { Router } from "express";
-import isValidUser from "../../middlewares/isValidUser.mid.js";
 import userManager from "../../DAO/mongo/managers/UserManager.db.js";
 import passport from "../../middlewares/passport.mid.js";
 import { signedCookie } from "cookie-parser";
