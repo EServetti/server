@@ -21,8 +21,8 @@ export const productValidator = joi.object({
     'string.min': "category must have 5 characters min",
     'string.max': "category can have 20 characters max",
   }),
-  price: joi.number(),
-  stock: joi.number(),
+  price: joi.number().min(1),
+  stock: joi.number().min(1),
 });
 
 export const updateProductValidator = joi.object({
