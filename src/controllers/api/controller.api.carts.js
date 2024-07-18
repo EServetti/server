@@ -91,9 +91,6 @@ async function paginate(req, res, next) {
       if(exists){
         return res.error400("You have already added this product to cart!")
       }
-      if (Object.keys(data).length === 0 || !data.product_id || !data.quantity) {
-        return res.error400("You must enter at least quantity and product_id!");
-      }
       const created = await createService(data);
       return res.message200("The product has been added to cart");
     } catch (error) {
@@ -105,8 +102,8 @@ async function paginate(req, res, next) {
     try {
       const { nid } = req.params;
       const data = req.body;
-      if (Object.keys(data).length === 0 || nid === ":nid") {
-        return res.error400("You must enter data and nid!");
+      if (nid === ":nid") {
+        return res.error400("You must enter nid!");
       }
       const updated = await updateService(nid, data);
       if (!updated) {
