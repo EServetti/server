@@ -1,11 +1,11 @@
 //modules
 import express from 'express';
-import { engine } from "express-handlebars"
+// import { engine } from "express-handlebars"
 import { createServer } from "http"
 import { Server } from "socket.io"
 import cookieParser from "cookie-parser";
 import cors from "cors"
-import Handlebars from "handlebars"
+// import Handlebars from "handlebars"
 import compression from 'express-compression';
 // import session from "express-session"
 // import morgan from 'morgan';
@@ -46,16 +46,16 @@ socketServer.on("connection", socketCb)
 export { socketServer }
 
 //template engine (handlebars)
-server.engine("handlebars",engine())
-server.set('view engine', 'handlebars')
-server.set('views', __dirname + '/src/views')
-Handlebars.registerHelper('equal', function(value1, value2, options) {
-  if (value1 === value2) {
-      return true
-  } else {
-      return false
-  }
-});
+// server.engine("handlebars",engine())
+// server.set('view engine', 'handlebars')
+// server.set('views', __dirname + '/src/views')
+// Handlebars.registerHelper('equal', function(value1, value2, options) {
+//   if (value1 === value2) {
+//       return true
+//   } else {
+//       return false
+//   }
+// });
 
 //middlewares
 server.use(cookieParser(environment.SECRET_COOKIE))
@@ -87,6 +87,6 @@ server.use(
 
 //endpoints
 server.use('/', indexRouter)
-server.use(winston);
 server.use(errorHandler);
 server.use(pathHandler)
+server.use(winston);
