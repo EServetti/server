@@ -7,7 +7,7 @@ export const productValidator = joi.object({
     'string.max': "title can have 20 characters max",
     'string.pattern.base': "title must only have letters"
   }),
-  description: joi.string().pattern(new RegExp("^(?=.*[a-zA-Z])[a-zA-Z0-9 ]+$")).min(10).max(60).required().messages({
+  description: joi.string().pattern(new RegExp("^(?=.*[a-zA-Z])[a-zA-Z0-9 ,.?!\t]+$")).min(10).max(120).required().messages({
     'any.required': "please enter the description",
     'string.min': "description must have 10 characters min",
     'string.max': "description can have 60 characters max",

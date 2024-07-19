@@ -41,9 +41,14 @@ nodeServer.listen(port, ready);
 }
 
 //tcp server
-const socketServer = new Server(nodeServer)
+const socketServer = new Server(nodeServer, {
+  cors: {
+    origin: true,
+    credentials: true
+  }
+})
 socketServer.on("connection", socketCb)
-export { socketServer }
+
 
 //template engine (handlebars)
 // server.engine("handlebars",engine())
@@ -70,14 +75,14 @@ server.use(cookieParser(environment.SECRET_COOKIE))
 //       saveUninitialized: true
 //     })
 //   );
-server.use(express.json());
-server.use(express.urlencoded({ extended: true }))
-server.use(express.static('public'))
 server.use(cors({
-  origin: true, 
+  origin: "http://localhost:5173", 
   credentials: true 
 }
 ))
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }))
+server.use(express.static('public'))
 server.use(
   compression({
   brotli: { enabled: true, zlib: {} },
