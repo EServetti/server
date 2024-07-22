@@ -1,6 +1,5 @@
 import { Router } from "express";
 import isValidUser from "../../middlewares/isValidUser.mid.js";
-import isValidData from "../../middlewares/isValidData.js";
 import passportCb from "../../middlewares/passportCollback.js";
 import CustomRouter from "../customRouter.js";
 import {
@@ -12,6 +11,9 @@ import {
   password,
   passwordUpdate
 } from "../../controllers/api/controller.api.session.js";
+import { usersValidate, updateUsersValidate, updatePassValidator } from "../../schemas/users.validator.js";
+import validator from "../../middlewares/joi.validator.js";
+import userEmailExists from "../../middlewares/userEmailExists.js";
 
 class SessionRouter extends CustomRouter {
   init() {
@@ -19,7 +21,7 @@ class SessionRouter extends CustomRouter {
     this.create(
       "/register",
       ["PUBLIC"],
-      isValidData,
+      validator(usersValidate),
       passportCb("register"),
       register
     );
@@ -37,10 +39,10 @@ class SessionRouter extends CustomRouter {
     this.create("/signout", ["USER", "ADMIN"], signout);
 
     //ruta para enviar un mail de restablecimiento de password
-    this.create("/password", ["PUBLIC"], password);
+    this.create("/password", ["PUBLIC"], userEmailExists, password);
     
     //ruta para actualizar la contraseña
-    this.update("/password", ["PUBLIC"], passwordUpdate);
+    this.update("/password", ["PUBLIC"], validator(updatePassValidator), passwordUpdate);
 
   }
 }

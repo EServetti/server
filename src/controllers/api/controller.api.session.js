@@ -40,7 +40,7 @@ async function register (req, res, next) {
           verify: true
         })
         const message = `The account ${one.email} has been authenticated!`
-        return res.render("verify", {title: "VERIFY", message})
+        return res.message200("The account has been verified!")
       }
     } catch (error) {
       return next(error)
@@ -76,11 +76,17 @@ async function register (req, res, next) {
   async function passwordUpdate(req, res, next) {
     try {
       const {uid, password} = req.body
+      if(!uid) {
+        return res.error400("Please enter the uid!")
+      }
       const pass = createHash(password)
       const data = {
         password: pass
       }
       const one = await usersRepository.updateRepository(uid, data)
+      if(!one) {
+        return res.error404()
+      }
       return res.message200(one)
     } catch (error) {
       return next(error)

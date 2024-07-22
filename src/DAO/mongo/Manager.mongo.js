@@ -12,7 +12,7 @@ class Manager {
   }
   async read() {
     try {
-      const all = await this.Model.find().sort("title").lean();
+      const all = await this.Model.find().lean();
       return all;
     } catch (error) {
       throw error;

@@ -1,15 +1,16 @@
 import { Router } from "express";
-import exist from "../../middlewares/userExist.js";
 import CustomRouter from "../customRouter.js";
 import {read, paginate, readOne, create, update, destroy, desAll } from "../../controllers/api/controller.api.carts.js";
+import validator from "../../middlewares/joi.validator.js"
+import { cartValidator, UpdateCartValidator } from "../../schemas/carts.validator.js";
 
 class CartsRouter extends CustomRouter {
   init() {
     this.read("/", ["USER", "ADMIN"], read);
     this.read("/paginate", ["USER", "ADMIN"], paginate);
     this.read("/:nid", ["USER", "ADMIN"], readOne);
-    this.create("/", ["USER", "ADMIN"], exist, create);
-    this.update("/:nid", ["USER", "ADMIN"], update);
+    this.create("/", ["USER", "ADMIN"], validator(cartValidator), create);
+    this.update("/:nid", ["USER", "ADMIN"], validator(UpdateCartValidator), update);
     this.destroy("/all", ["USER","ADMIN"], desAll);
     this.destroy("/:nid", ["USER", "ADMIN"], destroy);
   }

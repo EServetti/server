@@ -80,9 +80,6 @@ async function readOne(req, res, next) {
 async function create(req, res, next) {
   try {
     const data = req.body;
-    if (Object.keys(data).length === 0 || !data.title || !data.description) {
-      return res.error400("You must enter at least title and description of the product!");
-    }
     const created = await createService(data);
     return res.message201(`The product ${data.title} has been created!`);
   } catch (error) {
@@ -94,8 +91,8 @@ async function update(req, res, next) {
   try {
     const { nid } = req.params;
     const data = req.body;
-    if (Object.keys(data).length === 0 || nid === ":nid") {
-      return res.error400("You must enter data and nid!");
+    if (nid === ":nid") {
+      return res.error400("You must enter nid!");
     }
     const updated = await updateService(nid, data);
     if (!updated) {
