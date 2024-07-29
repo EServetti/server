@@ -1,0 +1,337 @@
+paths: 
+  /api/tickets:
+    get:
+      summary: Get a list of carts
+      tags:
+        - Cart
+      security:
+        - cookieAuth: []
+      responses:
+        200:
+          description: A list of carts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart200all'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart404'
+        401:
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart401'
+        403:
+          description: Authorization failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart403'
+  /api/carts:
+    post:
+      summary: Create a new cart
+      tags:
+        - Cart
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+      responses:
+        201:
+          description: Cart created succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart201'
+        400:
+          description: Invalid or incomplete data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart400'
+        401:
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart401'
+        403:
+          description: Authorization failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart403'
+  /api/carts/{nid}:
+    put:
+      summary: Update a cart
+      tags:
+        - Cart
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: nid
+          in: path
+          required: true
+          description: Id of the cart to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+      responses:
+        200:
+          description: Cart updated succefully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart200one'
+        400:
+          description: Invalid or incomplete data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart400'
+        401:
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart401'
+        403:
+          description: Authorization failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart403'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart404'
+    delete:
+      summary: Delete a cart
+      tags:
+        - Cart
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: nid
+          in: path
+          required: true
+          description: Id of the cart
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cart deleted succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart200one'
+        '400':
+          description: Invalid or incomplete data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart400'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart401'
+        '403':
+          description: Authorization failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart403'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/cart404'
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        user_id:
+          description: ID of the user
+          type: string
+        product_id:
+          description: ID of the product
+          type: string
+        quantity:
+          description: Quantity of the product
+          type: number
+        state:
+          description: State of the cart item
+          type: string
+          enum:
+            - reserved
+            - paid
+            - delivered
+      example:
+        user_id: 60c72b2f9b1d4c001c8e4b3e
+        product_id: 60c72b2f9b1d4c001c8e4b3f
+        quantity: 2
+        state: reserved
+
+  responses:
+    cart200all:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Array of carts
+          type: array
+          items: 
+            $ref: '#/components/schemas/Cart'
+      example:
+        statusCode: 200
+        message: 
+          - user_id: 60c72b2f9b1d4c001c8e4b3e
+            product_id: 60c72b2f9b1d4c001c8e4b3f
+            quantity: 2
+            state: reserved
+          - user_id: 60c72b2f9b1d4c001c8e4b3e
+            product_id: 60c72b2f9b1d4c001c8e4b3g
+            quantity: 1
+            state: paid
+
+    cart200one:
+      type: object
+      properties: 
+        statusCode: 
+          description: Status code
+          type: integer
+        message:
+          description: A single cart item
+          type: object
+      example: 
+        statusCode: 200
+        message: 
+          user_id: 60c72b2f9b1d4c001c8e4b3e
+          product_id: 60c72b2f9b1d4c001c8e4b3f
+          quantity: 2
+          state: reserved
+
+    cartpaginate:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Array of cart items
+          type: array
+          items: 
+            $ref: '#/components/schemas/Cart'
+        info:
+          description: Paginated information
+          type: object
+      example:
+        statusCode: 200
+        message: 
+          - user_id: 60c72b2f9b1d4c001c8e4b3e
+            product_id: 60c72b2f9b1d4c001c8e4b3f
+            quantity: 2
+            state: reserved
+          - user_id: 60c72b2f9b1d4c001c8e4b3e
+            product_id: 60c72b2f9b1d4c001c8e4b3g
+            quantity: 1
+            state: paid
+        info: 
+          page: 1
+          totalPages: 1
+          prevPage: null
+          nextPage: null
+          maxPage: 9
+
+    cart201:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Creation message
+          type: string
+      example:
+        statusCode: 201
+        message: "The cart item has been created"
+
+    cart400:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Error message
+          type: string
+      example:
+        statusCode: 400
+        message: "Bad request"
+
+    cart401:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Authentication error message
+          type: string
+      example:
+        statusCode: 401
+        message: "Bad auth!"
+
+    cart403:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Forbidden error message
+          type: string
+      example:
+        statusCode: 403
+        message: "Forbidden"
+
+    cart404:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Resource not found message
+          type: string
+      example:
+        statusCode: 404
+        message: "Not found docs"
+
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token

@@ -1,0 +1,385 @@
+paths:
+  /api/users:
+    get:
+      summary: Get a list with users
+      tags:
+        - User
+      parameters:
+        - name: role
+          in: query
+          description: Role to filter users by
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user200all'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user404'
+  /api/sessions/register:
+    post:
+      summary: Path to register a new account
+      tags:
+        - User
+      requestBody:
+        required: true
+        description: Account data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        201:
+          description: Account registered succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user201'
+        400:
+          description: Failed because of invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user400'
+  /api/sessions/login:
+    post:
+      summary: Path to login (enter email and password)
+      tags:
+        - User
+      requestBody:
+        required: true
+        description: Account data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: Loged in succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user201'
+        400:
+          description: Failed because of invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user400'
+        401: 
+          description: Failed because of bad auth
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user400'
+  /api/users/{nid}:
+    get:
+      summary: Get a single user
+      tags:
+        - User
+      parameters:
+        - name: nid
+          in: path
+          description: Id of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: One user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user200one'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user404'
+    put:
+      summary: Update a user
+      tags:
+        - User
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: nid
+          in: path
+          required: true
+          description: Id of the user to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: User updated succefully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user200one'
+        400:
+          description: Invalid or incomplete data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user400'
+        401:
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user401'
+        403:
+          description: Authorization failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user403'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user404'
+    delete:
+      summary: Delete a user
+      tags:
+        - User
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: nid
+          in: path
+          required: true
+          description: Id of the user
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User deleted succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user200one'
+        '400':
+          description: Invalid or incomplete data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user400'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user401'
+        '403':
+          description: Authorization failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user403'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/user404'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          description: Name of the user
+          type: string
+        age:
+          description: Age of the user
+          type: number
+        photo:
+          description: Photo of the user
+          type: string
+        email:
+          description: Email of the user
+          type: string
+        password:
+          description: Password of the user
+          type: string
+        phone:
+          description: Phone number of the user
+          type: number
+      example:
+        name: John Doe
+        age: 25
+        photo: https://www.url-example
+        email: johndoe@example.com
+        password: strongpassword
+        phone: 123456789
+
+  responses:
+    user200all:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Array of users
+          type: array
+          items: 
+            $ref: '#/components/schemas/User'
+      example:
+        statusCode: 200
+        message: 
+          - name: John Doe
+            age: 25
+            photo: https://www.url-example
+            email: johndoe@example.com
+            password: strongpassword
+            phone: 123456789
+          - name: Jane Doe
+            age: 30
+            photo: https://www.url-example
+            email: janedoe@example.com
+            password: strongpassword
+            phone: 987654321
+
+    user200one:
+      type: object
+      properties: 
+        statusCode: 
+          description: Status code
+          type: integer
+        message:
+          description: A single user
+          type: object
+      example: 
+        statusCode: 200
+        message: 
+          name: John Doe
+          age: 25
+          photo: https://www.url-example
+          email: johndoe@example.com
+          password: strongpassword
+          phone: 123456789
+
+    userpaginate:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Array of users
+          type: array
+          items: 
+            $ref: '#/components/schemas/User'
+        info:
+          description: Paginated information
+          type: object
+      example:
+        statusCode: 200
+        message: 
+          - name: John Doe
+            age: 25
+            photo: https://www.url-example
+            email: johndoe@example.com
+            password: strongpassword
+            phone: 123456789
+          - name: Jane Doe
+            age: 30
+            photo: https://www.url-example
+            email: janedoe@example.com
+            password: strongpassword
+            phone: 987654321
+        info: 
+          page: 1
+          totalPages: 1
+          prevPage: null
+          nextPage: null
+          maxPage: 9
+
+    user201:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Creation message
+          type: string
+      example:
+        statusCode: 201
+        message: "The user has been created"
+
+    user400:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Error message
+          type: string
+      example:
+        statusCode: 400
+        message: "Bad request"
+
+    user401:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Authentication error message
+          type: string
+      example:
+        statusCode: 401
+        message: "Bad auth!"
+
+    user403:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Forbidden error message
+          type: string
+      example:
+        statusCode: 403
+        message: "Forbidden"
+
+    user404:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Resource not found message
+          type: string
+      example:
+        statusCode: 404
+        message: "Not found docs"
+
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token

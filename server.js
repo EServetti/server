@@ -11,6 +11,9 @@ import compression from 'express-compression';
 // import morgan from 'morgan';
 import cluster from 'cluster';
 import { cpus } from 'os';
+import { serve, setup } from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
+import socketCb from "./src/routers/index.socket.js"
 //middlewares
 import indexRouter from './src/routers/index.router.js';
 import pathHandler from './src/middlewares/pathHandler.mid.js'
@@ -19,7 +22,9 @@ import winston from './src/middlewares/winston.mid.js';
 //server data
 import environment from './src/utils/env.utils.js';
 import __dirname from "./utils.js"
-import socketCb from "./src/routers/index.socket.js"
+import swaggerOptions from './src/utils/swagger.js';
+
+
 
 
 //http server
@@ -87,11 +92,18 @@ server.use(
   compression({
   brotli: { enabled: true, zlib: {} },
   })
-  );
+);
+const specs = swaggerJSDoc(swaggerOptions)
+
 
 
 //endpoints
+// //solo documentar en caso de estar en desarrollo o testing
+if(environment.PORT == 8080 || environment.PORT == 8000) {
+  server.use("/api/docs", serve, setup(specs))
+}
 server.use('/', indexRouter)
 server.use(errorHandler);
 server.use(pathHandler)
 server.use(winston);
+

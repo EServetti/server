@@ -1,0 +1,419 @@
+paths:
+  /api/products:
+    get:
+      summary: Get a list of products
+      tags:
+        - Product
+      parameters:
+        - name: category
+          in: query
+          description: Category to filter products by
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product200all'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product404'
+    post:
+      summary: Create a new product
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        201:
+          description: Product created succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product201'
+        400:
+          description: Invalid or incomplete data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product400'
+        401:
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product401'
+        403:
+          description: Authorization failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product403'
+  /api/products/paginate:
+    get:
+      summary: Get a list of products paginated
+      tags:
+        - Product
+      parameters:
+        - name: category
+          in: query
+          description: Category to filter products by
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Limit of products per page
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number to get products from
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/productpaginate'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product404'
+  /api/products/{nid}:
+    get:
+      summary: Get a single product
+      tags:
+        - Product
+      parameters:
+        - name: nid
+          in: path
+          description: Id of the product
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: One product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product200one'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product404'
+    put:
+      summary: Update a product
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: nid
+          in: path
+          required: true
+          description: Id of the product to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        200:
+          description: Product updated succefully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product200one'
+        400:
+          description: Invalid or incomplete data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product400'
+        401:
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product401'
+        403:
+          description: Authorization failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product403'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product404'
+    delete:
+      summary: Delete a product
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: nid
+          in: path
+          required: true
+          description: Id of the product
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product deleted succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product200one'
+        '400':
+          description: Invalid or incomplete data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product400'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product401'
+        '403':
+          description: Authorization failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product403'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/product404'
+      
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          description: Name of the product
+          type: string
+        description:
+          description: Description of the product
+          type: string
+        photo:
+          description: Photo of the product
+          type: string
+        category:
+          description: Category of the product (home, kitchen, appliances)
+          type: string
+        price:
+          description: Price of the product
+          type: number
+        stock:
+          description: Stock of the product
+          type: number
+      example:
+        title: Modern white sofa
+        description: A comfortable modern sofa for your living room!
+        photo: https://www.url-example
+        category: home
+        price: 2500
+        stock: 7
+
+  responses:
+    product200all:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Array of products
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+      example:
+        statusCode: 200
+        message:
+          - title: Product
+            description: Description of product
+            photo: Url
+            category: home
+            price: 150
+            stock: 10
+          - title: Product
+            description: Description of product
+            photo: Url
+            category: kitchen
+            price: 150
+            stock: 10
+          - title: Product
+            description: Description of product
+            photo: Url
+            category: appliances
+            price: 150
+            stock: 10
+    product200one:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Ane product
+          type: object
+          items:
+            $ref: '#/components/schemas/Product'
+      example:
+        statusCode: 200
+        message:
+          title: Product
+          description: Description of product
+          photo: Url
+          category: appliances
+          price: 150
+          stock: 10
+    productpaginate:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Array of products
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        info:
+          description: Paginated information
+          type: object
+          properties:
+            page:
+              type: integer
+            totalPages:
+              type: integer
+            prevPage:
+              type: string
+              nullable: true
+            nextPage:
+              type: string
+              nullable: true
+            maxPage:
+              type: integer
+      example:
+        statusCode: 200
+        message:
+          - title: Product
+            description: Description of product
+            photo: Url
+            category: home
+            price: 150
+            stock: 10
+          - title: Product
+            description: Description of product
+            photo: Url
+            category: kitchen
+            price: 150
+            stock: 10
+        info:
+          page: 1
+          totalPages: 1
+          prevPage: null
+          nextPage: null
+          maxPage: 9
+    product201:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Creation message
+          type: string
+      example:
+        statusCode: 201
+        message: "The product has been created"
+    product400:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Error message
+          type: string
+      example:
+        statusCode: 400
+        message: "Bad request"
+    product401:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Authentication error message
+          type: string
+      example:
+        statusCode: 401
+        message: "Bad auth!"
+    product403:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Forbidden error message
+          type: string
+      example:
+        statusCode: 403
+        message: "Forbidden"
+    product404:
+      type: object
+      properties:
+        statusCode:
+          description: Status code
+          type: integer
+        message:
+          description: Resource not found message
+          type: string
+      example:
+        statusCode: 404
+        message: "Not found docs"
+
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
