@@ -1,16 +1,15 @@
 import { aggregateService } from "../../service/tickets.api.service.js";
 import { Types } from "mongoose";
+import { verifyToken } from "../../utils/jwt.js";
 
 async function read(req, res, next) {
     try {
-      const { uid } = req.params;
-      if (uid === ":uid") {
-        return res.error400("You must enter uid!");
-      }
+      const token = verifyToken(req.cookies.token)
+      const { _id } = token
       const total = await aggregateService([
         {
           $match: {
-            user_id: new Types.ObjectId(uid),
+            user_id: new Types.ObjectId(_id),
           },
         },
         {
@@ -44,14 +43,12 @@ async function read(req, res, next) {
   
   async function readOne(req, res, next) {
     try {
-      const { uid } = req.body;
-      if (!uid) {
-        return res.error400("You must enter uid!");
-      }
+      const token = verifyToken(req.cookies.token)
+      const { _id } = token
       const total = await aggregateService([
         {
           $match: {
-            user_id: new Types.ObjectId(uid),
+            user_id: new Types.ObjectId(_id),
           },
         },
         {
