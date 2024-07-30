@@ -23,6 +23,7 @@ import winston from './src/middlewares/winston.mid.js';
 import environment from './src/utils/env.utils.js';
 import __dirname from "./utils.js"
 import swaggerOptions from './src/utils/swagger.js';
+import argsUtil from './src/utils/args.util.js';
 
 
 
@@ -99,7 +100,7 @@ const specs = swaggerJSDoc(swaggerOptions)
 
 //endpoints
 // //solo documentar en caso de estar en desarrollo o testing
-if(environment.PORT == 8080 || environment.PORT == 8000) {
+if(argsUtil.env === "dev" || argsUtil.env === "test") {
   server.use("/api/docs", serve, setup(specs))
 }
 server.use('/', indexRouter)
