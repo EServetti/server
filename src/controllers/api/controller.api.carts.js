@@ -46,7 +46,6 @@ async function paginate(req, res, next) {
         opts.page = page
       }
       const all = await paginateService(filter, opts);
-      console.log(all);
       const info = {
         page: all.page,
         prevPage: all.prevPage,
@@ -83,16 +82,21 @@ async function paginate(req, res, next) {
       const data = req.body;
       const token = verifyToken(req.cookies.token);
       data.user_id = token._id;
-      //verifico que el user no tenga un carrito con el mismo producto
+      //verifico si el user ya tiene un cart con el mismo product
       const carts = await paginateService({
         user_id: data.user_id
       },{})
       const exists = carts.docs.find((c) => c.product_id._id == data.product_id)
       if(exists){
-        return res.error400("You have already added this product to cart!")
+        const data = {
+          quantity: exists.quantity + 1
+        }
+        await updateService(exists._id, data)
+        return res.message200("The product has been added to cart")
+      } else {
+        await createService(data);
+        return res.message200("The product has been added to cart");
       }
-      const created = await createService(data);
-      return res.message200("The product has been added to cart");
     } catch (error) {
       return next(error);
     }
