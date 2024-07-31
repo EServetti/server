@@ -10,7 +10,8 @@
     "test": "nodemon ./server.js --env test --pers mongo",
     "mock-products": "node ./src/mocks/products.mocker.js --env dev",
     "mock-users": "node ./src/mocks/user.mocker.js --env dev",
-    "image": "docker build -t e-commerce ."
+    "image": "docker build -t e-commerce .",
+    "artillery-flow": "artillery run ./src/test/artillery/flow.yaml"
   },
   "keywords": [],
   "author": "",
@@ -49,6 +50,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "artillery": "^2.0.18",
     "nodemon": "^3.1.0"
   }
 }
