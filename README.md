@@ -152,3 +152,6 @@ Esto nos devuelve un error de status 403 con un mensaje "Forbidden from policies
 Esto nos devuelve un error de status 404 con un mensaje "Not found docs!".
 
 Entrando en estos endpoints podras ver como se consologuean todos los errores en la consola en el caso de que estemos en un ambiente de desarrollo, y en caso de un ambiente de producción ademas de consologuearse se guardaran en un archivo.
+
+# Documentacion
+En la ruta  http://localhost:8080/api/docs podremos ver la documentacion sobre las persistencias de la api y sus rutas, esta doumentación estara disponible solamente cuando la api este en desarrollo.

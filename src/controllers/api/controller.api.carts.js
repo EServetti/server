@@ -133,8 +133,8 @@ async function paginate(req, res, next) {
   //metodo destroy (todos los carritos de un user)
   async function desAll(req, res, next) {
     try {
-      // const token = verifyToken(req.body.token);
-      const _id = req.body._id
+      const token = verifyToken(req.cookies.token);
+      const {_id} = token
       if (_id) {
         const filter = {
           user_id: _id,

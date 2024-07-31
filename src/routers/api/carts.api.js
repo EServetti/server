@@ -6,9 +6,9 @@ import { cartValidator, UpdateCartValidator } from "../../schemas/carts.validato
 
 class CartsRouter extends CustomRouter {
   init() {
-    this.read("/", ["USER", "ADMIN"], read);
-    this.read("/paginate", ["USER", "ADMIN"], paginate);
-    this.read("/:nid", ["USER", "ADMIN"], readOne);
+    this.read("/", ["ADMIN"], read);
+    this.read("/paginate", ["ADMIN"], paginate);
+    this.read("/:nid", ["ADMIN"], readOne);
     this.create("/", ["USER", "ADMIN"], validator(cartValidator), create);
     this.update("/:nid", ["USER", "ADMIN"], validator(UpdateCartValidator), update);
     this.destroy("/all", ["USER","ADMIN"], desAll);
