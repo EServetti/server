@@ -11,7 +11,8 @@
     "mock-products": "node ./src/mocks/products.mocker.js --env dev",
     "mock-users": "node ./src/mocks/user.mocker.js --env dev",
     "image": "docker build -t e-commerce .",
-    "artillery-flow": "artillery run ./src/test/artillery/flow.yaml"
+    "artillery-flow": "artillery run ./src/test/artillery/flow.yaml",
+    "supertest": "mocha ./src/test/supertest/app.test.js"
   },
   "keywords": [],
   "author": "",
@@ -51,6 +52,9 @@
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "artillery": "^2.0.18",
-    "nodemon": "^3.1.0"
+    "chai": "^5.1.1",
+    "mocha": "^10.7.0",
+    "nodemon": "^3.1.0",
+    "supertest": "^7.0.0"
   }
 }

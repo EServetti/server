@@ -4,9 +4,7 @@ async function userEmailExists(req, res, next) {
   try {
     const {email} = req.body;
     const all = await usersRepository.readRepository()
-    const exist = all.find((u) => {
-      u.email === email
-    })
+    const exist = all.find((u) => u.email === email);
     if (!exist) {
       return res.error400("Invalid credentials!")
     }
