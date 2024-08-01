@@ -81,11 +81,24 @@ server.use(cookieParser(environment.SECRET_COOKIE))
 //       saveUninitialized: true
 //     })
 //   );
-server.use(cors({
-  origin: "http://localhost:5173", 
-  credentials: true 
-}
-))
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:8080'
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+};
+
+server.use(cors(corsOptions));
+
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }))
 server.use(express.static('public'))
