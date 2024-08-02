@@ -81,7 +81,7 @@ async function create(req, res, next) {
   try {
     const data = req.body;
     const created = await createService(data);
-    return res.message201(`The product ${data.title} has been created!`);
+    return res.message201(created);
   } catch (error) {
     return next(error);
   }

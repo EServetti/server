@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import supertest from "supertest";
+import { paginateService } from "../../service/products.api.service.js";
 
 const requester = supertest(`http://localhost:8080/api`)
 
@@ -13,7 +14,15 @@ describe( "Testeando e-commerce", function () {
     role: 1,
     verify: true
   }
+  const product = {
+    title: "Product Example",
+    description: "The description of the product",
+    category: "hogar",
+    price: 1500,
+    stock: 10
+  }
   let token;
+  let allProducts;
   describe( "Testeando enpoints de sessions", () => {
     it( "Register of a user", async () => {
       const response = await requester.post("/sessions/register").send(user)
@@ -52,6 +61,38 @@ describe( "Testeando e-commerce", function () {
         uid: user._id,
         password: "Example1111"
       })
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(200)
+    })
+  })
+  describe( "Testeando endpoints de products", () => {
+    it( "Fetching all the products", async () => {
+      const response = await requester.get("/products?category=cocina")
+      const {_body} = response
+      allProducts = _body.message
+      expect(_body.statusCode).to.be.equals(200)
+    }),
+    it( "Fetching a sole product", async () => {
+      const theProduct = allProducts[0]
+      const response = await requester.get(`/products/${theProduct._id}`)
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(200)
+    }),
+    it( "Creating a product", async () => {
+      const response = await requester.post(`/products`).send(product).set("Cookie", token)
+      const {_body} = response
+      product._id = _body.message._id
+      expect(_body.statusCode).to.be.equals(201)
+    }),
+    it( "Updating the product", async () => {
+      const response = await requester.put(`/products/${product._id}`).send({
+        title: "Example Updated"
+      }).set("Cookie", token)
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(200)
+    }), 
+    it( "Deleting a product", async () => {
+      const response = await requester.delete(`/products/${product._id}`).set("Cookie", token)
       const {_body} = response
       expect(_body.statusCode).to.be.equals(200)
     })
