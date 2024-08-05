@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { expect, use } from "chai";
 import supertest from "supertest";
 import { paginateService } from "../../service/products.api.service.js";
 
@@ -23,7 +23,8 @@ describe( "Testeando e-commerce", function () {
   }
   let token;
   let allProducts;
-  describe( "Testeando enpoints de sessions", () => {
+  let allUsers;
+  describe( "Testing enpoints of sessions", () => {
     it( "Register of a user", async () => {
       const response = await requester.post("/sessions/register").send(user)
       const {_body } = response
@@ -65,8 +66,8 @@ describe( "Testeando e-commerce", function () {
       expect(_body.statusCode).to.be.equals(200)
     })
   })
-  describe( "Testeando endpoints de products", () => {
-    it( "Fetching all the products", async () => {
+  describe( "Testing endpoints of products", () => {
+    it( "Fetching products with category hogar", async () => {
       const response = await requester.get("/products?category=cocina")
       const {_body} = response
       allProducts = _body.message
@@ -93,6 +94,53 @@ describe( "Testeando e-commerce", function () {
     }), 
     it( "Deleting a product", async () => {
       const response = await requester.delete(`/products/${product._id}`).set("Cookie", token)
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(200)
+    })
+  })
+  describe( "Testing endpoints of users", () => {
+    it( "Fetching all the users", async () => {
+      const response = await requester.get("/users").set("Cookie", token)
+      const {_body} = response
+      allUsers = _body.message
+      expect(_body.statusCode).to.be.equals(200)
+    }),
+    it( "Fetching one user", async () => {
+      const theUser = allUsers[0]
+      const response = await requester.get(`/users/${theUser._id}`).set("Cookie", token)
+      const {_body} = response
+      allUsers = _body.message
+      expect(_body.statusCode).to.be.equals(200)
+    }),
+    it ( "Deleting the first user", async () => {
+      const response = await requester.delete(`/users/${user._id}`).set("Cookie", token)
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(200)
+    })
+    it( "Creating a new user", async () => {
+      const logged = await requester.post("/sessions/login").send({
+        email: "eservetti2018@gmail.com",
+        password: "Emilio1011"
+      })
+      const { headers } =  logged
+      token = headers["set-cookie"][0].split(";")[0]
+      const copyUser = user
+      delete copyUser._id
+      const response = await requester.post(`/users`).send(copyUser).set("Cookie", token)
+      const {_body} = response
+      const _id = _body.message._id
+      user._id = _id
+      expect(_body.statusCode).to.be.equals(201)
+    }),
+    it( "Updating the user", async () => {;
+      const response = await requester.put(`/users/${user._id}`).send({
+        name: "Updated"
+      }).set("Cookie", token)
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(200)
+    }),
+    it( "Deleting the user", async () => {;
+      const response = await requester.delete(`/users/${user._id}`).set("Cookie", token)
       const {_body} = response
       expect(_body.statusCode).to.be.equals(200)
     })

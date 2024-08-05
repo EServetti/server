@@ -9,8 +9,8 @@ import {updateUsersValidate, usersValidate} from "../../schemas/users.validator.
 
 class UsersRouter extends CustomRouter {
   init() {
-    this.read("/", ["PUBLIC"], read);
-    this.read("/:nid", ["PUBLIC"], readOne);
+    this.read("/", ["ADMIN"], read);
+    this.read("/:nid", ["ADMIN"], readOne);
     this.create("/", ["ADMIN"], exist, validator(usersValidate), create);
     this.update("/:nid", ["ADMIN"], emailExists, validator(updateUsersValidate), update);
     this.destroy("/:nid", ["ADMIN"], destroy);
