@@ -24,6 +24,7 @@ describe( "Testeando e-commerce", function () {
   let token;
   let allProducts;
   let allUsers;
+  let cart;
   describe( "Testing enpoints of sessions", () => {
     it( "Register of a user", async () => {
       const response = await requester.post("/sessions/register").send(user)
@@ -119,8 +120,8 @@ describe( "Testeando e-commerce", function () {
     })
     it( "Creating a new user", async () => {
       const logged = await requester.post("/sessions/login").send({
-        email: "eservetti2018@gmail.com",
-        password: "Emilio1011"
+        email: "testing-user@gmail.com",
+        password: "Example1011"
       })
       const { headers } =  logged
       token = headers["set-cookie"][0].split(";")[0]
@@ -141,6 +142,69 @@ describe( "Testeando e-commerce", function () {
     }),
     it( "Deleting the user", async () => {;
       const response = await requester.delete(`/users/${user._id}`).set("Cookie", token)
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(200)
+    })
+  })
+  describe( "Testing endpoints of carts", () => {
+    it( "Creating carts of a user", async () => {
+      const cart = {
+        product_id: allProducts[0]._id,
+        quantity: 1
+      }
+      const response = await requester.post("/carts").send(cart).set("Cookie", token)
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(201)
+    }),
+    it( "Reading the carts of a user", async () => {
+      const userData = await requester.post("/sessions").set("Cookie", token)
+      const body = userData.body;
+      const _id = body.message._id
+      const response = await requester.get(`/carts?user=${_id}`).set("Cookie", token)
+      const {_body} = response
+      cart = _body.message[0]
+      expect(_body.statusCode).to.be.equals(200)
+    }), 
+    it( "Reading a sole cart", async () => {
+      const response = await requester.get(`/carts/${cart._id}`).set("Cookie", token)
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(200)
+    }), 
+    it( "Updating a cart", async () => {
+      const response = await requester.put(`/carts/${cart._id}`).send({
+        state: "paid"
+      }).set("Cookie", token)
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(200)
+    }),
+    it( "Deleting a cart", async () => {
+      const response = await requester.delete(`/carts/${cart._id}`).set("Cookie", token)
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(200)
+    }),
+    it( "Creating multiple carts of a user", async () => {
+      const cart1 = {
+        product_id: allProducts[0]._id,
+        quantity: 1
+      }
+      const cart2 = {
+        product_id: allProducts[1]._id,
+        quantity: 1
+      }
+      const response1 = await requester.post("/carts").send(cart1).set("Cookie", token)
+      const _body1 = response1._body
+      const response2 = await requester.post("/carts").send(cart2).set("Cookie", token)
+      const _body2 = response2._body
+      expect(_body1.statusCode).to.be.equals(201)
+      expect(_body2.statusCode).to.be.equals(201)
+    }),
+    it ( "Fetching the total price to pay for the products", async () => {
+      const response = await requester.post("/tickets/total").set("Cookie", token)
+      const {_body} = response
+      expect(_body.statusCode).to.be.equals(200)
+    }),
+    it( "Deleting all the carts", async () => {
+      const response = await requester.delete(`/carts/all`).set("Cookie", token)
       const {_body} = response
       expect(_body.statusCode).to.be.equals(200)
     })

@@ -21,8 +21,6 @@ class Manager {
   async paginate(filter, opts) {
     try {
       opts.sort = "title"
-      console.log("the filter is: "+ JSON.stringify(filter));
-      
       const all = await this.Model.paginate(filter, opts);
       return all;
     } catch (error) {

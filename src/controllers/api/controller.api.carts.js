@@ -92,10 +92,10 @@ async function paginate(req, res, next) {
           quantity: exists.quantity + 1
         }
         await updateService(exists._id, data)
-        return res.message200("The product has been added to cart")
+        return res.message201("The product has been added to cart")
       } else {
         await createService(data);
-        return res.message200("The product has been added to cart");
+        return res.message201("The product has been added to cart");
       }
     } catch (error) {
       return next(error);
