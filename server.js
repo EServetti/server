@@ -36,7 +36,7 @@ const ready = async () => {
 }
 const nodeServer = createServer(server)
 // const numOfProc = cpus().length
-const numOfProc = 8
+const numOfProc = 5
 if(cluster.isPrimary) {
 for (let i=1; i<=numOfProc; i++) {
 const worker = cluster.fork()
