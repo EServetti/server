@@ -7,6 +7,10 @@ import fs from "fs";
 
 const { GOOGLE_PROYECT_ID, GOOGLE_B64_SECRET } = environment;
 
+if (!GOOGLE_B64_SECRET) {
+  throw new Error('La variable de entorno GOOGLE_B64_SECRET no está definida.');
+}
+
 // Decodifica la cadena Base64 y guarda el archivo JSON temporalmente solo una vez
 const keyFilenamePath = path.join(__dirname, "/temp-keyfile.json");
 
