@@ -35,7 +35,8 @@ const ready = async () => {
     console.log(`Server listening on port ${port}`);
 }
 const nodeServer = createServer(server)
-const numOfProc = cpus().length
+// const numOfProc = cpus().length
+const numOfProc = 1
 if(cluster.isPrimary) {
 for (let i=1; i<=numOfProc; i++) {
 cluster.fork()
