@@ -3,21 +3,20 @@ import { Storage } from "@google-cloud/storage";
 import __dirname from "../../utils.js";
 import environment from "../utils/env.utils.js";
 import path from "path";
+import fs from "fs";
 
-const { GOOGLE_PROYECT_ID } = environment;
+const { GOOGLE_PROYECT_ID, GOOGLE_B64_SECRET } = environment;
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => cb(null, __dirname + "/public/img/users-img"),
-//   //filename: (req, file, cb) => cb(null, crypto.randomBytes(12).toString("hex"))
-//   filename: (req, file, cb) => cb(null, file.originalname),
-// });
+// Decodifica la cadena Base64 y guarda el archivo JSON temporalmente solo una vez
+const keyFilenamePath = path.join(__dirname, "/temp-keyfile.json");
 
-// const uploader = multer({ storage });
-// export default uploader;
+if (!fs.existsSync(keyFilenamePath)) {
+  fs.writeFileSync(keyFilenamePath, Buffer.from(GOOGLE_B64_SECRET, 'base64').toString('utf-8'));
+}
 
 const storage = new Storage({
   projectId: GOOGLE_PROYECT_ID,
-  keyFilename: path.join(__dirname, "/coderhouse-server-59e87afc5f62.json"),
+  keyFilename: keyFilenamePath,
 });
 
 const bucketName = "everithingforyourhome";
@@ -29,7 +28,7 @@ const uploader = multer({
 const uploadFile = (req, res, next) => {
   try {
     if (!req.file) {
-      return next()
+      return next();
     }
 
     const bucket = storage.bucket(bucketName);
@@ -40,9 +39,7 @@ const uploadFile = (req, res, next) => {
     });
 
     blobStream.on("error", (err) => {
-      const error = new Error(
-        err.message
-      );
+      const error = new Error(err.message);
       throw error;
     });
 
