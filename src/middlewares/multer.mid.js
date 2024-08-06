@@ -17,7 +17,7 @@ const { GOOGLE_PROYECT_ID } = environment;
 
 const storage = new Storage({
   projectId: GOOGLE_PROYECT_ID,
-  keyFilename: path.join(__dirname, "/coderhouse-server-e3271927dc20.json"),
+  keyFilename: path.join(__dirname, "/coderhouse-server-59e87afc5f62.json"),
 });
 
 const bucketName = "everithingforyourhome";

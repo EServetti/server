@@ -6,35 +6,70 @@ async function read(req, res, next) {
     try {
       const token = verifyToken(req.cookies.token)
       const { _id } = token
-      const total = await aggregateService([
-        {
-          $match: {
-            user_id: new Types.ObjectId(_id),
-          },
-        },
-        {
-          $lookup: {
-            foreignField: "_id",
-            from: "products",
-            localField: "product_id",
-            as: "product_id",
-          },
-        },
-        {
-          $replaceRoot: {
-            newRoot: {
-              $mergeObjects: [{ $arrayElemAt: ["$product_id", 0] }, "$$ROOT"],
+      const {state} = req.query
+      if(!state) {
+        const total = await aggregateService([
+          {
+            $match: {
+              user_id: new Types.ObjectId(_id),
             },
           },
-        },
-        {
-          $set: {subTotal: {$multiply: ["$price", "$quantity"]}}
+          {
+            $lookup: {
+              foreignField: "_id",
+              from: "products",
+              localField: "product_id",
+              as: "product_id",
+            },
+          },
+          {
+            $replaceRoot: {
+              newRoot: {
+                $mergeObjects: [{ $arrayElemAt: ["$product_id", 0] }, "$$ROOT"],
+              },
+            },
+          },
+          {
+            $set: {subTotal: {$multiply: ["$price", "$quantity"]}}
+          }
+        ]);
+        if (total.length === 0) {
+          return res.error404();
         }
-      ]);
-      if (total.length === 0) {
-        return res.error404();
+        return res.message200(total);
+      } else {
+        const total = await aggregateService([
+          {
+            $match: {
+              user_id: new Types.ObjectId(_id),
+              state: state
+            },
+          },
+          {
+            $lookup: {
+              foreignField: "_id",
+              from: "products",
+              localField: "product_id",
+              as: "product_id",
+            },
+          },
+          {
+            $replaceRoot: {
+              newRoot: {
+                $mergeObjects: [{ $arrayElemAt: ["$product_id", 0] }, "$$ROOT"],
+              },
+            },
+          },
+          {
+            $set: {subTotal: {$multiply: ["$price", "$quantity"]}}
+          }
+        ]);
+        if (total.length === 0) {
+          return res.error404();
+        }
+        return res.message200(total);
       }
-      return res.message200(total);
+      
     } catch (error) {
       return next(error);
     }
@@ -45,41 +80,81 @@ async function read(req, res, next) {
     try {
       const token = verifyToken(req.cookies.token)
       const { _id } = token
-      const total = await aggregateService([
-        {
-          $match: {
-            user_id: new Types.ObjectId(_id),
-          },
-        },
-        {
-          $lookup: {
-            foreignField: "_id",
-            from: "products",
-            localField: "product_id",
-            as: "product_id",
-          },
-        },
-        {
-          $replaceRoot: {
-            newRoot: {
-              $mergeObjects: [{ $arrayElemAt: ["$product_id", 0] }, "$$ROOT"],
+      const {state} = req.query
+      if(!state) {
+        const total = await aggregateService([
+          {
+            $match: {
+              user_id: new Types.ObjectId(_id),
             },
           },
-        },
-        {
-          $set: {subTotal: {$multiply: ["$price", "$quantity"]}}
-        },
-        {
-          $group: {_id:"$user_id", total: {$sum: "$subTotal"}}
-        },
-        {
-          $project: { _id: 0, user_id: "$_id", total: "$total"}
+          {
+            $lookup: {
+              foreignField: "_id",
+              from: "products",
+              localField: "product_id",
+              as: "product_id",
+            },
+          },
+          {
+            $replaceRoot: {
+              newRoot: {
+                $mergeObjects: [{ $arrayElemAt: ["$product_id", 0] }, "$$ROOT"],
+              },
+            },
+          },
+          {
+            $set: {subTotal: {$multiply: ["$price", "$quantity"]}}
+          },
+          {
+            $group: {_id:"$user_id", total: {$sum: "$subTotal"}}
+          },
+          {
+            $project: { _id: 0, user_id: "$_id", total: "$total"}
+          }
+        ]);
+        if (total.length === 0) {
+          return res.error404();
         }
-      ]);
-      if (total.length === 0) {
-        return res.error404();
+        return res.message200(total);
+      } else {
+        const total = await aggregateService([
+          {
+            $match: {
+              user_id: new Types.ObjectId(_id),
+              state: state
+            },
+          },
+          {
+            $lookup: {
+              foreignField: "_id",
+              from: "products",
+              localField: "product_id",
+              as: "product_id",
+            },
+          },
+          {
+            $replaceRoot: {
+              newRoot: {
+                $mergeObjects: [{ $arrayElemAt: ["$product_id", 0] }, "$$ROOT"],
+              },
+            },
+          },
+          {
+            $set: {subTotal: {$multiply: ["$price", "$quantity"]}}
+          },
+          {
+            $group: {_id:"$user_id", total: {$sum: "$subTotal"}}
+          },
+          {
+            $project: { _id: 0, user_id: "$_id", total: "$total"}
+          }
+        ]);
+        if (total.length === 0) {
+          return res.error404();
+        }
+        return res.message200(total);
       }
-      return res.message200(total);
     } catch (error) {
       return next(error);
     }
