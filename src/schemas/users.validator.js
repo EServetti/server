@@ -1,5 +1,6 @@
 import joi from "joi-oid";
 
+
 //Validador de creación
 export const usersValidate = joi.object({
   name: joi.string().min(4).max(12).alphanum().required().messages({
@@ -36,6 +37,8 @@ export const usersValidate = joi.object({
   phone: joi.string().pattern(new RegExp("^[0-9\\-\\+]{9,15}$")).messages({
     "string.pattern.base": "phone number must be valid",
   }),
+  role: joi.number().min(0).max(1),
+  verify: joi.boolean(),
 });
 
 //Validador de actualización
@@ -73,6 +76,8 @@ export const updateUsersValidate = joi.object({
   phone: joi.string().pattern(new RegExp("^[0-9\\-\\+]{9,15}$")).messages({
     "string.pattern.base": "phone number must be valid",
   }),
+  role: joi.number().min(0).max(1),
+  verify: joi.boolean(),
 });
 
 //Validador de actualización de password( recuperar tu contraseña)

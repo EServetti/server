@@ -62,9 +62,7 @@ class CartRepository {
   
     updateRepository = async (id, data) => {
       try {
-        console.log(data);
         const one = await this.manager.update(id, data)
-        console.log(one);
         return one
       } catch (error) {
         throw error

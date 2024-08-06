@@ -13,13 +13,17 @@ scenarios:
           url: /sessions/login
           json:
             email: eservetti2018@gmail.com
-            password: 1011
+            password: "1011"
       - log: read all products
       - get:
           url: /products
       - log: create a cart
       - post:
-          url: /pets
+          url: /carts
           json:
-            product_id: 6684501acfbcff73d405d899
+            product_id: 6684501acfbcff73d405d89d
             quantity: 1
+      - log: logout
+      - post:
+          url: /sessions/signout
+        

@@ -155,3 +155,16 @@ Entrando en estos endpoints podras ver como se consologuean todos los errores en
 
 # Documentacion
 En la ruta  http://localhost:8080/api/docs podremos ver la documentacion sobre las persistencias de la api y sus rutas, esta doumentación estara disponible solamente cuando la api este en desarrollo.
+
+# Testing 
+Tambien podremos testear el server de dos maneras:
+## Test de stress
+Este test sera con el modulo de artillery y un flujo con un archivo yaml en este flujo se testearan 4 operaciones (login, read all products, create a cart y logout) y esto se repetira durante 10 segundos con 50 repeticiones por segundo, de esta manera podremos testear que tan preparado esta nuestro server en caso de un uso masivo, este test se podra ejecutar teniendo en una consola el server en funcionamiento y en otra ejecutando el script:
+```
+npm run artillery-flow
+```
+## Test de endpoints
+Tambien podremos testear todos los endpoints del server, probando como funciona la creación, actualización, leído y eliminación de cada una de las persistencias a traves de sus respectivos endpoints chequeando que el statusCode de sus respuestas sea el debido, este test se puede ejecutar con el script:
+```
+npm run supertest
+```

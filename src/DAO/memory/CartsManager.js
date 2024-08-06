@@ -41,7 +41,6 @@ class CartManager {
       const { user_id } = filter;
       const limit = opts.limit || 10;
       const page = opts.page || 1;
-      console.log(filter);
       if (Object.keys(filter).length !== 0) {
         all = all.filter((c) => c.user_id === user_id);
       }
@@ -89,7 +88,6 @@ class CartManager {
   // Método para leer un carrito específico
   readOne(id) {
     try {
-      console.log(id);
       const cart = CartManager.#carts.find((cart) => cart._id === id);
       return cart;
     } catch (error) {
