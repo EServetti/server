@@ -12,7 +12,8 @@
     "mock-users": "node ./src/mocks/user.mocker.js --env dev",
     "image": "docker build -t e-commerce .",
     "artillery-flow": "artillery run ./src/test/artillery/flow.yaml",
-    "supertest": "mocha ./src/test/supertest/app.test.js"
+    "supertest": "mocha ./src/test/supertest/app.test.js",
+    "toBase64": "node ./toBase64.js"
   },
   "keywords": [],
   "author": "",
