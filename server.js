@@ -39,12 +39,19 @@ const nodeServer = createServer(server)
 const numOfProc = 1
 if(cluster.isPrimary) {
 for (let i=1; i<=numOfProc; i++) {
-cluster.fork()
+const worker = cluster.fork()
+worker.on('error', (err) => {
+  console.error(`Worker ${worker.process.pid} encountered an error: ${err.message}`);
+});
 }
 console.log("proceso primario");
 } else {
 console.log("proceso worker "+process.pid);
 nodeServer.listen(port, ready);
+nodeServer.on('error', (err) => {
+  console.error('HTTP Server Error:', err);
+});
+
 }
 
 //tcp server
