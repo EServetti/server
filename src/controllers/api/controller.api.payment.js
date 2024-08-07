@@ -15,14 +15,12 @@ async function payment(req, res, next) {
 
 async function webhook(req, res, next) {
   try {
-    console.log("Heard from webhook");
     const sig = req.headers['stripe-signature'];
     let event;
     event = stripe.webhooks.constructEvent(req.body, sig, environment.STRIPE_WEBHOOK_SECRET);
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       const cartsId = JSON.parse(session.metadata.cartsId);
-      console.log(cartsId);
       cartsId.forEach( async (cart) => {
         await updateService(cart, {
           state: "paid"

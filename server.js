@@ -33,6 +33,7 @@ const server = express();
 const port = environment.PORT
 const ready = async () => {
     console.log(`Server listening on port ${port}`);
+    console.log(environment.MONGO_URI);
 }
 const nodeServer = createServer(server)
 // const numOfProc = cpus().length
