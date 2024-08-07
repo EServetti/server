@@ -23,8 +23,10 @@ class SessionRouter extends CustomRouter {
         try {
           return res
             .cookie("token", req.user.token, {
+              secure: true,
               signedCookie: true,
               maxAge: 3600000,
+              sameSite: "None"
             })
             .redirect("https://everithingforyourhome.vercel.app");
         } catch (error) {

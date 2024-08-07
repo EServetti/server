@@ -50,7 +50,7 @@ async function register (req, res, next) {
   async function signout (req, res, next) {
     try {
       const online = req.cookies.token;
-        res.clearCookie("token")
+        res.clearCookie("token", { secure: true, sameSite: "None"})
         return res.message200("Loged out!");
     } catch (error) {
       return next(error);
