@@ -26,7 +26,7 @@ class SessionRouter extends CustomRouter {
               signedCookie: true,
               maxAge: 3600000,
             })
-            .redirect("http://localhost:5173/");
+            .redirect("https://everithingforyourhome.vercel.app");
         } catch (error) {
           return next(error);
         }
