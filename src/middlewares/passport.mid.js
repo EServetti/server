@@ -116,7 +116,7 @@ passport.use(
     {
       clientID: environment.GOOGLE_CLIENT_ID,
       clientSecret: environment.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:8080/session/google/callback",
+      callbackURL: "hhttps://server-production-f97c.up.railway.app/session/google/callback",
       passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, done) => {
