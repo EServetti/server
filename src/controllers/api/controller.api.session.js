@@ -13,7 +13,7 @@ async function register (req, res, next) {
   
   async function login (req, res, next) {
     try {
-      return res.cookie("token", req.user.token, { signedCookie: true, maxAge:3600000 }).message200("You're welcome!");
+      return res.cookie("token", req.user.token, { secure: true, sameSite: 'None', signedCookie: true, maxAge:3600000 }).message200("You're welcome!");
     } catch (error) {
       return next(error);
     }
