@@ -58,7 +58,7 @@ nodeServer.on('error', (err) => {
 //tcp server
 const socketServer = new Server(nodeServer, {
   cors: {
-    origin: true,
+    origin: 'https://everithingforyourhome.vercel.app',
     credentials: true
   }
 })
