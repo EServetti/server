@@ -116,7 +116,7 @@ passport.use(
     {
       clientID: environment.GOOGLE_CLIENT_ID,
       clientSecret: environment.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://everithingforyourhome.vercel.app/session/google/callback",
+      callbackURL: "https://server-production-f97c.up.railway.app/session/google/callback",
       passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, done) => {
