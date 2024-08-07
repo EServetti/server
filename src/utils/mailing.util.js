@@ -15,7 +15,7 @@ async function sendEmail(data) {
     });
     await transport.verify();
     // const verificationUrl = `http://localhost:${PORT}/api/sessions/verify?email=${encodeURIComponent(data.to)}&verifyCode=${encodeURIComponent(data.verifyCode)}`;
-    const verificationUrl = `https://server-production-f97c.up.railway.app/verify/${encodeURIComponent(data.to)}/${encodeURIComponent(data.verifyCode)}`;
+    const verificationUrl = `https://everithingforyourhome.vercel.app/verify/${encodeURIComponent(data.to)}/${encodeURIComponent(data.verifyCode)}`;
     const htmlContent = `
     <h1>Welcome to our store!</h1>
       <p>Click the link below to verify your email:</p>
