@@ -26,7 +26,6 @@ async function webhook(req, res, next) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       const cartsId = JSON.parse(session.metadata.cartsId)
-      console.log(cartsId, session.metadata.cartsId);
       for (const cart of cartsId) {
         try {
             const one = await updateCartService(cart, { state: "paid" }); 
