@@ -37,12 +37,43 @@ async function read(req, res, next) {
           return res.error404();
         }
         return res.message200(total);
-      } else {
+      } else if(state === "reserved"){
         const total = await aggregateService([
           {
             $match: {
               user_id: new Types.ObjectId(_id),
               state: state
+            },
+          },
+          {
+            $lookup: {
+              foreignField: "_id",
+              from: "products",
+              localField: "product_id",
+              as: "product_id",
+            },
+          },
+          {
+            $replaceRoot: {
+              newRoot: {
+                $mergeObjects: [{ $arrayElemAt: ["$product_id", 0] }, "$$ROOT"],
+              },
+            },
+          },
+          {
+            $set: {subTotal: {$multiply: ["$price", "$quantity"]}}
+          }
+        ]);
+        if (total.length === 0) {
+          return res.error404();
+        }
+        return res.message200(total);
+      } else {
+        const total = await aggregateService([
+          {
+            $match: {
+              user_id: new Types.ObjectId(_id),
+              state: {$in: ["paid", "delivered"]}
             },
           },
           {
