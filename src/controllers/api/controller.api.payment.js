@@ -1,6 +1,8 @@
-import { updateService } from "../../service/carts.api.service.js"
+import { updateService as updateCartService } from "../../service/carts.api.service.js"
 import { checkoutService } from "../../service/payment.api.service.js"
+import { readOneService, updateService as updateProductService } from "../../service/products.api.service.js"
 import environment from "../../utils/env.utils.js"
+import Stripe from "stripe"
 
 async function payment(req, res, next) {
   try {
@@ -15,7 +17,7 @@ async function payment(req, res, next) {
 
 async function webhook(req, res, next) {
   try {
-    console.log("heard from webhook");
+    const stripe = new Stripe(environment.STRIPE_SECRET_KEY)
     const sig = req.headers['stripe-signature'];
     let event;
     event = stripe.webhooks.constructEvent(req.body, sig, environment.STRIPE_WEBHOOK_SECRET);
@@ -24,7 +26,9 @@ async function webhook(req, res, next) {
       const cartsId = JSON.parse(session.metadata.cartsId);
       for (const cart of cartsId) {
         try {
-            await updateService(cart, { state: "paid" });
+            const one = await updateCartService(cart, { state: "paid" }); 
+            const product_id = await readOneService(one.product_id)
+            await updateProductService(product_id, {stock: one.stock - 1})
         } catch (error) {
             console.error(`Failed to update cart ${cart}:`, error);
         }
