@@ -1,6 +1,8 @@
 import { readService, paginateService, readOneService, createService,updateService, destroyService} from "../../service/carts.api.service.js"
 import { verifyToken } from "../../utils/jwt.js";
-
+import { readOneService as readOneProductService } from "../../service/products.api.service.js";
+import CustomError from "../../utils/errors/customError.js";
+import errors from "../../utils/errors/errors.js";
 
 
 //metodo read
@@ -88,11 +90,19 @@ async function paginate(req, res, next) {
       },{})
       const exists = carts.docs.find((c) => c.product_id._id == data.product_id)
       if(exists){
-        const data = {
-          quantity: exists.quantity + 1
+        const newQuantity = exists.quantity + 1
+        const product = await readOneProductService(exists.product_id)
+        
+        if(newQuantity > product.stock) {
+          const error = CustomError.new(errors.noSufficientStock)
+          throw error
+        } else {
+          const data = {
+            quantity: newQuantity
+          }
+          await updateService(exists._id, data)
+          return res.message201("The product has been added to cart")
         }
-        await updateService(exists._id, data)
-        return res.message201("The product has been added to cart")
       } else {
         await createService(data);
         return res.message201("The product has been added to cart");

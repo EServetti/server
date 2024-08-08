@@ -4,6 +4,7 @@ import {read, paginate, readOne, create, update, destroy, desAll } from "../../c
 import validator from "../../middlewares/joi.validator.js"
 import { cartValidator, UpdateCartValidator } from "../../schemas/carts.validator.js";
 import hasStock from "../../middlewares/hasStock.js";
+import hasEnoughStock from "../../middlewares/hasEnoughStock.js";
 
 class CartsRouter extends CustomRouter {
   init() {
@@ -11,7 +12,7 @@ class CartsRouter extends CustomRouter {
     this.read("/paginate", ["ADMIN"], paginate);
     this.read("/:nid", ["ADMIN"], readOne);
     this.create("/", ["USER", "ADMIN"], validator(cartValidator), hasStock, create);
-    this.update("/:nid", ["USER", "ADMIN"], validator(UpdateCartValidator), update);
+    this.update("/:nid", ["USER", "ADMIN"], validator(UpdateCartValidator), hasEnoughStock, update);
     this.destroy("/all", ["USER","ADMIN"], desAll);
     this.destroy("/:nid", ["USER", "ADMIN"], destroy);
   }

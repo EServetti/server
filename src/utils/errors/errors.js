@@ -12,7 +12,8 @@ const errors = {
   expDateToken: {message: "The current token doesn't have a valid exp date", statusCode: 500},
   productExist: {message: "There's already a product with this name!", statusCode: 401},
   userExists: {message: "There's already a user with this email!", statusCode: 401},
-  hasNoStock: {message: "Sorry this product doesn't have stock!", statusCode: 400}
+  hasNoStock: {message: "Sorry this product doesn't have stock", statusCode: 400},
+  noSufficientStock: {message: "This product doesn't have enough stock", statusCode: 400}
 };
 
 export default errors;
