@@ -27,8 +27,8 @@ async function webhook(req, res, next) {
       for (const cart of cartsId) {
         try {
             const one = await updateCartService(cart, { state: "paid" }); 
-            const product_id = await readOneService(one.product_id)
-            await updateProductService(product_id, {stock: one.stock - 1})
+            const product = await readOneService(one.product_id)
+            await updateProductService(product._id, {stock: product.stock - 1})
         } catch (error) {
             console.error(`Failed to update cart ${cart}:`, error);
         }
