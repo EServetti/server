@@ -1,6 +1,6 @@
-import { readOneService } from "../service/products.api.service"
-import CustomError from "../utils/errors/customError"
-import errors from "../utils/errors/errors"
+import { readOneService } from "../service/products.api.service.js"
+import CustomError from "../utils/errors/customError.js"
+import errors from "../utils/errors/errors.js"
 
 async function hasStock(req, res, next) {
   try {
