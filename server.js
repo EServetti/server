@@ -24,6 +24,7 @@ import environment from './src/utils/env.utils.js';
 import __dirname from "./utils.js"
 import swaggerOptions from './src/utils/swagger.js';
 import argsUtil from './src/utils/args.util.js';
+import { webhook } from './src/controllers/api/controller.api.payment.js';
 
 
 
@@ -97,7 +98,12 @@ const corsOptions = {
   credentials: true
 };
 
+
 server.use(cors(corsOptions));
+
+//Endpoint creado desde aca ya que debe tener un raw body
+server.post("/api/payment/webhook", express.raw({type: 'application/json'}), webhook)
+
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }))
