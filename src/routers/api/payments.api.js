@@ -5,7 +5,7 @@ import express from "express"
 class PaymentRouter extends CustomRouter {
     init() {
         this.create("/checkout", ["USER", "ADMIN"], payment)
-        this.create("/webhook", ["USER","ADMIN"], express.raw({type: 'application/json'}), webhook)
+        this.update("/webhook", ["PUBLIC"], express.raw({type: 'application/json'}), webhook)
     }
 }
 
