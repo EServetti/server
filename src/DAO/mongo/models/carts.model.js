@@ -24,6 +24,7 @@ const schema = new Schema(
       default: "reserved",
       enum: ["reserved", "paid", "delivered"],
     },
+    date: { type: String, default: null}
   },
   {
     timestamps: true,
