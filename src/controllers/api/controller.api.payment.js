@@ -35,7 +35,10 @@ async function webhook(req, res, next) {
             console.error(`Failed to update cart ${cart}:`, error);
         }
     }
-      return res.message200("Successfully paid")
+      return res.status(200).json({
+        statusCode: 200,
+         message:"The cart has been updated!"
+        })
     };
   } catch (error) {
     return next(error)
