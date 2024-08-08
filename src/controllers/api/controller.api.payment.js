@@ -3,10 +3,11 @@ import { checkoutService } from "../../service/payment.api.service.js"
 import { readOneService, updateService as updateProductService } from "../../service/products.api.service.js"
 import environment from "../../utils/env.utils.js"
 import Stripe from "stripe"
+import { verifyToken } from "../../utils/jwt.js"
 
 async function payment(req, res, next) {
   try {
-    const {user} = req
+    const user = verifyToken(req.cookies.token)
     const {_id} = user
     const response = await checkoutService({user_id: _id})
     return res.message200(response.url)
