@@ -12,9 +12,10 @@ class ProductsRouter extends CustomRouter {
     this.read("/", ["PUBLIC"], read);
     this.read('/paginate', ["PUBLIC"], paginate)
     this.read("/:nid", ["PUBLIC"], readOne);
-    this.create("/", ["ADMIN"], validator(productValidator), exist, create,);
-    this.update("/:nid",["ADMIN"], validator(updateProductValidator), titleExists, update);
-    this.destroy("/:nid",["ADMIN"], destroy);
+    this.create("/", ["PREMIUM","ADMIN"], validator(productValidator), exist, create,);
+    //Crear middleware para que los user premium solo puedan editar y eliminar sus productos
+    this.update("/:nid",["PREMIUM","ADMIN"], validator(updateProductValidator), titleExists, update);
+    this.destroy("/:nid",["PREMIUM","ADMIN"], destroy);
   }
 }
 

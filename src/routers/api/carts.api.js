@@ -9,10 +9,10 @@ class CartsRouter extends CustomRouter {
     this.read("/", ["ADMIN"], read);
     this.read("/paginate", ["ADMIN"], paginate);
     this.read("/:nid", ["ADMIN"], readOne);
-    this.create("/", ["USER", "ADMIN"], validator(cartValidator), create);
-    this.update("/:nid", ["USER", "ADMIN"], validator(UpdateCartValidator), update);
-    this.destroy("/all", ["USER","ADMIN"], desAll);
-    this.destroy("/:nid", ["USER", "ADMIN"], destroy);
+    this.create("/", ["USER","PREMIUM", "ADMIN"], validator(cartValidator), create);
+    this.update("/:nid", ["USER","PREMIUM", "ADMIN"], validator(UpdateCartValidator), update);
+    this.destroy("/all", ["USER","PREMIUM", "ADMIN"], desAll);
+    this.destroy("/:nid", ["USER","PREMIUM", "ADMIN"], destroy);
   }
 }
 

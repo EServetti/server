@@ -4,8 +4,8 @@ import { read, readOne } from "../../controllers/api/controller.api.tickets.js";
 
 class TicketsRouter extends CustomRouter {
   init() {
-    this.create("/total", ["USER", "ADMIN"], readOne)
-    this.read("/", ["USER", "ADMIN"], read);
+    this.create("/total", ["USER", "PREMIUM", "ADMIN"], readOne)
+    this.read("/", ["USER", "PREMIUM", "ADMIN"], read);
   }
 }
 
