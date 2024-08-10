@@ -10,9 +10,9 @@ class Manager {
       throw error;
     }
   }
-  async read() {
+  async read(filter) {
     try {
-      const all = await this.Model.find().lean();
+      const all = await this.Model.find(filter).lean();
       return all;
     } catch (error) {
       throw error;

@@ -16,9 +16,9 @@ class ProductsRepository {
       }
     }
   
-     readRepository = async () => {
+     readRepository = async (filter) => {
       try {
-        const all = await this.manager.read()
+        const all = await this.manager.read(filter)
         return all
       } catch (error) {
         throw error

@@ -1,7 +1,7 @@
 import { Router } from "express";
 //import productManager from "../../data/fs/ProductManager.fs.js";
 import exist from "../../middlewares/productExist.js";
-import { read, paginate, readOne, create, update, destroy } from "../../controllers/api/controller.api.products.js";
+import { read, paginate, readOne, create, update, destroy, readMyProdcuts } from "../../controllers/api/controller.api.products.js";
 import CustomRouter from "../customRouter.js";
 import titleExists from "../../middlewares/titleExists.js";
 import validator from "../../middlewares/joi.validator.js";
@@ -11,6 +11,7 @@ import isAdmin from "../../middlewares/isAdmin.js";
 class ProductsRouter extends CustomRouter {
   init() {
     this.read("/", ["PUBLIC"], read);
+    this.read("/me", ["PREMIUM"], readMyProdcuts)
     this.read('/paginate', ["PUBLIC"], paginate)
     this.read("/:nid", ["PUBLIC"], readOne);
     this.create("/", ["PREMIUM","ADMIN"], validator(productValidator), exist, create,);

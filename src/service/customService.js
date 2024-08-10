@@ -13,9 +13,9 @@ class CustomService {
     }
   }
 
-   readService = async () => {
+   readService = async (filter) => {
     try {
-      const all = await this.repository.readRepository()
+      const all = await this.repository.readRepository(filter)
       return all
     } catch (error) {
       throw error
