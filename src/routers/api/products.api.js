@@ -6,6 +6,7 @@ import CustomRouter from "../customRouter.js";
 import titleExists from "../../middlewares/titleExists.js";
 import validator from "../../middlewares/joi.validator.js";
 import { productValidator, updateProductValidator } from "../../schemas/products.validator.js";
+import isAdmin from "../../middlewares/isAdmin.js";
 
 class ProductsRouter extends CustomRouter {
   init() {
@@ -13,9 +14,8 @@ class ProductsRouter extends CustomRouter {
     this.read('/paginate', ["PUBLIC"], paginate)
     this.read("/:nid", ["PUBLIC"], readOne);
     this.create("/", ["PREMIUM","ADMIN"], validator(productValidator), exist, create,);
-    //Crear middleware para que los user premium solo puedan editar y eliminar sus productos
-    this.update("/:nid",["PREMIUM","ADMIN"], validator(updateProductValidator), titleExists, update);
-    this.destroy("/:nid",["PREMIUM","ADMIN"], destroy);
+    this.update("/:nid",["PREMIUM","ADMIN"], validator(updateProductValidator), isAdmin, titleExists, update);
+    this.destroy("/:nid",["PREMIUM","ADMIN"], isAdmin, destroy);
   }
 }
 
