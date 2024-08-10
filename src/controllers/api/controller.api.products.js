@@ -15,6 +15,7 @@ async function read(req, res, next) {
     req.cookies.token ? user = verifyToken(req.cookies.token) : user = null
     const { category } = req.query;
     let all;
+
     !user || user.role !== "premium" ? all = await readService() : all = await readService({ 
       supplier_id: { $ne: user._id }
     })
@@ -39,7 +40,7 @@ async function readMyProdcuts(req, res, next) {
   try {
     const {user} = req
     const all = await readService({ supplier_id: user._id})
-    if(all || all.length === 0) {
+    if(!all || all.length === 0) {
       return res.error404()
     } else {
       return res.message200(all)
@@ -52,7 +53,7 @@ async function paginate(req, res, next) {
   try {
     let user;
     req.cookies.token ? user = verifyToken(req.cookies.token) : user = null
-    const filter = {};
+    const filter = {};    
     user && user.role === "premium" ? filter.supplier_id = { $ne: user._id} : null
     const opts = {};
     if (req.query.category) {
