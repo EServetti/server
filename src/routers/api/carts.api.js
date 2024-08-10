@@ -5,16 +5,17 @@ import validator from "../../middlewares/joi.validator.js"
 import { cartValidator, UpdateCartValidator } from "../../schemas/carts.validator.js";
 import hasStock from "../../middlewares/hasStock.js";
 import hasEnoughStock from "../../middlewares/hasEnoughStock.js";
+import buyOwnProducts from "../../middlewares/buyOwnProducts.js";
 
 class CartsRouter extends CustomRouter {
   init() {
     this.read("/", ["ADMIN"], read);
     this.read("/paginate", ["ADMIN"], paginate);
     this.read("/:nid", ["ADMIN"], readOne);
-    this.create("/", ["USER","PREMIUM", "ADMIN"], validator(cartValidator), create);
-    this.update("/:nid", ["USER","PREMIUM", "ADMIN"], validator(UpdateCartValidator), update);
-    this.destroy("/all", ["USER","PREMIUM", "ADMIN"], desAll);
-    this.destroy("/:nid", ["USER","PREMIUM", "ADMIN"], destroy);
+    this.create("/", ["USER","PREMIUM"], validator(cartValidator), buyOwnProducts, create);
+    this.update("/:nid", ["USER","PREMIUM"], validator(UpdateCartValidator), update);
+    this.destroy("/all", ["USER","PREMIUM"], desAll);
+    this.destroy("/:nid", ["USER","PREMIUM"], destroy);
   }
 }
 
