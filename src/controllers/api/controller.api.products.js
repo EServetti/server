@@ -79,7 +79,9 @@ async function readOne(req, res, next) {
 //metodo create
 async function create(req, res, next) {
   try {
+    const {_id} = req.user
     const data = req.body;
+    data.supplier_id = _id
     const created = await createService(data);
     return res.message201(created);
   } catch (error) {

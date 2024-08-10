@@ -45,7 +45,8 @@ class ProductManager {
         photo: data.photo,
         category: data.category,
         price: data.price,
-        stock: data.stock
+        stock: data.stock,
+        supplier_id: data.supplier_id
       };
       let contant = await fs.promises.readFile(this.path, "utf-8");
       contant = JSON.parse(contant);

@@ -13,6 +13,7 @@ class CartManager {
         product_id: data.product_id,
         quantity: data.quantity,
         state: data.state,
+        date: data.date,
         createdAt: data.createdAt,
         updatedAt: data.updatedAt
       };

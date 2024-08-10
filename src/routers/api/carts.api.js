@@ -3,6 +3,8 @@ import CustomRouter from "../customRouter.js";
 import {read, paginate, readOne, create, update, destroy, desAll } from "../../controllers/api/controller.api.carts.js";
 import validator from "../../middlewares/joi.validator.js"
 import { cartValidator, UpdateCartValidator } from "../../schemas/carts.validator.js";
+import hasStock from "../../middlewares/hasStock.js";
+import hasEnoughStock from "../../middlewares/hasEnoughStock.js";
 
 class CartsRouter extends CustomRouter {
   init() {

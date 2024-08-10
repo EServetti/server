@@ -3,14 +3,15 @@ import { Router } from "express";
 import {update } from "../../controllers/views/controller.views.users.js";
 import {uploader, uploadFile} from "../../middlewares/multer.mid.js";
 import isOnline from "../../middlewares/isOnline.js";
-import alreadyUpdated from "../../middlewares/alreadyUpdated.js";
 import _ from "mongoose-paginate-v2";
 import CustomRouter from "../customRouter.js"
+import validator from "../../middlewares/joi.validator.js";
+import { updateUsersValidate } from "../../schemas/users.validator.js";
 
 
 class UsersRouter extends CustomRouter {
   init(){
-    this.update("/",["USER","ADMIN"], isOnline, alreadyUpdated, uploader.single("photo"), uploadFile, update);
+    this.update("/",["USER","ADMIN"], isOnline, uploader.single("photo"), uploadFile, validator(updateUsersValidate), update);
   }
 }
 

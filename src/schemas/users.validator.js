@@ -78,6 +78,7 @@ export const updateUsersValidate = joi.object({
   }),
   role: joi.string().valid('user', 'premium', 'admin'),
   verify: joi.boolean(),
+  complete: joi.boolean()
 });
 
 //Validador de actualización de password( recuperar tu contraseña)
