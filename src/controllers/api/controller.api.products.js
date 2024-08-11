@@ -39,7 +39,12 @@ async function read(req, res, next) {
 async function readMyProdcuts(req, res, next) {
   try {
     const {user} = req
-    const all = await readService({ supplier_id: user._id})
+    let all;
+    if(user.role === "premium") {
+      all = await readService({ supplier_id: user._id})
+    } else {
+      all = await readService()
+    }
     if(!all || all.length === 0) {
       return res.error404()
     } else {

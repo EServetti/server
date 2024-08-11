@@ -7,10 +7,14 @@ async function isAdmin(req, res, next) {
     if(user.role === "admin") return next()
     else {
       const product = await readOneService(nid)
+      let {_id} = user
+      _id = _id.toString()
+      let {supplier_id} = product
+      supplier_id = supplier_id.toString()
       if(!product) {
         return res.error404()
       }
-      else if(product.supplier_id !== user._id) {
+      else if(supplier_id !== _id) {
         return res.error401()
       } else {
         return next()

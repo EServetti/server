@@ -64,7 +64,6 @@ class CustomRouter {
             (policies.includes("ADMIN") && role === "admin") 
           ) {
             const user = await readByEmailService(email);
-            //proteger contraseña del usuario!!!
             req.user = user;
             return next();
           } else return res.error403();

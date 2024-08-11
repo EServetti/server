@@ -11,7 +11,7 @@ import isAdmin from "../../middlewares/isAdmin.js";
 class ProductsRouter extends CustomRouter {
   init() {
     this.read("/", ["PUBLIC"], read);
-    this.read("/me", ["PREMIUM"], readMyProdcuts)
+    this.read("/me", ["PREMIUM", "ADMIN"], readMyProdcuts)
     this.read('/paginate', ["PUBLIC"], paginate)
     this.read("/:nid", ["PUBLIC"], readOne);
     this.create("/", ["PREMIUM","ADMIN"], validator(productValidator), exist, create,);
