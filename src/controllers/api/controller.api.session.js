@@ -13,7 +13,7 @@ async function register (req, res, next) {
   
   async function login (req, res, next) {
     try {
-      return res.cookie("token", req.user.token, { signedCookie: true, maxAge:3600000 }).message200("You're welcome!");
+      return res.cookie("token", req.user.token, { secure: true, sameSite: 'None', signedCookie: true, maxAge:3600000 }).message200("You're welcome!");
     } catch (error) {
       return next(error);
     }
@@ -50,7 +50,7 @@ async function register (req, res, next) {
   async function signout (req, res, next) {
     try {
       const online = req.cookies.token;
-        res.clearCookie("token")
+        res.clearCookie("token", { secure: true, sameSite: "None"})
         return res.message200("Loged out!");
     } catch (error) {
       return next(error);

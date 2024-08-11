@@ -18,6 +18,7 @@ class CartDTO {
     }
     this.quantity = data.quantity;
     this.state = data.state || "reserved";
+    this.date = data.date || null;
     pers !== "mongo" && (this.createdAt = new Date());
     pers !== "mongo" && (this.updatedAt = new Date());
   }

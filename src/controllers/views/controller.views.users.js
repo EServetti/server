@@ -12,45 +12,45 @@ import {verifyToken, updateToken} from"../../utils/jwt.js"
         const timeLeft = token.exp
         const maxAge = timeLeft * 1000 - Date.now()
         delete token.exp
-        res.clearCookie("token")
+        res.clearCookie("token", { secure: true, sameSite: "None"})
         const updatedToken = updateToken(req.cookies.token, token)
-        res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
+        res.cookie("token", updatedToken, { secure: true, signedCookie: true, maxAge:maxAge, sameSite: "None"})
       }
       if(role){
         token.role = role
         const timeLeft = token.exp
         const maxAge = timeLeft * 1000 - Date.now()
         delete token.exp
-        res.clearCookie("token")
+        res.clearCookie("token", { secure: true, sameSite: "None"})
         const updatedToken = updateToken(req.cookies.token, token)
-        res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
+        res.cookie("token", updatedToken, { secure: true, signedCookie: true, maxAge:maxAge, sameSite: "None"})
       }
       if(name) {
         token.name = name
         const timeLeft = token.exp
         const maxAge = timeLeft * 1000 - Date.now()
         delete token.exp
-        res.clearCookie("token")
+        res.clearCookie("token", { secure: true, sameSite: "None"})
         const updatedToken = updateToken(req.cookies.token, token)
-        res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
+        res.cookie("token", updatedToken, { secure: true, signedCookie: true, maxAge:maxAge, sameSite: "None"})
       }
       if(complete) {
         token.complete = complete
         const timeLeft = token.exp
         const maxAge = timeLeft * 1000 - Date.now()
         delete token.exp
-        res.clearCookie("token")
+        res.clearCookie("token", { secure: true, sameSite: "None"})
         const updatedToken = updateToken(req.cookies.token, token)
-        res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
+        res.cookie("token", updatedToken, { secure: true, signedCookie: true, maxAge:maxAge, sameSite: "None"})
       }
       if(age) {
         token.age = age
         const timeLeft = token.exp
         const maxAge = timeLeft * 1000 - Date.now()
         delete token.exp
-        res.clearCookie("token")
+        res.clearCookie("token", { secure: true, sameSite: "None"})
         const updatedToken = updateToken(req.cookies.token, token)
-        res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
+        res.cookie("token", updatedToken, { secure: true, signedCookie: true, maxAge:maxAge, sameSite: "None"})
       }
 
       if(phone) {
@@ -58,9 +58,9 @@ import {verifyToken, updateToken} from"../../utils/jwt.js"
         const timeLeft = token.exp
         const maxAge = timeLeft * 1000 - Date.now()
         delete token.exp
-        res.clearCookie("token")
+        res.clearCookie("token", { secure: true, sameSite: "None"})
         const updatedToken = updateToken(req.cookies.token, token)
-        res.cookie("token", updatedToken, {signedCookie: true, maxAge:maxAge})
+        res.cookie("token", updatedToken, { secure: true, signedCookie: true, maxAge:maxAge, sameSite: "None"})
       }
 
       
