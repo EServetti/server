@@ -37,7 +37,11 @@ async function read(req, res, next) {
           return res.error404();
         }
         return res.message200(total);
+<<<<<<< HEAD
+      } else {
+=======
       } else if(state === "reserved"){
+>>>>>>> dde28f9844e2b9b2b3f3dbfdf6f85a4bd7ad8576
         const total = await aggregateService([
           {
             $match: {
@@ -68,6 +72,8 @@ async function read(req, res, next) {
           return res.error404();
         }
         return res.message200(total);
+<<<<<<< HEAD
+=======
       } else {
         const total = await aggregateService([
           {
@@ -99,6 +105,7 @@ async function read(req, res, next) {
           return res.error404();
         }
         return res.message200(total);
+>>>>>>> dde28f9844e2b9b2b3f3dbfdf6f85a4bd7ad8576
       }
       
     } catch (error) {
