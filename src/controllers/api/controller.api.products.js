@@ -6,14 +6,19 @@ import {
   updateService,
   destroyService,
 } from "../../service/products.api.service.js";
-import CustomError from "../../utils/errors/customError.js";
-import errors from "../../utils/errors/errors.js";
+import {verifyToken} from "../../utils/jwt.js"
 
 //metodo read
 async function read(req, res, next) {
   try {
+    let user;
+    req.cookies.token ? user = verifyToken(req.cookies.token) : user = null
     const { category } = req.query;
-    const all = await readService();
+    let all;
+
+    !user || user.role !== "premium" ? all = await readService() : all = await readService({ 
+      supplier_id: { $ne: user._id }
+    })
     const allCat = all.filter((product) => product.category === category);
     //si existen productos con la category ingresada los devuelve
     if (allCat.length !== 0) {
@@ -31,9 +36,30 @@ async function read(req, res, next) {
     return next(error);
   }
 }
+async function readMyProdcuts(req, res, next) {
+  try {
+    const {user} = req
+    let all;
+    if(user.role === "premium") {
+      all = await readService({ supplier_id: user._id})
+    } else {
+      all = await readService()
+    }
+    if(!all || all.length === 0) {
+      return res.error404()
+    } else {
+      return res.message200(all)
+    }
+  } catch (error) {
+    return next(error)
+  }
+}
 async function paginate(req, res, next) {
   try {
-    const filter = {};
+    let user;
+    req.cookies.token ? user = verifyToken(req.cookies.token) : user = null
+    const filter = {};    
+    user && user.role === "premium" ? filter.supplier_id = { $ne: user._id} : null
     const opts = {};
     if (req.query.category) {
       filter.category = req.query.category;
@@ -79,7 +105,9 @@ async function readOne(req, res, next) {
 //metodo create
 async function create(req, res, next) {
   try {
+    const {_id} = req.user
     const data = req.body;
+    data.supplier_id = _id
     const created = await createService(data);
     return res.message201(created);
   } catch (error) {
@@ -122,4 +150,4 @@ async function destroy(req, res, next) {
   }
 }
 
-export { read, paginate, readOne, create, update, destroy };
+export { read, readMyProdcuts, paginate, readOne, create, update, destroy };

@@ -8,7 +8,7 @@ const schema = new Schema ({
   photo: {type: String, default: "/img/defaultUser.webp"},
   email: {type: String, required: true, unique: true, index: true},
   password:{type: String, required: true},
-  role: {type: Number, default: 0},
+  role: {type: String, default: "user"},
   phone: {type: Number, default: 0},
   verify: {type: Boolean, default: false},
   verifyCode: {type: String, required: true},

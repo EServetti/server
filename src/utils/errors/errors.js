@@ -13,7 +13,8 @@ const errors = {
   productExist: {message: "There's already a product with this name!", statusCode: 401},
   userExists: {message: "There's already a user with this email!", statusCode: 401},
   hasNoStock: {message: "Sorry this product doesn't have stock", statusCode: 400},
-  noSufficientStock: {message: "This product doesn't have enough stock", statusCode: 400}
+  noSufficientStock: {message: "This product doesn't have enough stock", statusCode: 400},
+  buyOwnProduct: {message: "You can't buy your own product!", statusCode: 401}
 };
 
 export default errors;

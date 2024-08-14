@@ -14,7 +14,8 @@ class ProductManager {
         photo: data.photo,
         category: data.category,
         price: data.price,
-        stock: data.stock
+        stock: data.stock,
+        supplier_id: data.supplier_id
       };
       ProductManager.#products.push(product);
       return product;

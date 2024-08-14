@@ -11,7 +11,8 @@ class ProductDTO {
         this.photo = data.photo || "/img/defaultProduct.png"
         this.category = data.category || "product"
         this.price = data.price || 1;
-        this.stock = data.stock || 1
+        this.stock = data.stock || 1;
+        this.supplier_id = data.supplier_id
         pers !== "mongo" && (this.createdAt = new Date())
         pers !== "mongo" && (this.updatedAt = new Date())
     }

@@ -59,11 +59,11 @@ class CustomRouter {
           token = verifyToken(token);
           const { role, email } = token;
           if (
-            (policies.includes("USER") && role === 0) ||
-            (policies.includes("ADMIN") && role === 1)
+            (policies.includes("USER") && role === "user") ||
+            (policies.includes("PREMIUM") && role === "premium") ||
+            (policies.includes("ADMIN") && role === "admin") 
           ) {
             const user = await readByEmailService(email);
-            //proteger contraseña del usuario!!!
             req.user = user;
             return next();
           } else return res.error403();

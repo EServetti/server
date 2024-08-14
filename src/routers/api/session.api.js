@@ -30,13 +30,13 @@ class SessionRouter extends CustomRouter {
     this.create("/login", ["PUBLIC"], isValidUser, passportCb("login"), login);
 
     //ruta para ver datos del user online
-    this.create("/", ["USER", "ADMIN"], passportCb("data"), data);
+    this.create("/", ["USER", "PREMIUM", "ADMIN"], passportCb("data"), data);
 
     //ruta para autenticar una cuenta
     this.read("/verify", ["PUBLIC"], authenticate);
 
     //ruta de log out
-    this.create("/signout", ["USER", "ADMIN"], signout);
+    this.create("/signout", ["USER", "PREMIUM", "ADMIN"], signout);
 
     //ruta para enviar un mail de restablecimiento de password
     this.create("/password", ["PUBLIC"], userEmailExists, password);

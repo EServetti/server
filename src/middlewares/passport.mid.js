@@ -128,7 +128,6 @@ passport.use(
             name: profile.name.givenName,
             photo: profile.picture,
             password: createHash(profile.id),
-            role: 0,
             verify: true,
           };
           await createService(one);

@@ -1,11 +1,8 @@
 import Joi from 'joi';
-import JoiObjectId from 'joi-objectid';
-
-// Extiende Joi con JoiObjectId
-Joi.objectId = JoiObjectId(Joi);
+import JoiOid from "joi-oid"
 
 export const cartValidator = Joi.object({
-  product_id: Joi.objectId().required().messages({
+  product_id: JoiOid.objectId().required().messages({
     'any.required': "please enter the product_id",
     'string.pattern.name': "product_id must be a ObjectId"
   }),
@@ -18,7 +15,7 @@ export const cartValidator = Joi.object({
 });
 
 export const UpdateCartValidator = Joi.object({
-    product_id: Joi.objectId().messages({
+    product_id: JoiOid.objectId().messages({
       'string.pattern.name': "product_id must be a ObjectId"
     }),
     quantity: Joi.number().min(1),

@@ -37,7 +37,7 @@ export const usersValidate = joi.object({
   phone: joi.string().pattern(new RegExp("^[0-9\\-\\+]{9,15}$")).messages({
     "string.pattern.base": "phone number must be valid",
   }),
-  role: joi.number().min(0).max(1),
+  role: joi.string().valid('user', 'premium', 'admin'),
   verify: joi.boolean(),
 });
 
@@ -76,7 +76,7 @@ export const updateUsersValidate = joi.object({
   phone: joi.string().pattern(new RegExp("^[0-9\\-\\+]{9,15}$")).messages({
     "string.pattern.base": "phone number must be valid",
   }),
-  role: joi.number().min(0).max(1),
+  role: joi.string().valid('user', 'premium', 'admin'),
   verify: joi.boolean(),
   complete: joi.boolean()
 });
