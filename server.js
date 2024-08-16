@@ -93,15 +93,15 @@ server.use(cookieParser(environment.SECRET_COOKIE))
 //   );
 
 
-// const corsOptions = {
-//   origin: 'https://everithingforyourhome.vercel.app',
-//   credentials: true
-// };
-
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: 'https://everithingforyourhome.vercel.app',
   credentials: true
 };
+
+// const corsOptions = {
+//   origin: 'http://localhost:5173',
+//   credentials: true
+// };
 
 server.use(cors(corsOptions));
 
