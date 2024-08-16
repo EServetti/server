@@ -11,7 +11,7 @@ import { updateUsersValidate } from "../../schemas/users.validator.js";
 
 class UsersRouter extends CustomRouter {
   init(){
-    this.update("/",["USER","ADMIN"], isOnline, uploader.single("photo"), uploadFile, validator(updateUsersValidate), update);
+    this.update("/",["USER", "PREMIUM", "ADMIN"], isOnline, uploader.single("photo"), uploadFile, validator(updateUsersValidate), update);
   }
 }
 

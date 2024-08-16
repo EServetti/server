@@ -1,3 +1,19 @@
 [33mERROR[39m: POST - / - 401 - message: "Bad auth from poliecies!" - 9/7/2024
 [33mERROR[39m: POST - / - 401 - message: "Bad auth from poliecies!" - 9/7/2024
 [33mERROR[39m: POST - / - 401 - message: "Bad auth from poliecies!" - 9/7/2024
+[33mERROR[39m: POST - / - 401 - message: "Bad auth from poliecies!" - 16/8/2024
+[33mERROR[39m: POST - / - 401 - message: "Bad auth from poliecies!" - 16/8/2024
+[33mERROR[39m: POST - / - 403 - message: "Forbidden from poliecies!" - 16/8/2024
+[33mERROR[39m: POST - / - 403 - message: "Forbidden from poliecies!" - 16/8/2024
+[33mERROR[39m: POST - / - 403 - message: "Forbidden from poliecies!" - 16/8/2024
+[33mERROR[39m: POST - / - 403 - message: "Forbidden from poliecies!" - 16/8/2024
+[33mERROR[39m: POST - / - 401 - message: "Bad auth from poliecies!" - 16/8/2024
+[33mERROR[39m: POST - / - 401 - message: "Bad auth from poliecies!" - 16/8/2024
+[33mERROR[39m: POST - / - 401 - message: "Bad auth from poliecies!" - 16/8/2024
+[33mERROR[39m: POST - / - 401 - message: "Bad auth from poliecies!" - 16/8/2024
+[33mERROR[39m: GET - /?state=paid - 404 - message: "Not found docs" - 16/8/2024
+[33mERROR[39m: GET - /me - 404 - message: "Not found docs" - 16/8/2024
+[33mERROR[39m: POST - / - 401 - message: "Bad auth from poliecies!" - 16/8/2024
+[33mERROR[39m: POST - /api/sessions/login - 401 - message: Invalid credentials! - 16/8/2024
+[33mERROR[39m: PUT - / - 403 - message: "Forbidden from poliecies!" - 16/8/2024
+[33mERROR[39m: GET - /?state=paid - 404 - message: "Not found docs" - 16/8/2024
