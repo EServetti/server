@@ -13,7 +13,11 @@ async function checkoutRepository(filter) {
       productsOnCart = productsOnCart.map((each) => new CheckoutProduct(each))
       const line_items = productsOnCart;
       const mode = "payment";
+<<<<<<< HEAD
+      const success_url = "http://localhost:5173/thank-you"
+=======
       const success_url = "https://everithingforyourhome.vercel.app/thank-you"
+>>>>>>> dde28f9844e2b9b2b3f3dbfdf6f85a4bd7ad8576
       const intent = await stripe.checkout.sessions.create({
         line_items,
         mode,

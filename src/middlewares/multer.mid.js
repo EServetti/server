@@ -5,6 +5,15 @@ import environment from "../utils/env.utils.js";
 import path from "path";
 import fs from "fs";
 
+<<<<<<< HEAD
+const { GOOGLE_PROYECT_ID, GOOGLE_B64_SECRET } = environment;
+
+// Decodifica la cadena Base64 y guarda el archivo JSON temporalmente solo una vez
+const keyFilenamePath = path.join(__dirname, "/temp-keyfile.json");
+
+if (!fs.existsSync(keyFilenamePath)) {
+  fs.writeFileSync(keyFilenamePath, Buffer.from(GOOGLE_B64_SECRET, 'base64').toString('utf-8'));
+=======
 const { GOOGLE_PROYECT_ID, GOOGLE_SECRET_KEY } = environment;
 
 if (!GOOGLE_SECRET_KEY) {
@@ -20,6 +29,7 @@ keyJson = JSON.parse(GOOGLE_SECRET_KEY);
 
 if (!fs.existsSync(keyFilenamePath)) {
   fs.writeFileSync(keyFilenamePath, JSON.stringify(keyJson));
+>>>>>>> dde28f9844e2b9b2b3f3dbfdf6f85a4bd7ad8576
 }
 
 const storage = new Storage({
